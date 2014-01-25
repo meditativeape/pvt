@@ -2,7 +2,7 @@
  * Server side we import helper objects.
  */
 if( 'undefined' !== typeof global ){
-    var helper = require("./shared/game.shared.helper.js");
+    var helper = require("../shared/game.shared.helper.js");
 	var Point = helper.Point;
 	var CONSTANTS = helper.CONSTANTS;
 }
