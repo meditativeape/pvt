@@ -13,8 +13,11 @@ var GameClient = function(/*int*/type) {
 	this.gameClientUI = new GameClientUI();
     this.gameClientUI.loadImage();
     this.gameClientUI.initGameUI();
-	this.gameClientControl = new GameClientControl();
+	this.gameClientControl = new GameClientControl(this);
 	this.gameClientControl.registerEventListeners();
 	this.type = type;
 };
 
+
+GameClient.prototype.handleMessage = function(/*string*/message){
+}
