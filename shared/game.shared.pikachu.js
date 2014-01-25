@@ -1,6 +1,7 @@
 // JavaScript Document
 
-var Pikachu = new function(){
+var Pikachu = new function(/*PhysicalObject*/ object){
+	this.prototype = object;
 }
 
 

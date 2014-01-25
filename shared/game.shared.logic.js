@@ -75,7 +75,7 @@ GameLogic.prototype.updatePhysics = function() {
 };
 
 // Check if pikachu and pokeball collides
-GameLogic.prototype.checkCollision = function(/*Point*/ pikachu, /*Point*/ pokeball) {
+GameLogic.prototype.checkCollision = function(/*point*/ pikachu, /*Point*/ pokeball) {
     var xdiff = pikachu.X - pokeball.X;
     var ydiff = pikachu.Y - pokeball.Y;
     if (Math.sqrt(xdiff*xdiff + ydiff*ydiff) < (CONSTANTS.pikachuRadius + CONSTANTS.pokeballRadius))
@@ -84,9 +84,10 @@ GameLogic.prototype.checkCollision = function(/*Point*/ pikachu, /*Point*/ pokeb
         return false;
 };
 
-GameLogic.prototype.checkFloor = function(/*Point*/ pikachu){
-	if(pikachu.Y+CONSTANTS.pikachuRadius>height-floorHeight){
-		pikachu.Y = height-floorHeight-CONSTANTS.pikachuRadius;
+GameLogic.prototype.checkFloor = function(/*Pikachu*/ pikachu){
+	if(pikachu.center.Y+CONSTANTS.pikachuRadius>height-floorHeight){
+		pikachu.center.Y = height-floorHeight-CONSTANTS.pikachuRadius;
+		pikachu.accelerationY = 0;
 	}
 }
 
