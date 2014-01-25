@@ -4,7 +4,7 @@ var GameClientUI = function(/*GameClient*/ client){
     this.client = client;
     
     this.stage = new Kinetic.Stage({
-        container: 'container',
+        container: 'game',
         id: 'gameCanvas',
         width: CONSTANTS.width,
         height: CONSTANTS.height
