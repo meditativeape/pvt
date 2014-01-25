@@ -62,8 +62,8 @@ GameClientUI.prototype.initGameUI = function(){
         width: this.background.width,
         height: CONSTANTS.height
 	});
-	backLayer.add(bg1);
-	backLayer.add(bg2);
+	this.backLayer.add(bg1);
+	this.backLayer.add(bg2);
     
     // Kinetic animation to scroll the background
     this.bgAnim = new Kinetic.Animation(function(frame){
@@ -79,7 +79,7 @@ GameClientUI.prototype.initGameUI = function(){
                   y: 0});
         bg2.move({x: CONSTANTS.backgroundScrollSpeed * (timeDiff / 16), 
                   y: 0});
-	}, backLayer);
+	}, this.backLayer);
     this.bgAnim.start();
     
     // Create two Kinetic image objects for the scrolling floor
@@ -97,8 +97,8 @@ GameClientUI.prototype.initGameUI = function(){
         width: this.floor.width,
         height: this.floor.height
     });
-    platformLayer.add(floor1);
-    platformLayer.add(floor2);
+    this.platformLayer.add(floor1);
+    this.platformLayer.add(floor2);
     
     // Kinetic animation to scroll the floor and the platform
     this.platformLayerAnim = new Kinetic.Animation(function(frame){
@@ -114,7 +114,7 @@ GameClientUI.prototype.initGameUI = function(){
                     y: 0});
         floor2.move({x: CONSTANTS.platformScrollSpeed * (timeDiff / 16), 
                     y: 0});
-	}, platformLayer);
+	}, this.platformLayer);
     this.platformLayerAnim.start();
 
     // A Kinetic text to show text message at the center of canvas.
@@ -134,15 +134,15 @@ GameClientUI.prototype.initGameUI = function(){
     //this.msgAnim.start();
 };
 
-GameClientUI.cleanUp = function(){
+GameClientUI.prototype.cleanUp = function(){
 
     // stop all animations
     this.bgAnim.stop();
     // this.msgAnim.stop();
     
     // destroy all layers and the stage
-    backLayer.destroy();
-    platformLayer.destroy();
-    frontLayer.destroy();
-    stage.destroy();
+    this.backLayer.destroy();
+    this.platformLayer.destroy();
+    this.frontLayer.destroy();
+    this.stage.destroy();
 };
