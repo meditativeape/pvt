@@ -1,0 +1,18 @@
+{
+  "name": "PvT",
+  "author": "Beck Chen, Frank Zhang, Cindy Xu",
+  "description": "A HTML5 multiplayer side-scrolling game featuring Pikachu and Team Rocket!",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.4.x",
+    "socket.io": "0.9.x",
+    "node-uuid": "1.4.x"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "subdomain": "enemyunknown",
+  "scripts": {
+    "start": "main.js"
+  }
+}
