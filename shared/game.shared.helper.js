@@ -21,7 +21,14 @@ var CONSTANTS = {
     pokeballDelay: 1000,
 	floorHeight: 70,
 	height: 600,
-	width: 800
+	width: 800,
+	pikachuStartX: 400,
+	pikachuStartY: 500,
+	gravity: 5,
+	pikachuJump: 20,
+	pikachuMove: 1,
+	backgroundScrollSpeed:1,
+	platformScrollSpeed:2
 };
 
 /**

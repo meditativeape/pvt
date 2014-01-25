@@ -18,7 +18,7 @@ var Menu = function(){
 Menu.prototype.play = function(){
 	//Setup lobby client.
 	this.lobby.joinGame();
-	
+	this.game = new GameClient();
 }
 
 var menu = new Menu();
