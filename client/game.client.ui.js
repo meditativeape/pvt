@@ -12,6 +12,9 @@ var GameClientUI = function(/*GameClient*/ client){
     this.backLayer = new Kinetic.Layer();
     this.platformLayer = new Kinetic.Layer();
     this.frontLayer = new Kinetic.Layer();
+    this.stage.add(this.backLayer);
+    this.stage.add(this.platformLayer);
+    this.stage.add(this.frontLayer);
     
     // sprites
     this.background = null;
@@ -24,28 +27,41 @@ var GameClientUI = function(/*GameClient*/ client){
 };
 
 /**
- * Function to load all sprite images.
+ * Function to load all sprite images and draw UI.
  */
-GameClientUI.prototype.loadImage = function(){
+GameClientUI.prototype.initialize = function(){
 
+    var filesLoaded = 0;
+    var me = this;
+    
+    var incrementCounter = function() {
+        filesLoaded++;
+        if (filesLoaded >= 6) {
+            me.draw();
+        }
+    };
+    
     var loadImage = function(url) {
         var img = new Image();
+        img.onload = incrementCounter;
         img.src = url;
         return img;
     };
-    
+     
     this.background = loadImage("..\\sprites\\background.png");
     this.floor = loadImage("..\\sprites\\floor.png");
     this.grassHalf = loadImage("..\\sprites\\grassHalf.png");
     this.grassHalfLeft = loadImage("..\\sprites\\grassHalfLeft.png");
     this.grassHalfMid = loadImage("..\\sprites\\grassHalfMid.png");
     this.grassHalfRight = loadImage("..\\sprites\\grassHalfRight.png");
+    
+    //while (!hasLoaded) {}
 };
 
 /**
- * Initialize game UI.
+ * Draw game UI.
  */
-GameClientUI.prototype.initGameUI = function(){
+GameClientUI.prototype.draw = function(){
 
     // Create two Kinetic image objects for the scrolling background
     var bg1 = new Kinetic.Image({
@@ -55,6 +71,7 @@ GameClientUI.prototype.initGameUI = function(){
         width: this.background.width,
         height: CONSTANTS.height
 	});
+    console.log(this.background.width);
 	var bg2 = new Kinetic.Image({
         x: this.background.width,
         y: 0,
@@ -101,6 +118,7 @@ GameClientUI.prototype.initGameUI = function(){
     this.platformLayer.add(floor2);
     
     // Kinetic animation to scroll the floor and the platform
+    var i = 0;
     this.platformLayerAnim = new Kinetic.Animation(function(frame){
         var timeDiff = frame.timeDiff;
         //assuming 16ms/f is maximum
@@ -114,6 +132,8 @@ GameClientUI.prototype.initGameUI = function(){
                     y: 0});
         floor2.move({x: CONSTANTS.platformScrollSpeed * (timeDiff / 16), 
                     y: 0});
+        if (i++ < 1000)
+            console.log("floor1: " + floor1.getAbsolutePosition().x + ", floor2: " + floor2.getAbsolutePosition().x);
 	}, this.platformLayer);
     this.platformLayerAnim.start();
 
@@ -138,6 +158,7 @@ GameClientUI.prototype.cleanUp = function(){
 
     // stop all animations
     this.bgAnim.stop();
+    this.platformLayerAnim.stop();
     // this.msgAnim.stop();
     
     // destroy all layers and the stage

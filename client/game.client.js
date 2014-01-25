@@ -11,7 +11,6 @@ var GameClient = function() {
 	this.platforms = [];
     console.log("created");
 	this.gameClientUI = new GameClientUI();
-    this.gameClientUI.loadImage();
-    this.gameClientUI.initGameUI();
+    this.gameClientUI.initialize();
 };
 
