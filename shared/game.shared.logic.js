@@ -34,7 +34,7 @@ if('undefined' != typeof(global)) frame_time = 45; //on server we run at 45ms, 2
 }() );
 
 /**
- * Server side we import helper objects and scenarios.
+ * Server side we import helper objects.
  */
 if( 'undefined' !== typeof global ){
     var helper = require("game.shared.helper.js");
@@ -62,7 +62,7 @@ GameLogic.prototype.createPhysicsSimulation = function(){
     this._dte = new Date().getTime();   //The local timer last frame time
 
     // Update game physics every 15ms (about 66 updates per second)
-    this.physicsLoopInterval = setInterval(function(){
+    this.physicsUpateId = setInterval(function(){
         this._pdt = (new Date().getTime() - this._pdte)/1000.0;
         this._pdte = new Date().getTime();
         this.updatePhysics();
@@ -86,5 +86,6 @@ GameLogic.prototype.checkCollision = function(/*Point*/ pikachu, /*Point*/ pokeb
 
 // Clean up to shut down game
 GameLogic.prototype.cleanUp = function() {
-    clearInterval(this.physicsLoopInterval);
+    clearInterval(this.physicsUpateId);
+    window.cancelRequestAnimationFrame(this.networkUpdateId);
 };
