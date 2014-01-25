@@ -66,7 +66,21 @@ GameClientUI.prototype.initGameUI = function(){
 	backLayer.add(bg2);
     
     // Kinetic animation to scroll the background
-    
+    this.bgAnim = new Kinetic.Animation(function(frame){
+        var timeDiff = frame.timeDiff;
+        //assuming 16ms/f is maximum
+        if((bg1.getAbsolutePosition().x + bg1.width()) <= 0){ 
+            bg1.setX(bg2.getAbsolutePosition().x + bg2.width());
+        }
+        if((bg2.getAbsolutePosition().x + bg2.width()) <= 0){
+            bg2.setX(bg2.getAbsolutePosition().x + bg2.width());
+        }
+        bg1.move({x: CONSTANTS.backgroundScrollSpeed * (timeDiff / 16), 
+                  y: 0});
+        bg2.move({x: CONSTANTS.backgroundScrollSpeed * (timeDiff / 16), 
+                  y: 0});
+	}, backLayer);
+    this.bgAnim.start();
 
     // A Kinetic text to show text message at the center of canvas.
     // var centerMsg = new Kinetic.Text({
@@ -81,10 +95,19 @@ GameClientUI.prototype.initGameUI = function(){
     // frontLayer.add(centerMsg);
     
     // A Kinetic animation to change the text message at the center of canvas.
-    //this.msgLayerAnim = new Kinetic.Animation(function(frame) {}, frontLayer);
-    //this.msgLayerAnim.start();
+    //this.msgAnim = new Kinetic.Animation(function(frame) {}, frontLayer);
+    //this.msgAnim.start();
 };
 
 GameClientUI.cleanUp = function(){
+
+    // stop all animations
+    this.bgAnim.stop();
+    // this.msgAnim.stop();
     
+    // destroy all layers and the stage
+    backLayer.destroy();
+    platformLayer.destroy();
+    frontLayer.destroy();
+    stage.destroy();
 };
