@@ -84,6 +84,12 @@ GameLogic.prototype.checkCollision = function(/*Point*/ pikachu, /*Point*/ pokeb
         return false;
 };
 
+GameLogic.prototype.checkFloor = function(/*Point*/ pikachu){
+	if(pikachu.Y+CONSTANTS.pikachuRadius>height-floorHeight){
+		pikachu.Y = height-floorHeight-CONSTANTS.pikachuRadius;
+	}
+}
+
 // Clean up to shut down game
 GameLogic.prototype.cleanUp = function() {
     clearInterval(this.physicsLoopInterval);
