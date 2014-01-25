@@ -24,6 +24,9 @@ var GameClientUI = function(/*GameClient*/ client){
     this.grassHalfLeft = null;
     this.grassHalfMid = null;
     this.grassHalfRight = null;
+    
+    // Kinetic objects
+    this.pikachuToDraw = null;
 };
 
 /**
@@ -71,7 +74,6 @@ GameClientUI.prototype.draw = function(){
         width: this.background.width,
         height: CONSTANTS.height
 	});
-    console.log(this.background.width);
 	var bg2 = new Kinetic.Image({
         x: this.background.width,
         y: 0,
@@ -118,7 +120,6 @@ GameClientUI.prototype.draw = function(){
     this.platformLayer.add(floor2);
     
     // Kinetic animation to scroll the floor and the platform
-    var i = 0;
     this.platformLayerAnim = new Kinetic.Animation(function(frame){
         var timeDiff = frame.timeDiff;
         //assuming 16ms/f is maximum
@@ -132,10 +133,22 @@ GameClientUI.prototype.draw = function(){
                     y: 0});
         floor2.move({x: CONSTANTS.platformScrollSpeed * (timeDiff / 16), 
                     y: 0});
-        if (i++ < 1000)
-            console.log("floor1: " + floor1.getAbsolutePosition().x + ", floor2: " + floor2.getAbsolutePosition().x);
 	}, this.platformLayer);
     this.platformLayerAnim.start();
+    
+    // Create a Pikachu
+    this.pikachuToDraw = new Kinetic.Circle({
+        radius: CONSTANTS.pikachuRadius,
+        fill: 'yellow',
+        x: this.client.pikachu.center.X,
+        y: this.client.pikachu.center.Y
+    });
+    this.frontLayer.add(this.pikachuToDraw);
+    
+    this.frontLayerAnim = new Kinetic.Animation(function(frame){
+        this.pikachuToDraw.x = this.client.pikachu.center.X;
+        this.pikachuToDraw.y = this.client.pikachu.center.Y;
+    }.bind(this), this.frontLayer);
 
     // A Kinetic text to show text message at the center of canvas.
     // var centerMsg = new Kinetic.Text({
@@ -147,13 +160,16 @@ GameClientUI.prototype.draw = function(){
         // fontSize: 60,
         // fontStyle: 'italic'
     // });
-    // frontLayer.add(centerMsg);
+    // this.frontLayer.add(centerMsg);
     
     // A Kinetic animation to change the text message at the center of canvas.
     //this.msgAnim = new Kinetic.Animation(function(frame) {}, frontLayer);
     //this.msgAnim.start();
 };
 
+/**
+ * Clean up all animations and objects.
+ */
 GameClientUI.prototype.cleanUp = function(){
 
     // stop all animations
