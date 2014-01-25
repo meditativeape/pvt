@@ -8,18 +8,23 @@
 		<link href="index.css" media="screen" rel="stylesheet" type="text/css">
         
         <!-- Library code -->
+        <script type="text/javascript" src="./lib/kinetic-v5.0.1.min.js"></script>
         <!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
 		 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
          
           <!-- Load menu code -->
-       	 <script type="text/javascript" src="./menu.js"></script>
+       	 
          <script type="text/javascript" src="./client/lobby.client.js"></script>
+         <script type="text/javascript" src="./menu.js"></script>
          
          <!-- Load game code -->
-        <script type="text/javascript" src="./client/game.client.js"></script>
-         <script type="text/javascript" src="./client/game.client.ui.js"></script>
+        
+         <script type="text/javascript" src="./shared/game.shared.helper.js"></script>
          <script type="text/javascript" src="./shared/game.shared.object.js"></script>
          <script type="text/javascript" src="./shared/game.shared.pikachu.js"></script>
+         <script type="text/javascript" src="./shared/game.shared.logic.js"></script>
+         <script type="text/javascript" src="./client/game.client.js"></script>
+         <script type="text/javascript" src="./client/game.client.ui.js"></script>
         
         
         
