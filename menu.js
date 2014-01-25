@@ -17,7 +17,7 @@ var Menu = function(){
  */
 Menu.prototype.play = function(){
 	var scenarioMenu = document.getElementById('scenario');
-	var scenarioSelection = scenarioMenu.options[scenarioMenu.selectedIndex].value;
+	var scenarioName = scenarioMenu.options[scenarioMenu.selectedIndex].value;
 	//Setup lobby client.
 	this.lobby.joinGame(scenarioName);
 	game.style.visibility="visible";
