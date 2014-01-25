@@ -25,6 +25,7 @@
          <script type="text/javascript" src="./shared/game.shared.logic.js"></script>
          <script type="text/javascript" src="./client/game.client.js"></script>
          <script type="text/javascript" src="./client/game.client.ui.js"></script>
+         <script type="text/javascript" src="./client/game.client.control.js"></script>
         
         
         
@@ -33,13 +34,20 @@
 </head>
 
 <body>
-<!--<div class="center" id="mainMenu">-->
-<table border="0" align="center">
-			<tr>
-				<td><button onclick="menu.play();">Play!</button></td>
-			</tr>
-</table>
-
+<div class="center" id="mainMenu">
+    <table border="0" align="center">
+      <tr>
+          <td>Senario:&nbsp;<select name="scenario" class="option" id="scenario">
+          	<option value="any">Any</option>
+			  <option value="pikachu">Pikachu</option>
+			  <option value="teamRocket">Team Rocket</option>
+			</select></td>
+      </tr>
+      <tr>
+          <td><button onclick="menu.play();">Play!</button></td>
+      </tr>
+    </table>
+</div>
 <div class="center" id="game"></div>
 </body>
 </html>

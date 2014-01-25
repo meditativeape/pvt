@@ -13,5 +13,8 @@ var GameClient = function() {
 	this.gameClientUI = new GameClientUI();
     this.gameClientUI.loadImage();
     this.gameClientUI.initGameUI();
+	this.gameClientControl = new GameClientControl();
+	this.gameClientControl.registerEventListeners();
+	this.type = 0;
 };
 
