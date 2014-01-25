@@ -19,7 +19,6 @@ Menu.prototype.play = function(){
 	var scenario = document.getElementById('scenario');
 	//Setup lobby client.
 	this.lobby.joinGame(scenario);
-	this.game = new GameClient();
 	game.style.visibility="visible";
 }
 

@@ -71,8 +71,8 @@ LobbyClient.prototype.handleMessage = function(message){
 /**
  * Tell server client wishes to join a particular game.
  */
-LobbyClient.prototype.joinGame = function(){
-	//this.game = new GameClient();  
+LobbyClient.prototype.joinGame = function(/*scenario*/){
+	this.game = new GameClient();  
 	this.mainSocket.send('0 join');
 };
 
