@@ -48,19 +48,19 @@ GameClientUI.prototype.loadImage = function(){
 GameClientUI.prototype.initGameUI = function(){
 
     // Create two Kinetic image objects for the scrolling background
-    bg1 = new Kinetic.Image({
+    var bg1 = new Kinetic.Image({
         x: 0,
         y: 0,
         image: this.background,
         width: this.background.width,
-        height: this.background.height
+        height: CONSTANTS.height
 	});
-	bg2 = new Kinetic.Image({
+	var bg2 = new Kinetic.Image({
         x: this.background.width,
         y: 0,
         image: this.background,
         width: this.background.width,
-        height: this.background.height
+        height: CONSTANTS.height
 	});
 	backLayer.add(bg1);
 	backLayer.add(bg2);
@@ -73,7 +73,7 @@ GameClientUI.prototype.initGameUI = function(){
             bg1.setX(bg2.getAbsolutePosition().x + bg2.width());
         }
         if((bg2.getAbsolutePosition().x + bg2.width()) <= 0){
-            bg2.setX(bg2.getAbsolutePosition().x + bg2.width());
+            bg2.setX(bg1.getAbsolutePosition().x + bg1.width());
         }
         bg1.move({x: CONSTANTS.backgroundScrollSpeed * (timeDiff / 16), 
                   y: 0});
@@ -81,6 +81,41 @@ GameClientUI.prototype.initGameUI = function(){
                   y: 0});
 	}, backLayer);
     this.bgAnim.start();
+    
+    // Create two Kinetic image objects for the scrolling floor
+    var floor1 = new Kinetic.Image({
+        x: 0,
+        y: CONSTANTS.height - CONSTANTS.floorHeight,
+        image: this.floor,
+        width: this.floor.width,
+        height: this.floor.height
+    });
+    var floor2 = new Kinetic.Image({
+        x: this.floor.width,
+        y: CONSTANTS.height - CONSTANTS.floorHeight,
+        image: this.floor,
+        width: this.floor.width,
+        height: this.floor.height
+    });
+    platformLayer.add(floor1);
+    platformLayer.add(floor2);
+    
+    // Kinetic animation to scroll the floor and the platform
+    this.platformLayerAnim = new Kinetic.Animation(function(frame){
+        var timeDiff = frame.timeDiff;
+        //assuming 16ms/f is maximum
+        if((floor1.getAbsolutePosition().x + floor1.width()) <= 0){ 
+            floor1.setX(floor2.getAbsolutePosition().x + floor2.width());
+        }
+        if((floor2.getAbsolutePosition().x + floor2.width()) <= 0){
+            floor2.setX(floor1.getAbsolutePosition().x + floor1.width());
+        }
+        floor1.move({x: CONSTANTS.platformScrollSpeed * (timeDiff / 16), 
+                    y: 0});
+        floor2.move({x: CONSTANTS.platformScrollSpeed * (timeDiff / 16), 
+                    y: 0});
+	}, platformLayer);
+    this.platformLayerAnim.start();
 
     // A Kinetic text to show text message at the center of canvas.
     // var centerMsg = new Kinetic.Text({
