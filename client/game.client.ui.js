@@ -1,4 +1,6 @@
-// Game Client UI
+/** 
+ * Game Client UI.
+ */
 
 var GameClientUI = function(/*GameClient*/ client){
     this.client = client;

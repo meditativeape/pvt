@@ -16,6 +16,7 @@ html , body {
 	bottom:0;
 	position: absolute;
 	z-index:100;
+	background: #FF00FF;
 }
 
 
@@ -23,6 +24,11 @@ html , body {
 	visibility: visible;
 }
 
-#container {
+#game {
+	visibility: hidden;
+	background: #FFFFFF;
+}
+
+#waiting {
 	visibility: hidden;
 }

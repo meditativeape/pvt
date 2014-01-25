@@ -2,6 +2,7 @@
 
 var Pikachu = function(/*PhysicalObject*/ object){
 	this.prototype = object;
+	this.midair = false;
 }
 
 
@@ -18,5 +19,8 @@ Pikachu.prototype.normal = function(){
 }
 
 Pikachu.prototype.jump = function(){
-	this.acceleration.Y = -CONSTANTS.pikachuJump;
+	if(this.midair === false){
+		this.acceleration.Y = -CONSTANTS.pikachuJump;
+		this.midair = true;
+	}
 }

@@ -16,9 +16,9 @@ var Menu = function(){
  * Code to execute when player enters game lobby.
  */
 Menu.prototype.play = function(){
+	var scenarioName = document.getElementById('scenario');
 	//Setup lobby client.
-	this.lobby.joinGame();
-	this.game = new GameClient();
+	this.lobby.joinGame(scenarioName);
 	game.style.visibility="visible";
 }
 

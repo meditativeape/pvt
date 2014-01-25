@@ -25,5 +25,10 @@ GameServer.prototype.setTRPlayer = function(/*client*/ player){
 	trPlayer = player;
 }
 
+GameServer.prototype.leaveGame = function(/*client*/ player){
+	//TODO
+}
+
+
 //Export GameServer
 module.exports = GameServer;
