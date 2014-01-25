@@ -64,16 +64,20 @@ LobbyClient.prototype.onConnected = function(message){
 	//TODO
 };
 
+/**
+ * Handle message from the server
+ */
 LobbyClient.prototype.handleMessage = function(message){
+	//TODO
 }
 
 
 /**
  * Tell server client wishes to join a particular game.
  */
-LobbyClient.prototype.joinGame = function(/*scenario*/){
-	this.game = new GameClient();  
-	this.mainSocket.send('0 join');
+LobbyClient.prototype.joinGame = function(/*scenarioName*/ scenarioName){
+	this.game = new GameClient(0);  
+	this.mainSocket.send('0 join ' + scenarioName);
 };
 
 
