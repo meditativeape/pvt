@@ -1,0 +1,28 @@
+html , body {
+	background: #000000; 
+	color: #fff; 
+	font-family: Helvetica;
+	margin: 0; 
+	padding: 0;
+}
+
+.center{
+	width : 800px;
+	height : 600px;
+	margin: auto;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	position: absolute;
+	z-index:100;
+}
+
+
+#mainMenu {
+	visibility: visible;
+}
+
+#container {
+	visibility: hidden;
+}

@@ -5,7 +5,9 @@
  */
 
 //Import express server
+
 var express = require('express');
+var http = require('http')
 //Import lobby setup.
 var LobbyServer  = require('./server/lobby.server.js');
 
@@ -17,9 +19,7 @@ var Setup = function(){
 	// Set the gameport for express server.
 	var gameport = process.env.PORT || 4004;	
 	//Create the express server.
-	var expressServer = express.createServer();
-	//Tell the server to listen for incoming connections
-    expressServer.listen( gameport );
+	var expressServer = express();
     //Something so we know that it succeeded.
     console.log(':: Express :: Listening on port ' + gameport );
 	//All requests are redirected to the homepage.
@@ -37,7 +37,10 @@ var Setup = function(){
     }); 
 	//Set up lobby server and socket io message handler.
 	var lobbyServer = new LobbyServer();
-	lobbyServer.messageHandler(expressServer);
+	httpServer = http.createServer(expressServer)
+		//Tell the server to listen for incoming connections
+    httpServer.listen( gameport );
+	lobbyServer.messageHandler(httpServer);
 };
 
 //Start express server and lobby setup.
