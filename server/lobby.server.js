@@ -4,7 +4,7 @@
  */
 
 // Import GameServer
-//var GameServer = require('./game.server.js');
+var GameServer = require('./game.server.js');
 
 // Import socket io and UUID
 var io = require('socket.io');
@@ -115,11 +115,12 @@ LobbyServer.prototype.handleMessage = function(client,message){
 LobbyServer.prototype.findGame = function(player, type) {
 	//If open game available join game
 	if(this.openGames>0){
-		for(var openGame in this.games){
-			this.games.splice(openGame, openGame+1);
-            this.game_count--;
+		for(var openGameID in this.games){
+			var openGame = this.games[openGameID]
+			this.games.splice(openGameID, openGameID+1);
+            this.openGames--;
 			
-			openGame.add(player,type); 
+			openGame.setTRPlayer(player);
 			
 			// Tell the player that he joins the game
 			player.send('0 join 1 ' + player.userid);
@@ -143,13 +144,13 @@ LobbyServer.prototype.createGame = function(player, type) {
 	// Create a new game instance
 	var theGame = new GameServer();
 	
-	openGame.add(player,type); 
+	theGame.setPikachuPlayer(player); 
 	
 	// Store it in the list of game
 	this.games.push(theGame);
 
 	// Keep track of #games
-	this.game_count++;
+	this.openGames++;
 
 	// Tell the player that he joins the game
 	player.send('0 join 1 ' + player.userid);

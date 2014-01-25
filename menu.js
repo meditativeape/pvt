@@ -16,7 +16,6 @@ var Menu = function(){
  * Code to execute when player enters game lobby.
  */
 Menu.prototype.play = function(){
-	alert("join");
 	//Setup lobby client.
 	this.lobby.joinGame();
 	
