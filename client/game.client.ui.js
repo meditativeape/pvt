@@ -101,6 +101,18 @@ GameClientUI.prototype.draw = function(){
 	}, this.backLayer);
     this.bgAnim.start();
     
+    
+    var rectPlat = new Kinetic.Rect({
+        x: this.client.platforms[0].center.X-.5*this.client.platforms[0].width,
+        y: this.client.platforms[0].center.Y-.5*this.client.platforms[0].height,
+        width: this.client.platforms[0].width,
+        height: this.client.platforms[0].height,
+        fill: 'green',
+        stroke: 'black',
+        strokeWidth: 4});
+    this.platformLayer.add(rectPlat);
+    
+    
     // Create two Kinetic image objects for the scrolling floor
     var floor1 = new Kinetic.Image({
         x: 0,
@@ -137,6 +149,7 @@ GameClientUI.prototype.draw = function(){
     this.platformLayerAnim.start();
     
     // Create a Pikachu
+    
     this.pikachuToDraw = new Kinetic.Circle({
         radius: CONSTANTS.pikachuRadius,
         fill: 'yellow',

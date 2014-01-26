@@ -1,7 +1,7 @@
 //define/init the platform class
 var Platform = function(p, v, a ){
 	this.midair = false;
-	this.height = 35;
+	this.height = 40;
 	this.width = 70;
 	PhysicalObject.call(this,p,v,a);
 }
