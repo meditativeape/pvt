@@ -13,7 +13,7 @@ PhysicalObject.prototype.update = function(){
 }
 
 PhysicalObject.prototype.gravity = function(){
-	this.accelerationY = this.accelerationY + CONSTANTS.gravity
+	this.accelerationY = this.accelerationY + CONSTANTS.gravity;
 }
 
 
