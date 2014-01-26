@@ -15,7 +15,7 @@ function Point(/*float*/ x, /*float*/ y) {
  * Constants.
  */
 var CONSTANTS = {
-    pikachuRadius: 50,
+    pikachuRadius: 40,
     pokeballRadius: 25,
     pokeballCD: 500,
     pokeballDelay: 1000,
@@ -24,9 +24,9 @@ var CONSTANTS = {
 	width: 800,
 	pikachuStartX: 400,
 	pikachuStartY: 400,
-	gravity: 5,
-	pikachuJump: 20,
-	pikachuMove: 10,
+	gravity: 0.1,
+	pikachuJump: 18,
+	pikachuMove: 5,
 	backgroundScrollSpeed: -0.5,
 	platformScrollSpeed: -2,
 	pikachuBoundLeft:100,
