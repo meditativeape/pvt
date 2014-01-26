@@ -104,7 +104,7 @@ GameClientUI.prototype.draw = function(){
     this.bgAnim.start();
     
     
-    var rectPlat = new Kinetic.Rect({
+    this.rectPlat = new Kinetic.Rect({
         x: this.gameState.platforms[0].center.X-.5*this.gameState.platforms[0].width,
         y: this.gameState.platforms[0].center.Y-.5*this.gameState.platforms[0].height,
         width: this.gameState.platforms[0].width,
@@ -112,12 +112,16 @@ GameClientUI.prototype.draw = function(){
         fill: 'green',
         stroke: 'black',
         strokeWidth: 4});
-    this.platformLayer.add(rectPlat);
+    this.platformLayer.add(this.rectPlat);
     
+    
+
     this.rectAnim = new Kinetic.Animation(function(frame){
+    	
     	var timeDiff = frame.timeDiff;
-    	rectPlat.move({x: me.gameState.platforms[0].velocity.X* (timeDiff / 16), 
-                  	   y: 0});
+    	me.rectPlat.setAbsolutePosition({x:me.gameState.platforms[0].center.X - 0.5*me.gameState.platforms[0].width,
+        y:me.gameState.platforms[0].center.Y - 0.5*me.gameState.platforms[0].height});
+
 	}, this.platformLayer);
 	this.rectAnim.start();
     
@@ -164,7 +168,10 @@ GameClientUI.prototype.draw = function(){
         y: this.gameState.pikachu.center.Y - 0.5*this.pikachus[0].height,
         width: this.pikachus[0].width,
         height: this.pikachus[0].height,
-    });
+    });    	
+    
+    
+    
     this.pikachuToDraw.counter = 0;
     this.frontLayer.add(this.pikachuToDraw);
 	
