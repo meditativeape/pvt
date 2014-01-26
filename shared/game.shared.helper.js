@@ -19,7 +19,7 @@ var CONSTANTS = {
     pikachuRadius: 40,
     pokeballRadius: 25,
     pokeballCD: 50,
-    pokeballDelay: 50,
+    pokeballDelay: 100,
 	floorHeight: 70,
 	height: 600,
 	width: 800,
