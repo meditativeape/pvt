@@ -33,7 +33,9 @@ var CONSTANTS = {
 	pikachuBoundLeft:100,
 	pikachuBoundRight:700,
 	pikachuJumpCooldown: 24,
-	pikachuRotation: -15
+	pikachuRotation: -15,
+	platformArrayLenght: 15,
+	platformUnitWidth: 70
 };
 
 /**

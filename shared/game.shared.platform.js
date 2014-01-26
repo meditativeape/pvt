@@ -24,9 +24,11 @@ Platform.prototype.constructor = Platform;
 Platform.prototype.move = function(){
 	this.velocity.X = CONSTANTS.platformSpeed;
 	this.center.X = this.center.X + this.velocity.X;
+	/*
 	if(this.center.X+(this.width)*0.5<0){
 		this.center.X = CONSTANTS.width+(this.width)*0.5;
 	}
+	*/
 }
 
 Platform.prototype.checkStatus = function(/*Pikachu*/ pikachu){

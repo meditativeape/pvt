@@ -17,6 +17,7 @@ var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.pikachu = new Pikachu(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
     this.pokeballs = [];
 	this.platforms = [];
+	this.platforms2 = [];
 	//this.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
     this.end = false;
     this.winner = null;
@@ -94,21 +95,25 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 			pikachu.midair = false;
 		}
 	}
-	else if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
+
+}
+GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
+	if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
 	&&(pikachu.center.X-CONSTANTS.pikachuRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
 	&&(pikachu.center.X+CONSTANTS.pikachuRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
 	&&(pikachu.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
 		pikachu.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
 		pikachu.velocity.Y = 0;
-		if(pikachu.midair === true){
+	if(pikachu.midair === true){
 			pikachu.cooldown = CONSTANTS.pikachuJumpCooldown;
 			pikachu.midair = false;
-		}
+	}
 				
 
 	}
-	this.gameInstance.gameState.platforms[0].checkStatus(pikachu);
+	this.gameInstance.gameState.platforms[index].checkStatus(pikachu);
+
 }
 
 // Clean up to shut down game
