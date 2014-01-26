@@ -168,6 +168,8 @@ GameClientUI.prototype.draw = function(){
     this.pikachuToDraw.counter = 0;
     this.frontLayer.add(this.pikachuToDraw);
 	
+
+	
     this.frontLayerAnim = new Kinetic.Animation(function(frame){
 		
         if (!me.gameState.pikachu.midair) {
