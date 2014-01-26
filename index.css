@@ -1,7 +1,9 @@
 html , body {
-	background: #79C8F9; 
-	color: #fff; 
-	font-family: Helvetica;
+	background-image:url('./sprites/wallpaper.jpg');
+	background-size: cover;
+	color: #000; 
+	font-family: Lucida Console;
+	font-size:30px;
 	margin: 0; 
 	padding: 0;
 }
@@ -16,9 +18,20 @@ html , body {
 	bottom:0;
 	position: absolute;
 	z-index:100;
-	background: #FF00FF;
+	text-align:center;
 }
 
+#play{
+	color: #000; 
+	font-family: Lucida Console;
+	font-size:40px;
+}
+
+#scenario{
+	color: #000; 
+	font-family: Lucida Console;
+	font-size:30px;
+}
 
 #mainMenu {
 	visibility: visible;
@@ -31,7 +44,7 @@ html , body {
 
 #waiting {
 	visibility: hidden;
-	background: #F0000F;
+	background: #FFFFFF;
 }
 
 #score {

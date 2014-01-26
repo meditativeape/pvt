@@ -38,19 +38,47 @@
 <body>
 <div class="center" id="mainMenu">
     <table border="0" align="center">
+    	<tr>
+    	<img src="sprites/title.png" width="632" height="314" alt="Pikachu vs. Team Rocket" />
+   		</tr>
       <tr>
-          <td>Senario:&nbsp;<select name="scenario" class="option" id="scenario">
+      <tr>
+		    	<td align="center">&nbsp;</td>
+	      	</tr>
+          <td>Side:&nbsp;<select name="scenario" class="option" id="scenario">
           	<option value="any">Any</option>
 			  <option value="pikachu">Pikachu</option>
 			  <option value="tr">Team Rocket</option>
 			</select></td>
       </tr>
       <tr>
-          <td><button onclick="menu.join();">Play!</button></td>
+		    	<td align="center">&nbsp;</td>
+	      	</tr>
+
+      <tr>
+          <td><button id="play" onclick="menu.join();">Play!</button></td>
       </tr>
     </table>
 </div>
-<div class="center" id="waiting"></div>
+<div class="center" id="waiting">
+    <table border="0" align="center">
+    <tr>
+		    	<td height="200" align="center">&nbsp;</td>
+	      	</tr>
+            
+    	<tr>
+    		<td> Waiting for other players . . .</td>
+   		</tr>
+        <tr>
+		    	<td align="center">&nbsp;</td>
+	      	</tr>
+      <tr>
+          <td><img src="sprites/loading.gif" width="128" height="160" alt="loading" />
+          </td>
+      </tr>
+
+    </table>
+    </div>
 <div class="center" id="game"></div>
 <div class="center" id="score"></div>
 </body>
