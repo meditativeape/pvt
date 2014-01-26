@@ -73,10 +73,11 @@ LobbyClient.prototype.handleMessage = function(message){
 	if(keywords[0].valueOf()===new String("lobby").valueOf()){
 		if(keywords[1].valueOf()===new String("start").valueOf()){
 			if(keywords[2].valueOf()===new String("pikachu").valueOf()){
-				
-				this.game = new GameClient(0,this.mainSocket);  
+				this.game = new GameClient(0, this.mainSocket);
+                this.game.start();
 			}else{
-				this.game = new GameClient(1,this.mainSocket);
+				this.game = new GameClient(1, this.mainSocket);
+                this.game.start();
 			}
 		}
 	};
