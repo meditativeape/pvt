@@ -46,7 +46,7 @@ GameClient.prototype.physicsUpdate = function(){
 
 	
     this.gameState.pikachu.update();
-
+	this.gameState.pokeballUpdate();
 	
 	if(this.gameState.pikachu.cooldown>0){
 		this.gameState.pikachu.cooldown--;
@@ -62,8 +62,12 @@ GameClient.prototype.physicsUpdate = function(){
 		this.gameState.checkPlatform(this.gameState.pikachu,i);
 		if(this.gameState.platforms[i].center.X+.5*this.gameState.platforms[i].width <0){
 		this.gameState.platforms.splice(0, 1);
-		this.gameState.pokeballUpdate(i);
+		for(var j =0; j < this.gameState.pokeballs.length;j++){
+			this.checkFloorBall(pokeballs[j],i);
+		}
+		
 	}
+			
 
 	}
 	

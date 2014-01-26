@@ -63,7 +63,7 @@ GameState.prototype.addPokeball = function(/*point*/ center){
 }
 
 // Update pokeball position
-GameState.prototype.pokeballUpdate = function(index){
+GameState.prototype.pokeballUpdate = function(){
     for(var pokeballID in this.pokeballs){
 		var pokeball = this.pokeballs[pokeballID];
 		pokeball.update();
@@ -74,8 +74,6 @@ GameState.prototype.pokeballUpdate = function(index){
 		else{
 			pokeball.gravity();
 		}
-
-		this.checkFloorBall(pokeball,index);
 
 		
 	}
