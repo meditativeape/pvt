@@ -2,7 +2,7 @@
 
 // Pokeball inherits Physical
 var Pokeball = function(/*Point*/ center){
-	this.midair = false;
+	this.midair = true;
 	this.cooldown = CONSTANTS.pokeballCD;
 	PhysicalObject.call(this,center,new Point(0,0),0);
 }
