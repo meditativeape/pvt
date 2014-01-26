@@ -27,8 +27,8 @@ var GameClientUI = function(/*GameState*/ gameState){
     this.pikachus = [null, null, null, null];
     
     // Kinetic objects
-    this.pikachuToDraw = null;
-    this.pokeballsToDraw = null;
+    this.pikachuToDraw = [];
+    this.pokeballsToDraw = [];
 };
 
 /**
