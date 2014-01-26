@@ -83,12 +83,7 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 		pikachu.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
 		pikachu.velocity.Y = 0;
-		if(pikachu.midair === true){
-			pikachu.cooldown = CONSTANTS.pikachuJumpCooldown;
-			pikachu.midair = false;
-		}
-		
-		
+		pikachu.midair = false;
 	}
 	else if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
 	&&(pikachu.center.X-CONSTANTS.pikachuRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
@@ -97,10 +92,7 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 		pikachu.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
 		pikachu.velocity.Y = 0;
-		if(pikachu.midair === true){
-			pikachu.cooldown = CONSTANTS.pikachuJumpCooldown;
-			pikachu.midair = false;
-		}
+		pikachu.midair = false;
 	}
 	this.gameInstance.gameState.platforms[0].checkStatus(pikachu);
 }

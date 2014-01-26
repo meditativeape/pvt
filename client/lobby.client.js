@@ -68,6 +68,7 @@ LobbyClient.prototype.onConnected = function(message){
  * Handle message from the server
  */
 LobbyClient.prototype.handleMessage = function(message){
+	console.log("game created");
 	var keywords = message.split(" ");
 	if(keywords[0].valueOf()===new String("lobby").valueOf()){
 		if(keywords[1].valueOf()===new String("start").valueOf()){
