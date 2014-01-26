@@ -39,10 +39,12 @@ GameServer.prototype.createTimer = function(){
 
 GameServer.prototype.setPikachuPlayer = function(/*client*/ player){
 	this.pikachuPlayer = player;
+	this.pikachuPlayer.inputs = [];
 };
 
 GameServer.prototype.setTRPlayer = function(/*client*/ player){
 	this.trPlayer = player;
+	this.trPlayer.inputs = [];
 };
 
 GameServer.prototype.leaveGame = function(/*client*/ player){
@@ -72,8 +74,7 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
 GameServer.prototype.physicsUpdate = function(){
     this.processInput();
     
-    this.pikachuPlayer.inputs = [];
-    this.trPlayer.inputs = [];
+    
 };
 
 /**
