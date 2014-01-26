@@ -75,6 +75,14 @@ GameClient.prototype.handleMessage = function(/*string*/message){
             this.gameState.platforms.push(new Platform(new Point(CONSTANTS.width+(1+i)*CONSTANTS.platformUnitWidth,CONSTANTS.pikachuStartY-30), new Point(CONSTANTS.platformSpeed,0), 0));
         }
         break;
+	case "end":
+		var winner = keywords[2];
+		console.log("game end!");
+		if (winner === "pikachu")
+			menu.pikachuwin();
+		else 
+			menu.trwin();
+		this.cleanUp();
     }
 };
 
@@ -121,4 +129,5 @@ GameClient.prototype.handleServerUpdate = function(/*object*/ update){
 
 GameClient.prototype.cleanUp = function(){
     clearInterval(this.physicsId);
+    this.gameState.cleanUp();
 };
