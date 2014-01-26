@@ -186,30 +186,32 @@ GameClientUI.prototype.draw = function(){
         }
         me.pikachuToDraw.setAbsolutePosition({x:me.gameState.pikachu.center.X - 0.5*me.pikachus[0].width,
                                               y:me.gameState.pikachu.center.Y - 0.5*me.pikachus[0].height});                               
-        while (me.gameState.pokeballs.length > me.pokeballsToDraw.length) {
+        
+		while (me.gameState.pokeballs.length > me.pokeballsToDraw.length) {
             me.pokeballsToDraw.push(new Kinetic.Image({
                 image: this.pokeball,
                 x: 0,
                 y: 0,
-                width: this.pokeball.width,
-                height: this.pokeball.height
+                width: CONSTANTS.pokeballRadius*2,
+                height: CONSTANTS.pokeballRadius*2,
+				offset: {x:25, y:25}
             }));
+			me.frontLayer.add(me.pokeballsToDraw[me.pokeballsToDraw.length-1])
         }
-		
         while (me.gameState.pokeballs.length < me.pokeballsToDraw.length) {
             me.pokeballsToDraw[0].destory;
             me.pokeballsToDraw.splice(0, 1);
         }
         for (var i = 0; i < me.pokeballsToDraw.length; i++) {
             me.pokeballsToDraw[i].setAbsolutePosition({
-                x: me.gameState.pokeballs[i].center.X - 0.5 * me.pokeball.width,
-                y: me.gameState.pokeballs[i].center.Y - 0.5 * me.pokeball.height
+                x: me.gameState.pokeballs[i].center.X+25 - 0.5 * me.pokeball.width,
+                y: me.gameState.pokeballs[i].center.Y+25 - 0.5 * me.pokeball.height
             });
             if (me.gameState.pokeballs[i].cooldown > 0) {
-                me.pokeballsToDraw[i].setImage(this.pokeballGray);
-                me.pokeballsToDraw[i].rotation(CONSTANT.pokeballRotation);
+                me.pokeballsToDraw[i].setImage(me.pokeballGray);
+                me.pokeballsToDraw[i].rotate(5);
             } else {
-                me.pokeballsToDraw[i].setImage(this.pokeball);
+                me.pokeballsToDraw[i].setImage(me.pokeball);
                 me.pokeballsToDraw[i].rotation(0);
             }
         }

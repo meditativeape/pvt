@@ -4,7 +4,7 @@
 var Pokeball = function(/*Point*/ center){
 	this.midair = false;
 	this.cooldown = CONSTANTS.pokeballCD;
-	PhysicalObject.call(this,center,new Point(0,0),a0);
+	PhysicalObject.call(this,center,new Point(0,0),0);
 }
 
 // Pikachu inherits from PhysicalObject

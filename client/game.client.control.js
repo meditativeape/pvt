@@ -15,6 +15,7 @@ var GameClientControl = function(/*GameClient*/ gc){
  */
 GameClientControl.prototype.registerEventListeners = function(){
     var gc = this.gc;
+	
 	//If pikachu client
 	if(gc.type === 0){
 		var keydown = function(event){
@@ -42,6 +43,20 @@ GameClientControl.prototype.registerEventListeners = function(){
 	}
 	//If team rocket client
 	else{
-		
+		var onclick = function(event){
+			if(gc.gameState.pokeballDelay === 0){	
+				var x = event.pageX - this.offsetLeft 
+				var y = event.pageY - this.offsetTop
+				console.log(new Point(x,y));
+				gc.gameState.addPokeball(new Point(x,y));
+				gc.mainSocket.send('game input ' + x + ' ' + y);
+				gc.gameState.pokeballDelay = gc.gameState.currentDelay;
+				if(gc.gameState.currentDelay>1){
+					gc.gameState.currentDelay--;
+				};
+			}
+		};
+		var game = document.getElementById("game");
+		game.addEventListener("click", onclick);
 	}
 }
