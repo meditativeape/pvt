@@ -9,8 +9,10 @@
         
         <!-- Library code -->
         <script type="text/javascript" src="./lib/kinetic-v5.0.1.min.js"></script>
+        <script type="text/javascript" src="./lib/soundmanager2.js"></script>
         <!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
 		 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+         
          
           <!-- Load menu code -->
        	 
@@ -80,6 +82,61 @@
     </table>
     </div>
 <div class="center" id="game"></div>
-<div class="center" id="score"></div>
+<div class="center" id="trwin">
+    <table border="0" align="center">
+    <tr>
+		    	<td height="50" align="center">&nbsp;</td>
+	      	</tr>
+            
+    	<tr>
+    		<td> Pikachu was caught! </td>
+   		</tr>
+        <tr>
+		    	<td align="center">&nbsp;</td>
+	      	</tr>
+      <tr>
+          <td><img src="sprites/trwin.png" width="348" height="321" alt="Team Rocket Won" />
+          </td>
+      </tr>
+      <tr>
+          <td>&nbsp;
+          </td>
+      </tr>
+            <tr>
+          <td><button id="back" onclick="menu.back();">Play Again</button>
+          </td>
+      </tr>
+
+    </table>
+</div>
+<div class="center" id="pikachuwin">        <table border="0" align="center">
+    <tr>
+		    	<td height="50" align="center">&nbsp;</td>
+	      	</tr>
+            
+    	<tr>
+    		<td> Team Rocket is blasting off again! </td>
+   		</tr>
+        <tr>
+		    	<td align="center">&nbsp;</td>
+	      	</tr>
+                    <tr>
+		    	<td align="center">&nbsp;</td>
+	      	</tr>
+
+      <tr>
+          <td><img src="sprites/pikachuwin.png" width="320" height="240" alt="Pikachu Won" />
+          </td>
+      </tr>
+      <tr>
+          <td>&nbsp;
+          </td>
+      </tr>
+            <tr>
+          <td><button id="back" onclick="menu.back();">Play Again</button>
+          </td>
+      </tr>
+
+    </table></div>
 </body>
 </html>
