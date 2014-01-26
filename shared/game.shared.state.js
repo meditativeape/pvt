@@ -144,19 +144,19 @@ GameState.prototype.checkFloorPokeball = function(/*pokeball*/ pokeball){
 			pokeball.velocity.X = CONSTANTS.platformScrollSpeed;
 		}
 	}
-	else if((pokeball.center.Y+CONSTANTS.pokeballRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
-	&&(pokeball.center.X-CONSTANTS.pokeballRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
-	&&(pokeball.center.X+CONSTANTS.pokeballRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
-	&&(pokeball.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
-		pokeball.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pokeballRadius;
-		pokeball.accelerationY = 0;
-		pokeball.velocity.Y = 0;
-		if(pokeball.midair === true){
-			pokeball.midair = false;
-			pokeball.velocity.X = CONSTANTS.platformScrollSpeed;
-		}
-	}
-	this.gameInstance.gameState.platforms[0].checkStatusPokeball(pokeball);
+	//else if((pokeball.center.Y+CONSTANTS.pokeballRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
+//	&&(pokeball.center.X-CONSTANTS.pokeballRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
+//	&&(pokeball.center.X+CONSTANTS.pokeballRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
+//	&&(pokeball.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
+//		pokeball.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pokeballRadius;
+//		pokeball.accelerationY = 0;
+//		pokeball.velocity.Y = 0;
+//		if(pokeball.midair === true){
+//			pokeball.midair = false;
+//			pokeball.velocity.X = CONSTANTS.platformScrollSpeed;
+//		}
+//	}
+	//this.gameInstance.gameState.platforms[0].checkStatusPokeball(pokeball);
 }
 
 
