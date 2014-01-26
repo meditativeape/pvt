@@ -5,13 +5,14 @@ if( 'undefined' !== typeof global ){
     var helper = require("../shared/game.shared.helper.js");
 	var Point = helper.Point;
 	var CONSTANTS = helper.CONSTANTS;
+    var GameState = require("../shared/game.shared.state.js");
 };
 
 // Import UUID
 var UUID = require('node-uuid');
 
-var GameServer = function(/*GameState*/ gameState){
-    this.gameState = gameState;
+var GameServer = function(){
+    this.gameState = new GameState(this);
 	this.pikachuPlayer = null;
 	this.trPlayer = null;
     this.started = false;
@@ -77,8 +78,6 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
  */
 GameServer.prototype.physicsUpdate = function(){
     this.processInput();
-    
-    
 };
 
 /**

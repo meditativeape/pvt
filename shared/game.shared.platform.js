@@ -1,3 +1,10 @@
+/**
+ * Server side we import shared objects.
+ */
+if( 'undefined' !== typeof global ){
+    var PhysicalObject = require("./game.shared.object.js");
+}
+
 //define/init the platform class
 var Platform = function(p, v, a ){
 	this.midair = false;
@@ -41,5 +48,5 @@ Platform.prototype.checkStatus = function(/*PhysicalObject*/ pikachu){
  * Server side we export Platform.
  */
 if( 'undefined' !== typeof global ) {
-    exports = Platform;
+    module.exports = Platform;
 }
