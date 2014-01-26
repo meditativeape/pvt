@@ -185,8 +185,7 @@ GameClientUI.prototype.draw = function(){
 			me.pikachuToDraw.rotation(CONSTANTS.pikachuRotation);
         }
         me.pikachuToDraw.setAbsolutePosition({x:me.gameState.pikachu.center.X - 0.5*me.pikachus[0].width,
-                                              y:me.gameState.pikachu.center.Y - 0.5*me.pikachus[0].height});
-                                              
+                                              y:me.gameState.pikachu.center.Y - 0.5*me.pikachus[0].height});                               
         while (me.gameState.pokeballs.length > me.pokeballsToDraw.length) {
             me.pokeballsToDraw.push(new Kinetic.Image({
                 image: this.pokeball,
@@ -196,6 +195,7 @@ GameClientUI.prototype.draw = function(){
                 height: this.pokeball.height
             }));
         }
+		
         while (me.gameState.pokeballs.length < me.pokeballsToDraw.length) {
             me.pokeballsToDraw[0].destory;
             me.pokeballsToDraw.splice(0, 1);
