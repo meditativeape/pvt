@@ -20,25 +20,23 @@ var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY-30),new Point(-5,0),0);
     this.end = false;
     this.winner = null;
-    // this.scrollMeter = 0.0;
-    this.startTime = 0.0;
+    this.scrollMeter = 0.0;
+    this.prevTime = 0.0;
 	this.pokeballDelay = CONSTANTS.pokeballDelay;
 	this.currentDelay = CONSTANTS.pokeballDelay;
 };
 
 GameState.prototype.start = function(){
-    this.startTime = new Date().getTime();
-    // this.createTimer();
+    this.prevTime = new Date().getTime();
+    this.startScrollMeter();
 };
 
-// GameState.prototype.createTimer = function(){
-    // this.timerId = setInterval(function(){
-        // var dt = new Date().getTime() - this.tOld;
-        // this.scrollMeter += -dt/16 * CONSTANTS.platformScrollSpeed;
-        // this.tOld = new Date().getTime();
-        // console.log(this.scrollMeter);
-    // }.bind(this), 4);
-// };
+GameState.prototype.startScrollMeter = function(){
+    this.meterId = setInterval(function(){
+        var tDiff = new Date.getTime() - this.prevTime;
+        this.scrollMeter += tDiff / 16 * CONSTANTS.platformScrollSpeed;
+    }.bind(this), 4);
+};
 
 GameState.prototype.pikachuBrake = function(){
     this.pikachu.brake();
@@ -143,8 +141,7 @@ GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball){
 
 // Clean up to shut down game
 GameState.prototype.cleanUp = function() {
-    clearInterval(this.timerId);
-    window.cancelRequestAnimationFrame(this.networkUpdateId);
+    clearInterval(this.meterId);
 };
 
 /**

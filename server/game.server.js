@@ -19,24 +19,24 @@ var GameServer = function(){
 	// Store game's uuid
 	this.id = UUID();
     
-    this.serverTime = 0;               // Server time
-    this.localTime = 0.016;            //The local timer
-    this.dt = new Date().getTime();    //The local timer delta
-    this.dte = new Date().getTime();   //The local timer last frame time
+    // this.serverTime = 0;               // Server time
+    // this.localTime = 0.016;            //The local timer
+    // this.dt = new Date().getTime();    //The local timer delta
+    // this.dte = new Date().getTime();   //The local timer last frame time
     
     this.lastState = {};
     
     // Create a fast-paced timer for measuing time easier
-    this.createTimer();
+    // this.createTimer();
 };
 
-GameServer.prototype.createTimer = function(){
-    this.timerId = setInterval(function(){
-        this.dt = new Date().getTime() - this.dte;
-        this.dte = new Date().getTime();
-        this.localTime += this.dt/1000.0;
-    }.bind(this), 4);
-}
+// GameServer.prototype.createTimer = function(){
+    // this.timerId = setInterval(function(){
+        // this.dt = new Date().getTime() - this.dte;
+        // this.dte = new Date().getTime();
+        // this.localTime += this.dt/1000.0;
+    // }.bind(this), 4);
+// }
 
 GameServer.prototype.setPikachuPlayer = function(/*client*/ player){
 	this.pikachuPlayer = player;
@@ -51,7 +51,7 @@ GameServer.prototype.setTRPlayer = function(/*client*/ player){
 GameServer.prototype.start = function(){
 	this.started = true;
     this.physicsId = setInterval(this.physicsUpdate.bind(this), 15); // update physics every 15ms
-    this.networkId = setInterval(this.networkUpdate.bind(this), 45); // update clients every 15ms
+    this.networkId = setInterval(this.networkUpdate.bind(this), 15); // update clients every 15ms
 }
 
 GameServer.prototype.cleanUp = function(){
@@ -135,9 +135,10 @@ GameServer.prototype.networkUpdate = function(){
     // make a snapshot of current state
     this.lastState = {
         pikachuPos: this.gameState.pikachu.center,
-        pikachuLastInputSeq: this.pikachuPlayer.lastInputSeq,
-        trLastInputSeq: this.trPlayer.lastInputSeq,
-        time: this.serverTime
+        // pikachuLastInputSeq: this.pikachuPlayer.lastInputSeq,
+        // trLastInputSeq: this.trPlayer.lastInputSeq,
+        // time: this.serverTime
+        scrollMeter: this.gameState.scrollMeter
     };
     
     // send the snapshot to both states
