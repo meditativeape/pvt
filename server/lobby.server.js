@@ -172,8 +172,6 @@ LobbyServer.prototype.findGame = function(player, type) {
 			this.createGame(player,1);
 		}
 	}
-	
-	
 };    
 
 // Define some required functions
@@ -210,12 +208,6 @@ LobbyServer.prototype.createGame = function(player, type) {
 	  this.log(':: server :: Player ' + player.userid.substring(0,8) + ' created a game with id '
 	  + player.game.id.substring(0,8));
 	}
-	
-	
-	
-
-	
-
 }; 
 
 //Export Lobby

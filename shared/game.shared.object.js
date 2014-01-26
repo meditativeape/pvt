@@ -1,4 +1,10 @@
-// JavaScript Document
+/**
+ * Server side we import shared objects.
+ */
+if( 'undefined' !== typeof global ){
+    var helper = require("./game.shared.helper.js");
+	var CONSTANTS = helper.CONSTANTS;
+}
 
 var PhysicalObject = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.center = center;
@@ -21,5 +27,5 @@ PhysicalObject.prototype.gravity = function(){
  * Server side we export PhysicalObject
  */
 if( 'undefined' !== typeof global ) {
-    exports = PhysicalObject;
+    module.exports = PhysicalObject;
 }

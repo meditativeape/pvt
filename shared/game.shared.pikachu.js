@@ -1,6 +1,13 @@
-// JavaScript Document
-// Pikachu inherits Physical
+/**
+ * Server side we import shared objects.
+ */
+if( 'undefined' !== typeof global ){
+    var PhysicalObject = require("./game.shared.object.js");
+    var helper = require("./game.shared.helper.js");
+    var CONSTANTS = helper.CONSTANTS;
+}
 
+// Pikachu inherits Physical
 var Pikachu = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.midair = false;
 	this.cooldown = 0;
@@ -66,5 +73,5 @@ Pikachu.prototype.jump = function(){
  * Server side we export Pikachu :)
  */
 if( 'undefined' !== typeof global ) {
-    exports = Pikachu;
+    module.exports = Pikachu;
 }
