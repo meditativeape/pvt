@@ -18,16 +18,12 @@ GameClientControl.prototype.registerEventListeners = function(){
 	//If pikachu client
 	if(gc.type === 0){
 		var keydown = function(event){
-			if (event.keyCode === 37 || event.keyCode === 65){ // left or a
-				
+			if (event.keyCode === 37 || event.keyCode === 65){ // left or a			
 				gc.pikachu.brake();
-				alert("brake");
 			} else if (event.keyCode === 39 || event.keyCode === 68){ // right or d
 				gc.pikachu.dash();
-				alert("dash");
 			} else if (event.keyCode === 38 || event.keyCode === 87){ // up or w
 				gc.pikachu.jump();
-				console.log(gc.pikachu);
 			} else if (event.keyCode === 40 || event.keyCode === 83){ // down or s
 				//Nothing
 			}

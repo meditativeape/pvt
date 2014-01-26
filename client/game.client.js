@@ -9,7 +9,7 @@ var GameClient = function(/*int*/type) {
 	this.pikachu = new Pikachu(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
 	this.pokeball = [];
 	this.platforms = [];
-	this.type = type;
+	this.type = type; //0 is pikachu, 1 is tr
 	this.gameClientUI = new GameClientUI(this);
     this.gameClientUI.initialize();
 	this.gameClientControl = new GameClientControl(this);
