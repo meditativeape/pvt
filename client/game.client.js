@@ -34,12 +34,10 @@ GameClient.prototype.randomNumber = function(mac,min){
 }
 
 GameClient.prototype.physicsUpdate = function(){
-	console.log(this.count);
 	if(this.count == 0){
-	var platFormLength = this.randomNumber(1,4);
-	this.gameState.platforms.push(new Platform(new Point(CONSTANTS.width+.5*platFormLength*CONSTANTS.platformUnitWidth,CONSTANTS.pikachuStartY-30),new Point(CONSTANTS.platformSpeed,0),0));
-	this.count = this.randomNumber(5*CONSTANTS.platformUnitWidth,2*CONSTANTS.platformUnitWidth);
-	console.log("Count is 0, add new platform!");
+        var platFormLength = this.randomNumber(1,4);
+        this.gameState.platforms.push(new Platform(new Point(CONSTANTS.width+.5*platFormLength*CONSTANTS.platformUnitWidth,CONSTANTS.pikachuStartY-30),new Point(CONSTANTS.platformSpeed,0),0));
+        this.count = this.randomNumber(5*CONSTANTS.platformUnitWidth,2*CONSTANTS.platformUnitWidth);
 	}
 	this.count --;//speed can be changed
 	
@@ -80,7 +78,6 @@ GameClient.prototype.handleMessage = function(/*string*/message){
 };
 
 GameClient.prototype.processPikachuInput = function(/*String*/ action){
-    console.log(action);
     switch(action) {
     case "left":
         this.gameState.pikachuBrake();
