@@ -85,12 +85,16 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 		pikachu.velocity.Y = 0;
 		pikachu.midair = false;
 	}
-	else if(pikachu.center.Y+CONSTANTS.pikachuRadius<=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height){
-		pikachu.center.Y = this.gameInstance.platforms[0].center.Y-0.5*this.gameInstance.platforms[0].height-CONSTANTS.pikachuRadius;
+	else if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
+	&&(pikachu.center.X-CONSTANTS.pikachuRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
+	&&(pikachu.center.X+CONSTANTS.pikachuRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
+	&&(pikachu.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
+		pikachu.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
 		pikachu.velocity.Y = 0;
 		pikachu.midair = false;
 	}
+	this.gameInstance.gameState.platforms[0].checkStatus(pikachu);
 }
 
 // Clean up to shut down game

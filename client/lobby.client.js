@@ -79,6 +79,7 @@ LobbyClient.prototype.handleMessage = function(message){
 				this.game = new GameClient(1, this.mainSocket);
                 this.game.start();
 			}
+			menu.start();
 		}
 	};
 }

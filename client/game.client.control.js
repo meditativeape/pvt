@@ -24,7 +24,7 @@ GameClientControl.prototype.registerEventListeners = function(){
 			} else if (event.keyCode === 39 || event.keyCode === 68){ // right or d
 				gc.gameState.pikachu.dash();
 				gc.mainSocket.send('game input right');
-			} else if (event.keyCode === 38 || event.keyCode === 87){ // up or w
+			} else if (event.keyCode === 38 || event.keyCode === 87 || event.keyCode === 32){ // up or w
 				gc.gameState.pikachu.jump();
 				gc.mainSocket.send('game input up');
 			} else if (event.keyCode === 40 || event.keyCode === 83){ // down or s
