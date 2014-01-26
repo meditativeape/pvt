@@ -37,14 +37,16 @@ Menu.prototype.trwin = function(){
 	mainMenu.style.visibility="hidden";
 	waiting.style.visibility="hidden";
 	game.style.visibility="hidden";
-	score.style.visibility="visible";
+	trwin.style.visibility="visible";
+	pikachuwin.style.visibility="hidden";
 }
 
 Menu.prototype.pikachuwin = function(){
 	mainMenu.style.visibility="hidden";
 	waiting.style.visibility="hidden";
 	game.style.visibility="hidden";
-	score.style.visibility="visible";
+	pikachuwin.style.visibility="visible";
+	trwin.style.visibility="hidden";
 }
 
 
@@ -74,13 +76,13 @@ soundManager.setup({
 //   * iPad/iPhone and devices without flash installed will always attempt to use it.
 //   
   onready: function() {
-    	soundAssets.menuSound = soundManager.createSound({
+    	soundAssets.background = soundManager.createSound({
 			  id: 'background',
 			  url: './sounds/background.mp3',
 			  onfinish: function(){soundAssets.background.play();},
 			  volume: 30
 		});
-		soundAssets.menuSound.play();
+		soundAssets.background.play();
   },
   ontimeout: function() {
 		alert("soundManager failed to load");	
