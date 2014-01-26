@@ -5,7 +5,8 @@
 /**
  * The GameClient constructor. 
  */
-var GameClient = function(/*int*/type) {
+var GameClient = function(/*int*/type, /*socketIO*/ mainSocket) {
+	this.mainSocket = mainSocket;
 	this.type = type; //0 is pikachu, 1 is tr
 	this.gameClientUI = new GameClientUI(this);
     this.gameClientUI.initialize();
