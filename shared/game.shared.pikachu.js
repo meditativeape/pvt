@@ -1,6 +1,8 @@
 // JavaScript Document
 // Pikachu inherits Physical
 
+
+
 var Pikachu = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.midair = false;
 	PhysicalObject.call(this,center,velocity,accelerationY);
@@ -13,8 +15,12 @@ Pikachu.prototype = new PhysicalObject();
 Pikachu.prototype.constructor = Pikachu;
 
 Pikachu.prototype.brake = function(){
+
 	if(this.center<CONSTANTS.pikachuBoundLeft){
-		this.velocity.X = CONSTANTS.pikachuMove*2;
+		this.velocity.X = CONSTANTS.pikachuMove*2
+	}
+	else if(this.center.X>CONSTANTS.pikachuBoundRight){
+		this.velocity.X = -CONSTANTS.pikachuMove*2;
 	}
 	else{
 		this.velocity.X = -CONSTANTS.pikachuMove;
@@ -22,7 +28,10 @@ Pikachu.prototype.brake = function(){
 }
 
 Pikachu.prototype.dash = function(){
-	if(this.center>CONSTANTS.pikachuBoundRight){
+	if(this.center.X<CONSTANTS.pikachuBoundLeft){
+		this.velocity.X = CONSTANTS.pikachuMove*2;
+	}
+	else if(this.center.X>CONSTANTS.pikachuBoundRight){
 		this.velocity.X = -CONSTANTS.pikachuMove*2;
 	}
 	else{
@@ -31,10 +40,10 @@ Pikachu.prototype.dash = function(){
 }
 
 Pikachu.prototype.normal = function(){
-	if(this.center<CONSTANTS.pikachuBoundLeft){
+	if(this.center.X<CONSTANTS.pikachuBoundLeft){
 		this.velocity.X = CONSTANTS.pikachuMove*2;
 	}
-	else if(this.center>CONSTANTS.pikachuBoundRight){
+	else if(this.center.X>CONSTANTS.pikachuBoundRight){
 		this.velocity.X = -CONSTANTS.pikachuMove*2;
 	}
 	else{	
@@ -44,7 +53,10 @@ Pikachu.prototype.normal = function(){
 
 Pikachu.prototype.jump = function(){
 	if(this.midair === false){
-		this.accelerationY = -CONSTANTS.pikachuJump;
+		this.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius -1;
+		this.velocity.Y = -CONSTANTS.pikachuJump;
 		this.midair = true;
 	}
 }
+
+

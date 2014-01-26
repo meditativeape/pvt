@@ -85,12 +85,19 @@ GameLogic.prototype.checkCollision = function(/*point*/ pikachu, /*Point*/ pokeb
 };
 
 GameLogic.prototype.checkFloor = function(/*Pikachu*/ pikachu){
-	if(pikachu.center.Y+CONSTANTS.pikachuRadius>CONSTANTS.height-CONSTANTS.floorHeight){
+	if(pikachu.center.Y+CONSTANTS.pikachuRadius>=CONSTANTS.height-CONSTANTS.floorHeight){
 		pikachu.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
 		pikachu.velocity.Y = 0;
 		pikachu.midair = false;
 	}
+	else if(pikachu.center.Y+CONSTANTS.pikachuRadius<=this.gameInstance.platforms[0].center.Y-0.5*this.gameInstance.platforms[0].height){
+		pikachu.center.Y = this.gameInstance.platforms[0].center.Y-0.5*this.gameInstance.platforms[0].height-CONSTANTS.pikachuRadius;
+		pikachu.accelerationY = 0;
+		pikachu.velocity.Y = 0;
+		pikachu.midair = false;
+	}
+	
 }
 
 // Clean up to shut down game

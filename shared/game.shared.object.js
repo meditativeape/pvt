@@ -10,6 +10,7 @@ PhysicalObject.prototype.update = function(){
 	this.center.X = this.center.X + this.velocity.X;
 	this.center.Y = this.center.Y + this.velocity.Y;
 	this.velocity.Y = this.velocity.Y + this.accelerationY;
+	this.gravity();
 }
 
 PhysicalObject.prototype.gravity = function(){

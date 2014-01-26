@@ -147,8 +147,10 @@ GameClientUI.prototype.draw = function(){
 	
     this.frontLayerAnim = new Kinetic.Animation(function(frame){
 		
-		me.client.gameLogic.checkFloor(me.client.pikachu);
 		me.client.pikachu.update();
+		me.client.pikachu.gravity();
+		me.client.gameLogic.checkFloor(me.client.pikachu);
+		
 	
         me.pikachuToDraw.setAbsolutePosition({x:me.client.pikachu.center.X,
                                               y:me.client.pikachu.center.Y});
