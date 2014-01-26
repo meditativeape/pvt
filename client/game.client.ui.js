@@ -163,7 +163,7 @@ GameClientUI.prototype.draw = function(){
 		
 		this.client.gameLogic.checkFloor(this.client.pikachu);
 		this.client.pikachu.update();
-	
+		console.log(this.client.pikachu.center.X);
         this.pikachuToDraw.x = this.client.pikachu.center.X;
         this.pikachuToDraw.y = this.client.pikachu.center.Y;
     }.bind(this), this.frontLayer);

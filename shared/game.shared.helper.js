@@ -23,7 +23,7 @@ var CONSTANTS = {
 	height: 600,
 	width: 800,
 	pikachuStartX: 400,
-	pikachuStartY: 500,
+	pikachuStartY: 400,
 	gravity: 5,
 	pikachuJump: 20,
 	pikachuMove: 10,
