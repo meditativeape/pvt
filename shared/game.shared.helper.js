@@ -25,7 +25,7 @@ var CONSTANTS = {
 	width: 800,
 	pikachuStartX: 400,
 	pikachuStartY: 400,
-	gravity: 0.1,
+	gravity: 0.2,
 	pikachuJump: 22,
 	pikachuMove: 5,
 	backgroundScrollSpeed: -0.5,

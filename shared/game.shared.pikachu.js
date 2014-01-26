@@ -3,6 +3,8 @@
  */
 if( 'undefined' !== typeof global ){
     var PhysicalObject = require("./game.shared.object.js");
+    var helper = require("./game.shared.helper.js");
+    var CONSTANTS = helper.CONSTANTS;
 }
 
 // Pikachu inherits Physical

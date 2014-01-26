@@ -17,24 +17,24 @@ var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.pikachu = new Pikachu(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
     this.pokeballs = [];
 	this.platforms = [];
-	this.platforms2 = [];
-	//this.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
+
     this.end = false;
     this.winner = null;
     this.scrollMeter = 0.0;
-    this.tOld = 0.0;
+    this.prevTime = 0.0;
+	this.pokeballDelay = CONSTANTS.pokeballDelay;
+	this.currentDelay = CONSTANTS.pokeballDelay;
 };
 
 GameState.prototype.start = function(){
-    this.tOld = new Date().getTime();
-    this.createTimer();
+    this.prevTime = new Date().getTime();
+    this.startScrollMeter();
 };
 
-GameState.prototype.createTimer = function(){
-    this.timerId = setInterval(function(){
-        var dt = new Date().getTime() - this.tOld;
-        this.scrollMeter = -dt/16 * CONSTANTS.platformScrollSpeed;
-        this.tOld = new Date().getTime();
+GameState.prototype.startScrollMeter = function(){
+    this.meterId = setInterval(function(){
+        var tDiff = new Date().getTime() - this.prevTime;
+        this.scrollMeter += tDiff / 16 * CONSTANTS.platformScrollSpeed;
     }.bind(this), 4);
 };
 
@@ -54,10 +54,24 @@ GameState.prototype.pikachuNormal = function(){
     this.pikachu.normal();
 };
 
-// Update pikachu position
-GameState.prototype.pikachuUpdate = function(){
-    this.pikachu.update();
-    this.checkFloor();
+
+// Throw pokeball
+GameState.prototype.addPokeball = function(/*point*/ center){
+	var pokeball = new Pokeball(center);
+	this.pokeballs.push(pokeball);
+}
+
+// Update pokeball position
+GameState.prototype.pokeballUpdate = function(){
+    for(var pokeball in this.pokeballs){
+		pokeball.update();
+		if(pokeball.cooldown>0){
+			pokeball.gravity();		
+			pokeball.cooldown--;
+		}
+		this.checkFloorBall(pokeball);
+		
+	}
 };
 /*
 GameState.prototype.PlatformUpdate = function(){
@@ -108,19 +122,41 @@ GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
 	if(pikachu.midair === true){
 			pikachu.cooldown = CONSTANTS.pikachuJumpCooldown;
 			pikachu.midair = false;
+
 	}
 				
-
 	}
 	this.gameInstance.gameState.platforms[index].checkStatus(pikachu);
 
 }
 
+GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball){
+	if(pokeball.center.Y+CONSTANTS.pokeballRadius>=CONSTANTS.height-CONSTANTS.floorHeight){
+		pokeball.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pokeballRadius;
+		pokeball.accelerationY = 0;
+		pokeball.velocity.Y = 0;
+		if(pokeball.midair === true){
+			pokeball.midair = false;
+		}
+	}
+	else if((pokeball.center.Y+CONSTANTS.pokeballRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
+	&&(pokeball.center.X-CONSTANTS.pokeballRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
+	&&(pokeball.center.X+CONSTANTS.pokeballRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
+	&&(pokeball.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
+		pokeball.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pokeballRadius;
+		pokeball.accelerationY = 0;
+		pokeball.velocity.Y = 0;
+		if(pokeball.midair === true){
+			pokeball.midair = false;
+		}
+	}
+	this.gameInstance.gameState.platforms[0].checkStatusPokeball(pokeball);
+}
+
+
 // Clean up to shut down game
 GameState.prototype.cleanUp = function() {
-    clearInterval(this.physicsUpateId);
-    clearInterval(this.timerId);
-    window.cancelRequestAnimationFrame(this.networkUpdateId);
+    clearInterval(this.meterId);
 };
 
 /**

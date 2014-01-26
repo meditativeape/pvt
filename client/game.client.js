@@ -11,7 +11,6 @@ var GameClient = function(/*int*/type, /*socketIO*/ mainSocket) {
     
 	this.gameState = new GameState(this);
 
-    this.gameState.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY-30),new Point(CONSTANTS.platformSpeed,0),0);
 	this.gameState.start();
 	this.count = this.randomNumber(5*CONSTANTS.platformUnitWidth,2*CONSTANTS.platformUnitWidth);
     
@@ -20,10 +19,14 @@ var GameClient = function(/*int*/type, /*socketIO*/ mainSocket) {
     
 	this.gameClientControl = new GameClientControl(this);
 	this.gameClientControl.registerEventListeners();
+	
+	this.gameState.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY-30),new Point(CONSTANTS.platformSpeed,0),0);
+
 };
 
 GameClient.prototype.start = function(){
     this.physicsId = setInterval(this.physicsUpdate.bind(this), 15);  // update physics every 15ms
+    this.mainSocket.on('onserverupdate', this.handleServerUpdate.bind(this))
 };
 GameClient.prototype.randomNumber = function(mac,min){
 	var number = Math.floor(Math.random() * (mac - min + 1)) + min;	
@@ -41,10 +44,14 @@ GameClient.prototype.physicsUpdate = function(){
 	this.count --;//speed can be changed
 	
     this.gameState.pikachu.update();
+
+	this.gameState.pokeballUpdate();
 	if(this.gameState.pikachu.cooldown>0){
 		this.gameState.pikachu.cooldown--;
 	}
-
+	if(this.gameState.pokeballDelay>0){
+		this.gameState.pokeballDelay--;
+	}
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
 	
@@ -55,7 +62,6 @@ GameClient.prototype.physicsUpdate = function(){
 		this.gameState.platforms.splice(0, 1);
 	}
 	}
-	
 	
 };
 
@@ -94,6 +100,12 @@ GameClient.prototype.processPikachuInput = function(/*String*/ action){
 
 GameClient.prototype.processTRInput = function(/*Point*/ pokeballPos){
     // TODO
+};
+
+GameClient.prototype.handleServerUpdate = function(/*object*/ update){
+    this.gameState.scrollMeter = update.scrollMeter;
+    // TODO: naive approach. add interpolation!
+    this.gameState.pikachu.center = update.pikachuPos;
 };
 
 GameClient.prototype.cleanUp = function(){

@@ -19,24 +19,24 @@ var GameServer = function(){
 	// Store game's uuid
 	this.id = UUID();
     
-    this.serverTime = 0;               // Server time
-    this.localTime = 0.016;            //The local timer
-    this.dt = new Date().getTime();    //The local timer delta
-    this.dte = new Date().getTime();   //The local timer last frame time
+    // this.serverTime = 0;               // Server time
+    // this.localTime = 0.016;            //The local timer
+    // this.dt = new Date().getTime();    //The local timer delta
+    // this.dte = new Date().getTime();   //The local timer last frame time
     
     this.lastState = {};
     
     // Create a fast-paced timer for measuing time easier
-    this.createTimer();
+    // this.createTimer();
 };
 
-GameServer.prototype.createTimer = function(){
-    this.timerId = setInterval(function(){
-        this.dt = new Date().getTime() - this.dte;
-        this.dte = new Date().getTime();
-        this.localTime += this.dt/1000.0;
-    }.bind(this), 4);
-}
+// GameServer.prototype.createTimer = function(){
+    // this.timerId = setInterval(function(){
+        // this.dt = new Date().getTime() - this.dte;
+        // this.dte = new Date().getTime();
+        // this.localTime += this.dt/1000.0;
+    // }.bind(this), 4);
+// }
 
 GameServer.prototype.setPikachuPlayer = function(/*client*/ player){
 	this.pikachuPlayer = player;
@@ -51,7 +51,7 @@ GameServer.prototype.setTRPlayer = function(/*client*/ player){
 GameServer.prototype.start = function(){
 	this.started = true;
     this.physicsId = setInterval(this.physicsUpdate.bind(this), 15); // update physics every 15ms
-    this.networkId = setInterval(this.networkUpdate.bind(this), 45); // update clients every 15ms
+    this.networkId = setInterval(this.networkUpdate.bind(this), 15); // update clients every 15ms
 }
 
 GameServer.prototype.cleanUp = function(){
@@ -84,7 +84,13 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
  * Physics update loop.
  */
 GameServer.prototype.physicsUpdate = function(){
-    this.processInput();
+    //this.processInput();
+    this.gameState.pikachu.update();
+    if(this.gameState.pikachu.cooldown > 0){
+		this.gameState.pikachu.cooldown--;
+	}
+	this.gameState.pikachu.gravity();
+	this.gameState.checkFloor(this.gameState.pikachu);
 };
 
 /**
@@ -129,9 +135,10 @@ GameServer.prototype.networkUpdate = function(){
     // make a snapshot of current state
     this.lastState = {
         pikachuPos: this.gameState.pikachu.center,
-        pikachuLastInputSeq: this.pikachuPlayer.lastInputSeq,
-        trLastInputSeq: this.trPlayer.lastInputSeq,
-        time: this.serverTime
+        // pikachuLastInputSeq: this.pikachuPlayer.lastInputSeq,
+        // trLastInputSeq: this.trPlayer.lastInputSeq,
+        // time: this.serverTime
+        scrollMeter: this.gameState.scrollMeter
     };
     
     // send the snapshot to both states
@@ -164,14 +171,24 @@ GameServer.prototype.handleMessage = function(client, message){
                 action: keywords[2],
                 time: parseInt(keywords[3])
             };
-            this.pikachuPlayer.inputs.push(input);
+            // this.pikachuPlayer.inputs.push(input);
+            if (input.action === 'left') {
+                this.gameState.pikachuBrake();
+            } else if (input.action === 'up') {
+                this.gameState.pikachuJump();
+            } else if (input.action === 'right') {
+                this.gameState.pikachuDash();
+            } else if (input.action === 'stop') {
+                this.gameState.pikachuNormal();
+            }
             this.sendMsg(this.trPlayer, message); // TODO: change time???
         } else {
-            var newPokeballPos = new Point(parseInt(keywords[3]), parseInt(keywords[4]))
-            var input = {
-                pos: new Point(parseInt(keywords[3]), parseInt(keywords[4]))
-            };
-            this.trPlayer.inputs.push(input);
+            // var newPokeballPos = new Point(parseInt(keywords[3]), parseInt(keywords[4]))
+            // var input = {
+                // pos: new Point(parseInt(keywords[3]), parseInt(keywords[4]))
+            // };
+            // this.trPlayer.inputs.push(input);
+            // TODO: do something
             this.sendMsg(this.pikachuPlayer, message); // TODO: change time???
         }
         break;

@@ -1,4 +1,10 @@
-// JavaScript Document
+/**
+ * Server side we import shared objects.
+ */
+if( 'undefined' !== typeof global ){
+    var helper = require("./game.shared.helper.js");
+	var CONSTANTS = helper.CONSTANTS;
+}
 
 var PhysicalObject = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.center = center;
@@ -10,7 +16,6 @@ PhysicalObject.prototype.update = function(){
 	this.center.X = this.center.X + this.velocity.X;
 	this.center.Y = this.center.Y + this.velocity.Y;
 	this.velocity.Y = this.velocity.Y + this.accelerationY;
-	this.gravity();
 }
 
 PhysicalObject.prototype.gravity = function(){
