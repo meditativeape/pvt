@@ -49,7 +49,6 @@ GameClient.prototype.physicsUpdate = function(){
             }
         }	
 	}
-	
 };
 
 GameClient.prototype.handleMessage = function(/*string*/message){
