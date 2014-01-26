@@ -14,8 +14,6 @@ Pikachu.prototype = new PhysicalObject();
 // Correct the constructor pointer to Pikachu
 Pikachu.prototype.constructor = Pikachu;
 
-Pikachu.prototype = new PhysicalObject();
-
 Pikachu.prototype.brake = function(){
 	if(this.center.X<CONSTANTS.pikachuBoundLeft){
 		this.velocity.X = CONSTANTS.pikachuMove*2
