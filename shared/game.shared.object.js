@@ -9,7 +9,8 @@ var PhysicalObject = function(/*Point*/ center, /*Point*/velocity, /*int*/ accel
 PhysicalObject.prototype.update = function(){
 	this.center.X = this.center.X + this.velocity.X;
 	this.center.Y = this.center.Y + this.velocity.Y;
-	this.velocity.Y = this.velocity.Y + this.acceleration.Y;
+	this.velocity.Y = this.velocity.Y + this.accelerationY;
+	alert("update");
 }
 
 PhysicalObject.prototype.gravity = function(){

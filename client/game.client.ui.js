@@ -64,7 +64,10 @@ GameClientUI.prototype.initialize = function(){
  * Draw game UI.
  */
 GameClientUI.prototype.draw = function(){
-
+	
+	
+	
+	
     // Create two Kinetic image objects for the scrolling background
     var bg1 = new Kinetic.Image({
         x: 0,
@@ -118,8 +121,14 @@ GameClientUI.prototype.draw = function(){
     this.platformLayer.add(floor1);
     this.platformLayer.add(floor2);
     
+	
+	
     // Kinetic animation to scroll the floor and the platform
     this.platformLayerAnim = new Kinetic.Animation(function(frame){
+		
+		
+		
+		
         var timeDiff = frame.timeDiff;
         //assuming 16ms/f is maximum
         if((floor1.getAbsolutePosition().x + floor1.width()) <= 0){ 
@@ -144,10 +153,21 @@ GameClientUI.prototype.draw = function(){
     });
     this.frontLayer.add(this.pikachuToDraw);
     
+	
+	//var gc = this.client;
+	
     this.frontLayerAnim = new Kinetic.Animation(function(frame){
+		
+		//Update
+		//console.log("draw");
+		
+		this.client.gameLogic.checkFloor(this.client.pikachu);
+		this.client.pikachu.update();
+	
         this.pikachuToDraw.x = this.client.pikachu.center.X;
         this.pikachuToDraw.y = this.client.pikachu.center.Y;
     }.bind(this), this.frontLayer);
+	this.frontLayerAnim.start();
 
     // A Kinetic text to show text message at the center of canvas.
     // var centerMsg = new Kinetic.Text({

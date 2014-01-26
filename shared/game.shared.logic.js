@@ -85,9 +85,10 @@ GameLogic.prototype.checkCollision = function(/*point*/ pikachu, /*Point*/ pokeb
 };
 
 GameLogic.prototype.checkFloor = function(/*Pikachu*/ pikachu){
-	if(pikachu.center.Y+CONSTANTS.pikachuRadius>height-floorHeight){
-		pikachu.center.Y = height-floorHeight-CONSTANTS.pikachuRadius;
+	if(pikachu.center.Y+CONSTANTS.pikachuRadius>CONSTANTS.height-CONSTANTS.floorHeight){
+		pikachu.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
+		pikachu.velocity.Y = 0;
 		pikachu.midair = false;
 	}
 }
