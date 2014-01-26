@@ -64,11 +64,13 @@ GameState.prototype.addPokeball = function(/*point*/ center){
 
 // Update pokeball position
 GameState.prototype.pokeballUpdate = function(){
+	console.log(this.pokeballs);
     for(var pokeballID in this.pokeballs){
+		console.log(pokeballID);
 		var pokeball = this.pokeballs[pokeballID];
+		console.log(pokeball);
 		pokeball.update();
 		if(pokeball.cooldown>0){
-					
 			pokeball.cooldown--;
 		}
 		else{
