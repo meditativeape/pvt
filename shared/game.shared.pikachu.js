@@ -1,6 +1,8 @@
 // JavaScript Document
 // Pikachu inherits Physical
 
+
+
 var Pikachu = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.midair = false;
 	PhysicalObject.call(this,center,velocity,accelerationY);
@@ -12,9 +14,12 @@ Pikachu.prototype = new PhysicalObject();
 // Correct the constructor pointer to Pikachu
 Pikachu.prototype.constructor = Pikachu;
 
+Pikachu.prototype = new PhysicalObject();
+
 Pikachu.prototype.brake = function(){
-	if(this.center.X<CONSTANTS.pikachuBoundLeft){
-		this.velocity.X = CONSTANTS.pikachuMove*2;
+
+	if(this.center<CONSTANTS.pikachuBoundLeft){
+		this.velocity.X = CONSTANTS.pikachuMove*2
 	}
 	else if(this.center.X>CONSTANTS.pikachuBoundRight){
 		this.velocity.X = -CONSTANTS.pikachuMove*2;
@@ -55,3 +60,5 @@ Pikachu.prototype.jump = function(){
 		this.midair = true;
 	}
 }
+
+
