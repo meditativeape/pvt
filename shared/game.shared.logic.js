@@ -91,10 +91,10 @@ GameLogic.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 		pikachu.velocity.Y = 0;
 		pikachu.midair = false;
 	}
-	else if(pikachu.center.Y+CONSTANTS.pikachuRadius<=Platform.center.Y-0.5*Platform.height){
-		pikachu.center.Y = Platform.center.Y-0.5*Platform.height-CONSTANTS.pikachuRadius;
-		pikachu.accelerationY = 0;
-	}
+	//else if(pikachu.center.Y+CONSTANTS.pikachuRadius<=Platform.center.Y-0.5*Platform.height){
+//		pikachu.center.Y = Platform.center.Y-0.5*Platform.height-CONSTANTS.pikachuRadius;
+//		pikachu.accelerationY = 0;
+//	}
 	
 }
 
