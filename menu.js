@@ -51,11 +51,7 @@ Menu.prototype.pikachuwin = function(){
 
 
 Menu.prototype.back = function(){
-	mainMenu.style.visibility="visible";
-	waiting.style.visibility="hidden";
-	game.style.visibility="hidden";
-	pikachuwin.style.visibility="hidden";
-	trwin.style.visibility="hidden";
+	location.reload();
 }
 
 var menu = new Menu();
