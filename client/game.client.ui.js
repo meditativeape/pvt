@@ -29,6 +29,7 @@ var GameClientUI = function(/*GameState*/ gameState){
     // Kinetic objects
     this.pikachuToDraw = [];
     this.pokeballsToDraw = [];
+    this.platformsToDraw = [];
 };
 
 /**
@@ -108,8 +109,7 @@ GameClientUI.prototype.draw = function(){
 	}, this.backLayer);
     this.bgAnim.start();
     
-    this.platformsToDraw = [];
-    
+    // Animation to draw platformss
     this.platAnim = new Kinetic.Animation(function(frame){
     	while(me.platformsToDraw.length < me.gameState.platforms.length){
     		var pfLen = me.gameState.platforms.length-1;
@@ -128,11 +128,11 @@ GameClientUI.prototype.draw = function(){
     	}
     
     	for(var i= 0; i< me.platformsToDraw.length; i++){
-    	var timeDiff = frame.timeDiff;
-    	me.platformsToDraw[i].setAbsolutePosition({x:me.gameState.platforms[i].center.X - 0.5*me.gameState.platforms[i].width,
-        y:me.gameState.platforms[i].center.Y - 0.5*me.gameState.platforms[i].height});}
+            var timeDiff = frame.timeDiff;
+            me.platformsToDraw[i].setAbsolutePosition({x:me.gameState.platforms[i].center.X - 0.5*me.gameState.platforms[i].width,
+            y:me.gameState.platforms[i].center.Y - 0.5*me.gameState.platforms[i].height});}
 
-	}, this.platformLayer);
+        }, this.platformLayer);
 	this.platAnim.start();
     
     // Create two Kinetic image objects for the scrolling floor

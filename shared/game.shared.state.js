@@ -18,6 +18,7 @@ var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.pikachu = new Pikachu(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
     this.pokeballs = [];
 	this.platforms = [];
+    this.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY-30),new Point(CONSTANTS.platformSpeed,0),0);
 
     this.end = false;
     this.winner = null;
