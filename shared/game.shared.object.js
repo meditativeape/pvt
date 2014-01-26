@@ -21,5 +21,5 @@ PhysicalObject.prototype.gravity = function(){
  * Server side we export PhysicalObject
  */
 if( 'undefined' !== typeof global ) {
-    exports.PhysicalObject = PhysicalObject;
+    exports = PhysicalObject;
 }

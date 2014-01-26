@@ -49,11 +49,11 @@ LobbyServer.prototype.messageHandler = function(/*ExpressServer*/ expressServer)
 		//Generate a new UUID, looks something like
 		//5b2ca132-64bd-4513-99da-90e838ca47d1
 		//and store this on their socket/connection
-		client.id = UUID();
+		client.userid = UUID();
 		//Tell the player they connected, giving them their id to store on their socket/connection.
-		client.emit('onconnected', { id: client.id } );
+		client.emit('onconnected', { id: client.userid } );
 		//Log player connections
-		console.log(':: socket.io :: player ' + client.id.substring(0,8) + ' connected');
+		console.log(':: socket.io :: player ' + client.userid.substring(0,8) + ' connected');
 		//Send messages to the lobby to handle
 		client.on('message', function(m) {
 			me.onMessage(client, m);
@@ -84,14 +84,14 @@ LobbyServer.prototype.onDisconnect = function(client) {
 	//If player is in game.
 	if(client.game) {
 		//Log event
-		console.log(':: socket.io:: client ' + client.id.substring(0,8) + ' disconnected from game '
+		console.log(':: socket.io:: client ' + client.userid.substring(0,8) + ' disconnected from game '
 				+ client.game.id.substring(0, 8));
 		//Tell game instance that player has left game.
 		client.game.leaveGame(client);
 	}
 	//If player is not in game
 	else{
-		console.log(':: socket.io :: client ' + client.id.substring(0,8) + ' disconnected');
+		console.log(':: socket.io :: client ' + client.userid.substring(0,8) + ' disconnected');
 	}
 	//TODO Lobby
 };
@@ -140,7 +140,7 @@ LobbyServer.prototype.findGame = function(player, type) {
 			gameThatNeedsPikachu.start();
 			
 			//Log the event
-			this.log(':: server :: Player ' + player.id.substring(0,8) + ' Joined a game with id '
+			this.log(':: server :: Player ' + player.userid.substring(0,8) + ' Joined a game with id '
 			+ player.game.id.substring(0,8));
 			return;
 		}
@@ -164,7 +164,7 @@ LobbyServer.prototype.findGame = function(player, type) {
 			gameThatNeedsTR.start();
 			
 			//Log the event
-			this.log(':: server :: Player ' + player.id.substring(0,8) + ' Joined a game with id '
+			this.log(':: server :: Player ' + player.userid.substring(0,8) + ' Joined a game with id '
 			+ player.game.id.substring(0,8));
 			return;
 		}
@@ -192,7 +192,7 @@ LobbyServer.prototype.createGame = function(player, type) {
 	  player.game = newGame;
 	  
 	  //Log the event
-	  this.log(':: server :: Player ' + player.id.substring(0,8) + ' created a game with id '
+	  this.log(':: server :: Player ' + player.userid.substring(0,8) + ' created a game with id '
 	  + player.game.id.substring(0,8));
 
 	}
@@ -207,7 +207,7 @@ LobbyServer.prototype.createGame = function(player, type) {
 	  player.game = newGame;
 	  
 	  //Log the event
-	  this.log(':: server :: Player ' + player.id.substring(0,8) + ' created a game with id '
+	  this.log(':: server :: Player ' + player.userid.substring(0,8) + ' created a game with id '
 	  + player.game.id.substring(0,8));
 	}
 	
