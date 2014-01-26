@@ -108,24 +108,53 @@ GameClientUI.prototype.draw = function(){
 	}, this.backLayer);
     this.bgAnim.start();
     
+    this.platformsToDraw = [];
     
-    var rectPlat = new Kinetic.Rect({
-        x: this.gameState.platforms[0].center.X-.5*this.gameState.platforms[0].width,
-        y: this.gameState.platforms[0].center.Y-.5*this.gameState.platforms[0].height,
-        width: this.gameState.platforms[0].width,
-        height: this.gameState.platforms[0].height,
-        fill: 'green',
-        stroke: 'black',
-        strokeWidth: 4});
-    this.platformLayer.add(rectPlat);
+
     
-    this.rectAnim = new Kinetic.Animation(function(frame){
+    /*
+    	this.platformImage[0] = new Kinetic.Image({
+    	image: this.platformMid,
+        x: this.gameState.platforms[i].center.X-.5*this.gameState.platforms[i].width,
+        y: this.gameState.platforms[i].center.Y-.5*this.gameState.platforms[i].height,
+        width: this.gameState.platforms[i].width,
+        height: this.gameState.platforms[i].height
+        });
+        console.log(i);
+    this.platformLayer.add(this.platformImage);
+    
+    */
+    for(var i=0;i<this.gameState.platforms.length;i++){
+	console.log(this.gameState.platforms[i]);}
+	console.log(this.gameState.platforms.length);
+    this.platAnim = new Kinetic.Animation(function(frame){
+    	console.log(me.gameState.platforms.length);
+    	while(me.platformsToDraw.length < me.gameState.platforms.length){
+    		var pfLen = me.gameState.platforms.length-1;
+    		//console.log(me.gameState.platforms);
+    		var temp=new Kinetic.Image({
+ 	   		image: me.platformMid,
+ 	       	x: me.gameState.platforms[pfLen].center.X+.5*me.gameState.platforms[pfLen].width,
+        	y: me.gameState.platforms[pfLen].center.Y+.5*me.gameState.platforms[pfLen].height,
+        	width: me.gameState.platforms[pfLen].width,
+        	height: me.gameState.platforms[pfLen].height});
+        	//console.log(pfLen);
+    		me.platformsToDraw.push(temp);
+    		me.platformLayer.add(temp);
+    		}
+    	while(me.platformsToDraw.length > me.gameState.platforms.length){
+    		me.platformsToDraw[0].destroy();
+    		me.platformsToDraw.splice(0,1);
+    	}
+    
+    	for(var i= 0; i< me.platformsToDraw.length; i++){
     	var timeDiff = frame.timeDiff;
-    	rectPlat.move({x: me.gameState.platforms[0].velocity.X* (timeDiff / 16), 
-                  	   y: 0});
+    	me.platformsToDraw[i].setAbsolutePosition({x:me.gameState.platforms[i].center.X - 0.5*me.gameState.platforms[i].width,
+        y:me.gameState.platforms[i].center.Y - 0.5*me.gameState.platforms[i].height});}
+
 	}, this.platformLayer);
-	this.rectAnim.start();
-    
+	this.platAnim.start();
+  
     
     // Create two Kinetic image objects for the scrolling floor
     var floor1 = new Kinetic.Image({
@@ -169,7 +198,10 @@ GameClientUI.prototype.draw = function(){
         y: this.gameState.pikachu.center.Y - 0.5*this.pikachus[0].height,
         width: this.pikachus[0].width,
         height: this.pikachus[0].height,
-    });
+    });    	
+    
+    
+    
     this.pikachuToDraw.counter = 0;
     this.frontLayer.add(this.pikachuToDraw);
 	
