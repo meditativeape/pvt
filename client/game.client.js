@@ -23,7 +23,7 @@ var GameClient = function(/*int*/type, /*socketIO*/ mainSocket) {
 
 GameClient.prototype.start = function(){
     this.physicsId = setInterval(this.physicsUpdate.bind(this), 15);  // update physics every 15ms
-    this.socket.on('message', this.handleMessage.bind(this));
+    //this.socket.on('message', this.handleMessage.bind(this));
 };
 
 GameClient.prototype.physicsUpdate = function(){
@@ -33,6 +33,7 @@ GameClient.prototype.physicsUpdate = function(){
     this.gameState.pikachu.update();
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
+	this.gameState.platforms[0].move();
 };
 
 GameClient.prototype.handleMessage = function(/*string*/message){
