@@ -6,7 +6,7 @@
  * The GameClient constructor. 
  */
 var GameClient = function(/*int*/type) {
-	this.pikachu = new Pikachu(new PhysicalObject(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0));
+	this.pikachu = new PikachuFromPhysicalObject(new PhysicalObject(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0));
 	this.pokeball = [];
 	this.platforms = [];
 	this.gameClientUI = new GameClientUI(this);
