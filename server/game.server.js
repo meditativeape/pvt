@@ -50,6 +50,13 @@ GameServer.prototype.setTRPlayer = function(/*client*/ player){
 
 GameServer.prototype.start = function(){
 	this.started = true;
+    this.physicsId = setInterval(this.physicsUpdate.bind(this), 15); // update physics every 15ms
+    this.networkId = setInterval(this.networkUpdate.bind(this), 45); // update clients every 15ms
+}
+
+GameServer.prototype.cleanUp = function(){
+    clearInterval(this.physicsId);
+    clearInterval(this.networkId);
 }
 
 GameServer.prototype.leaveGame = function(/*client*/ player){
@@ -61,12 +68,12 @@ GameServer.prototype.leaveGame = function(/*client*/ player){
  */
 GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message){
     var clientIdentity;
-    if (recipient.id === this.pikachuPlayer.id) {
+    if (recipient.userid === this.pikachuPlayer.userid) {
         clientIdentity = "pikachu";
-    } else if (recipient.id === this.trPlayer.id) {
+    } else if (recipient.userid === this.trPlayer.userid) {
         clientIdentity = "team rocket";
     } else {
-        console.log("Error! Unrecognized player " + recipient.id + "when sending message");
+        console.log("Error! Unrecognized player " + recipient.userid + "when sending message");
         return;
     }
 	console.log(this.id.substring(0,8) + " sends a message to " + clientIdentity + " " + recipient.player + ": " + message);
@@ -138,12 +145,12 @@ GameServer.prototype.networkUpdate = function(){
 GameServer.prototype.handleMessage = function(client, message){
     var keywords = message.split(" ");
     var clientIdentity;
-    if (client.id === this.pikachuPlayer.id) {
+    if (client.id === this.pikachuPlayer.userid) {
         clientIdentity = "pikachu";
-    } else if (client.id === this.trPlayer.id) {
+    } else if (client.id === this.trPlayer.userid) {
         clientIdentity = "team rocket";
     } else {
-        console.log("Error! " + this.id.substring(0,8) + " received message from unrecognized player " + client.id + ": " + message);
+        console.log("Error! " + this.id.substring(0,8) + " received message from unrecognized player " + client.userid + ": " + message);
         return;
     }
     console.log(this.id.substring(0,8) + " received a message from " + clientIdentity + ": " + message);
