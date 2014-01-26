@@ -6,6 +6,7 @@ if( 'undefined' !== typeof global ){
 	var Point = helper.Point;
 	var CONSTANTS = helper.CONSTANTS;
     var GameState = require("../shared/game.shared.state.js");
+    var Platform = require("../shared/game.shared.platform.js");
 };
 
 // Import UUID
@@ -16,6 +17,8 @@ var GameServer = function(){
 	this.pikachuPlayer = null;
 	this.trPlayer = null;
     this.started = false;
+    this.count = this.randomNumber(5*CONSTANTS.platformUnitWidth,2*CONSTANTS.platformUnitWidth);
+    
 	// Store game's uuid
 	this.id = UUID();
     
@@ -84,6 +87,18 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
  * Physics update loop.
  */
 GameServer.prototype.physicsUpdate = function(){
+    if(this.count == 0){
+        var platFormLength = this.randomNumber(1,5);
+        for (var i = 0; i < platFormLength; i++) {
+            this.gameState.platforms.push(new Platform(new Point(CONSTANTS.width+(1+i)*CONSTANTS.platformUnitWidth,CONSTANTS.pikachuStartY-30), new Point(CONSTANTS.platformSpeed,0), 0));
+        }
+        var msg = "game platform " + platFormLength;
+        this.sendMsg(this.pikachuPlayer, msg);
+        this.sendMsg(this.trPlayer, msg);
+        this.count = this.randomNumber(3*CONSTANTS.platformUnitWidth,2*CONSTANTS.platformUnitWidth);
+	}
+	this.count --;//speed can be changed
+
     this.gameState.pikachu.update();
 
 	this.gameState.pokeballUpdate();
@@ -95,7 +110,28 @@ GameServer.prototype.physicsUpdate = function(){
 	}
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
+    for (var j = 0; j < this.gameState.pokeballs.length; j++) {
+		this.gameState.checkFloorBall(this.gameState.pokeballs[j]);
+	}
+	
+	for(var i = 0; i < this.gameState.platforms.length;){
+		this.gameState.platforms[i].move();
+		this.gameState.checkPlatform(this.gameState.pikachu,i);
+		if(this.gameState.platforms[i].center.X+.5*CONSTANTS.platformUnitWidth < 0){
+            this.gameState.platforms.splice(i, i+1);   
+        } else {
+        	for(var j = 0; j < this.gameState.pokeballs.length;j++){
+            	this.gameState.checkPlatformBall(this.gameState.pokeballs[j],i);
+        	}
+        	i++;
+        }
+	}
 };
+
+GameServer.prototype.randomNumber = function(mac,min){
+	var number = Math.floor(Math.random() * (mac - min + 1)) + min;	
+	return number;
+}
 
 /**
  * Process newly received player inputs.

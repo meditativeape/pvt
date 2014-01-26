@@ -29,6 +29,7 @@ var GameClientUI = function(/*GameState*/ gameState){
     // Kinetic objects
     this.pikachuToDraw = [];
     this.pokeballsToDraw = [];
+    this.platformsToDraw = [];
 };
 
 /**
@@ -108,8 +109,7 @@ GameClientUI.prototype.draw = function(){
 	}, this.backLayer);
     this.bgAnim.start();
     
-    this.platformsToDraw = [];
-    
+    // Animation to draw platformss
     this.platAnim = new Kinetic.Animation(function(frame){
     	while(me.platformsToDraw.length < me.gameState.platforms.length){
     		var pfLen = me.gameState.platforms.length-1;
@@ -128,11 +128,11 @@ GameClientUI.prototype.draw = function(){
     	}
     
     	for(var i= 0; i< me.platformsToDraw.length; i++){
-    	var timeDiff = frame.timeDiff;
-    	me.platformsToDraw[i].setAbsolutePosition({x:me.gameState.platforms[i].center.X - 0.5*me.gameState.platforms[i].width,
-        y:me.gameState.platforms[i].center.Y - 0.5*me.gameState.platforms[i].height});}
+            var timeDiff = frame.timeDiff;
+            me.platformsToDraw[i].setAbsolutePosition({x:me.gameState.platforms[i].center.X - 0.5*me.gameState.platforms[i].width,
+            y:me.gameState.platforms[i].center.Y - 0.5*me.gameState.platforms[i].height});}
 
-	}, this.platformLayer);
+        }, this.platformLayer);
 	this.platAnim.start();
     
     // Create two Kinetic image objects for the scrolling floor
@@ -179,8 +179,6 @@ GameClientUI.prototype.draw = function(){
         height: this.pikachus[0].height,
     });    	
     
-    
-    
     this.pikachuToDraw.counter = 0;
     this.frontLayer.add(this.pikachuToDraw);
 	
@@ -209,11 +207,11 @@ GameClientUI.prototype.draw = function(){
             }));
 			me.frontLayer.add(me.pokeballsToDraw[me.pokeballsToDraw.length-1])
         }
-        while (me.gameState.pokeballs.length < me.pokeballsToDraw.length) {
-            me.pokeballsToDraw[0].destory;
-            me.pokeballsToDraw.splice(0, 1);
+        for (var i = me.gameState.pokeballs.length; i < me.pokeballsToDraw.length; i++) {
+        	me.pokeballsToDraw[i].visible(false);
         }
-        for (var i = 0; i < me.pokeballsToDraw.length; i++) {
+        for (var i = 0; i < me.gameState.pokeballs.length; i++) {
+        	me.pokeballsToDraw[i].visible(true);
             me.pokeballsToDraw[i].setAbsolutePosition({
                 x: me.gameState.pokeballs[i].center.X+25 - 0.5 * me.pokeball.width,
                 y: me.gameState.pokeballs[i].center.Y+25 - 0.5 * me.pokeball.height
