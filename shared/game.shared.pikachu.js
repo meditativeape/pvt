@@ -1,8 +1,6 @@
 // JavaScript Document
 // Pikachu inherits Physical
 
-
-
 var Pikachu = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.midair = false;
 	PhysicalObject.call(this,center,velocity,accelerationY);
@@ -14,6 +12,7 @@ Pikachu.prototype = new PhysicalObject();
 // Correct the constructor pointer to Pikachu
 Pikachu.prototype.constructor = Pikachu;
 
+// Decrease velocity
 Pikachu.prototype.brake = function(){
 	if(this.center.X<CONSTANTS.pikachuBoundLeft){
 		this.velocity.X = CONSTANTS.pikachuMove*2
@@ -26,6 +25,7 @@ Pikachu.prototype.brake = function(){
 	}
 }
 
+// Increase velocity
 Pikachu.prototype.dash = function(){
 	if(this.center.X<CONSTANTS.pikachuBoundLeft){
 		this.velocity.X = CONSTANTS.pikachuMove*2;
@@ -38,6 +38,7 @@ Pikachu.prototype.dash = function(){
 	}
 }
 
+// Back to normal velocity
 Pikachu.prototype.normal = function(){
 	if(this.center.X<CONSTANTS.pikachuBoundLeft){
 		this.velocity.X = CONSTANTS.pikachuMove*2;
@@ -50,6 +51,7 @@ Pikachu.prototype.normal = function(){
 	}
 }
 
+// Jump
 Pikachu.prototype.jump = function(){
 	if(this.midair === false){
 		this.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius -1;
@@ -58,4 +60,9 @@ Pikachu.prototype.jump = function(){
 	}
 }
 
-
+/**
+ * Server side we export Pikachu :)
+ */
+if( 'undefined' !== typeof global ) {
+    exports = Pikachu;
+}

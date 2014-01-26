@@ -17,5 +17,9 @@ PhysicalObject.prototype.gravity = function(){
 	this.accelerationY = this.accelerationY + CONSTANTS.gravity;
 }
 
-
-
+/**
+ * Server side we export PhysicalObject
+ */
+if( 'undefined' !== typeof global ) {
+    exports = PhysicalObject;
+}
