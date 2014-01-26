@@ -35,6 +35,7 @@ var CONSTANTS = {
 	pikachuJumpCooldown: 24,
 	pikachuRotation: -15,
 	platformUnitWidth: 70,
+
 	pokeballRotateSpeed: 30
 };
 
