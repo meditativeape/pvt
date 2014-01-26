@@ -53,7 +53,7 @@ Pikachu.prototype.normal = function(){
 
 Pikachu.prototype.jump = function(){
 	if(this.midair === false){
-		this.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius -1;
+		//this.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius -1;
 		this.velocity.Y = -CONSTANTS.pikachuJump;
 		this.midair = true;
 	}
