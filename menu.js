@@ -54,7 +54,8 @@ Menu.prototype.back = function(){
 	mainMenu.style.visibility="visible";
 	waiting.style.visibility="hidden";
 	game.style.visibility="hidden";
-	score.style.visibility="hidden";
+	pikachuwin.style.visibility="hidden";
+	trwin.style.visibility="hidden";
 }
 
 var menu = new Menu();
@@ -83,6 +84,11 @@ soundManager.setup({
 			  volume: 30
 		});
 		soundAssets.background.play();
+		soundAssets.pika = soundManager.createSound({
+			  id: 'pika',
+			  url: './sounds/pikachu.mp3',
+			  volume: 30
+		});
   },
   ontimeout: function() {
 		alert("soundManager failed to load");	

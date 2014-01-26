@@ -28,6 +28,7 @@ GameClientControl.prototype.registerEventListeners = function(){
 			} else if (event.keyCode === 38 || event.keyCode === 87 || event.keyCode === 32){ // up or w
 				gc.gameState.pikachu.jump();
 				gc.mainSocket.send('game input up');
+				soundAssets.pika.play();
 			} else if (event.keyCode === 40 || event.keyCode === 83){ // down or s
 				//Nothing
 			}
