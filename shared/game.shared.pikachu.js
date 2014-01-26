@@ -1,10 +1,8 @@
 // JavaScript Document
 
-var Pikachu = function(/*PhysicalObject*/ object){
-	this.prototype = object;
+var Pikachu = function(){
 	this.midair = false;
 }
-
 
 Pikachu.prototype.brake = function(){
 	this.velocity.x = -CONSTANTS.pikachuMove;
@@ -23,4 +21,10 @@ Pikachu.prototype.jump = function(){
 		this.acceleration.Y = -CONSTANTS.pikachuJump;
 		this.midair = true;
 	}
+}
+
+var PikachuFromPhysicalObject = function(/*PhysicalObject*/ object){
+	var newPikachu = new Pikachu();
+	newPikachu.prototype = object;
+	return newPikachu;
 }
