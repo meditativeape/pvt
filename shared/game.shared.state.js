@@ -62,7 +62,7 @@ GameState.prototype.addPokeball = function(/*point*/ center){
 }
 
 // Update pokeball position
-GameState.prototype.pokeballUpdate = function(){
+GameState.prototype.pokeballUpdate = function(index){
     for(var pokeballID in this.pokeballs){
 		var pokeball = this.pokeballs[pokeballID];
 		pokeball.update();
@@ -73,7 +73,7 @@ GameState.prototype.pokeballUpdate = function(){
 		else{
 			pokeball.gravity();
 		}
-		this.checkFloorBall(pokeball);
+		this.checkFloorBall(pokeball,index);
 		
 	}
 };
@@ -116,11 +116,12 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 
 }
 GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
-	if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
-	&&(pikachu.center.X-CONSTANTS.pikachuRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
-	&&(pikachu.center.X+CONSTANTS.pikachuRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
-	&&(pikachu.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
-		pikachu.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pikachuRadius;
+	
+	if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[index].center.Y-0.5*this.gameInstance.gameState.platforms[index].height)
+	&&(pikachu.center.X-CONSTANTS.pikachuRadius<this.gameInstance.gameState.platforms[index].center.X+.5*this.gameInstance.gameState.platforms[index].width)
+	&&(pikachu.center.X+CONSTANTS.pikachuRadius>this.gameInstance.gameState.platforms[index].center.X-.5*this.gameInstance.gameState.platforms[index].width)
+	&&(pikachu.center.Y<this.gameInstance.gameState.platforms[index].center.Y)){
+		pikachu.center.Y = this.gameInstance.gameState.platforms[index].center.Y-0.5*this.gameInstance.gameState.platforms[index].height-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
 		pikachu.velocity.Y = 0;
 	if(pikachu.midair === true){
@@ -134,7 +135,7 @@ GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
 
 }
 
-GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball){
+GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball,index){
 	if(pokeball.center.Y+CONSTANTS.pokeballRadius>=CONSTANTS.height-CONSTANTS.floorHeight){
 		pokeball.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pokeballRadius;
 		pokeball.accelerationY = 0;
@@ -143,18 +144,8 @@ GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball){
 			pokeball.midair = false;
 		}
 	}
-	else if((pokeball.center.Y+CONSTANTS.pokeballRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
-	&&(pokeball.center.X-CONSTANTS.pokeballRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
-	&&(pokeball.center.X+CONSTANTS.pokeballRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
-	&&(pokeball.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
-		pokeball.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pokeballRadius;
-		pokeball.accelerationY = 0;
-		pokeball.velocity.Y = 0;
-		if(pokeball.midair === true){
-			pokeball.midair = false;
-		}
-	}
-	this.gameInstance.gameState.platforms[0].checkStatusPokeball(pokeball);
+	
+	this.checkPlatform(pokeball,index);
 }
 
 
