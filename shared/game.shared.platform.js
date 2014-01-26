@@ -20,7 +20,6 @@ Platform.prototype.checkStatus = function(/*PhysicalObject*/ pikachu){
 	&&(pikachu.velocity.Y<0)
 	&&(pikachu.center.Y>this.center.Y)){
 		pikachu.velocity.Y = -pikachu.velocity.Y;
-		console.log("AAAAA");
 	}
 	//condition 2: head side
 	else if(((this.X-pikachu.center.X)<=(CONSTANTS.pikachuRadius+this.width/2.0))&&
