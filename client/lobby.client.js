@@ -90,6 +90,3 @@ LobbyClient.prototype.handleMessage = function(message){
 LobbyClient.prototype.joinGame = function(/*scenarioName*/ scenarioName){
 	this.mainSocket.send('lobby join ' + scenarioName);
 };
-
-
-

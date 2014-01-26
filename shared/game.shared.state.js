@@ -2,11 +2,11 @@
  * Server side we import shared objects.
  */
 if( 'undefined' !== typeof global ){
-    var helper = require("game.shared.helper.js");
+    var helper = require("./game.shared.helper.js");
 	var Point = helper.Point;
 	var CONSTANTS = helper.CONSTANTS;
-    var Pikachu = require("game.shared.pikachu.js");
-    var Platform = require("game.shared.platform.js");
+    var Pikachu = require("./game.shared.pikachu.js").Pikachu;
+    var Platform = require("./game.shared.platform.js").Platform;
 }
 
 /**
@@ -116,5 +116,5 @@ GameState.prototype.cleanUp = function() {
  * Server side we export GameState.
  */
 if( 'undefined' !== typeof global ) {
-    exports = GameState;
+    exports.GameState = GameState;
 }
