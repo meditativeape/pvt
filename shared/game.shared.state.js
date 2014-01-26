@@ -43,14 +43,14 @@ if( 'undefined' !== typeof global ){
 }
 
 /**
- * Shared game logic.
+ * Shared game state.
  */
-var GameLogic = function(/*GameClient or GameServer*/gameInstance) {
+var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.gameInstance = gameInstance;
 };
 
 // Loop to keep updating game physics
-GameLogic.prototype.createPhysicsSimulation = function(){
+GameState.prototype.createPhysicsSimulation = function(){
 
     //Set up some physics integration values
     this._pdt = 0.0001;                 //The physics update delta time
@@ -70,12 +70,12 @@ GameLogic.prototype.createPhysicsSimulation = function(){
 };
 
 // Update game physics once
-GameLogic.prototype.updatePhysics = function() {
+GameState.prototype.updatePhysics = function() {
     this.gameInstance.updatePhysics();
 };
 
 // Check if pikachu and pokeball collides
-GameLogic.prototype.checkCollision = function(/*point*/ pikachu, /*Point*/ pokeball) {
+GameState.prototype.checkCollision = function(/*point*/ pikachu, /*Point*/ pokeball) {
     var xdiff = pikachu.X - pokeball.X;
     var ydiff = pikachu.Y - pokeball.Y;
     if (Math.sqrt(xdiff*xdiff + ydiff*ydiff) < (CONSTANTS.pikachuRadius + CONSTANTS.pokeballRadius))
@@ -84,7 +84,7 @@ GameLogic.prototype.checkCollision = function(/*point*/ pikachu, /*Point*/ pokeb
         return false;
 };
 
-GameLogic.prototype.checkFloor = function(/*Pikachu*/ pikachu){
+GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 	if(pikachu.center.Y+CONSTANTS.pikachuRadius>=CONSTANTS.height-CONSTANTS.floorHeight){
 		pikachu.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
@@ -101,7 +101,7 @@ GameLogic.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 }
 
 // Clean up to shut down game
-GameLogic.prototype.cleanUp = function() {
+GameState.prototype.cleanUp = function() {
     clearInterval(this.physicsUpateId);
     window.cancelRequestAnimationFrame(this.networkUpdateId);
 };
