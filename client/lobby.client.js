@@ -68,7 +68,18 @@ LobbyClient.prototype.onConnected = function(message){
  * Handle message from the server
  */
 LobbyClient.prototype.handleMessage = function(message){
-	//TODO
+	console.log("game created");
+	var keywords = message.split(" ");
+	if(keywords[0].valueOf()===new String("lobby").valueOf()){
+		if(keywords[1].valueOf()===new String("start").valueOf()){
+			if(keywords[2].valueOf()===new String("pikachu").valueOf()){
+				
+				this.game = new GameClient(0,this.mainSocket);  
+			}else{
+				this.game = new GameClient(1,this.mainSocket);
+			}
+		}
+	};
 }
 
 
@@ -76,8 +87,7 @@ LobbyClient.prototype.handleMessage = function(message){
  * Tell server client wishes to join a particular game.
  */
 LobbyClient.prototype.joinGame = function(/*scenarioName*/ scenarioName){
-	this.game = new GameClient(0);  
-	this.mainSocket.send('0 join ' + scenarioName);
+	this.mainSocket.send('lobby join ' + scenarioName);
 };
 
 

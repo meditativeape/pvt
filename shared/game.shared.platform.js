@@ -35,6 +35,11 @@ Platform.prototype.checkStatus = function(/*PhysicalObject*/ pikachu){
 	}
 	return;
 	*/
-
 }
 
+/**
+ * Server side we export Platform.
+ */
+if( 'undefined' !== typeof global ) {
+    exports = Platform;
+}

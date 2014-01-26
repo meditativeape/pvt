@@ -14,12 +14,10 @@ var UUID = require('node-uuid');
  * Set up LobbyServer.
  */
 var LobbyServer = function(){
-	// List to store open game instances
-	this.games = [];
-	//Number of game instances
-	this.openGames = 0;
-
-	
+	this.gamesThatNeedPikachu = [];
+	this.numberOfGamesThatNeedPikachu = 0;
+	this.gamesThatNeedTR = [];
+	this.numberOfGamesThatNeedTR = 0;	
 }
 
 /**
@@ -103,9 +101,21 @@ LobbyServer.prototype.onDisconnect = function(client) {
  */
 LobbyServer.prototype.handleMessage = function(client,message){
 	console.log(":: server :: received a message: " + message);
-			
+	var type = null;
+	var keywords = message.split(" ");
+	if(keywords[0].valueOf()===new String("lobby").valueOf()){
+		if(keywords[1].valueOf()===new String("join").valueOf()){
+			if(keywords[2].valueOf()===new String("pikachu").valueOf()){
+				type = 0;
+			}else if(keywords[2].valueOf()===new String("tr").valueOf()){
+				type = 1;
+			}else{
+				type = 2;
+			}
+		}
+	};
 	//TODO
-	this.findGame(client,null);
+	this.findGame(client,type);
 	
 }
 
@@ -113,55 +123,99 @@ LobbyServer.prototype.handleMessage = function(client,message){
  * Find a game for player to join.
  */
 LobbyServer.prototype.findGame = function(player, type) {
-	//If open game available join game
-	if(this.openGames>0){
-		for(var openGameID in this.games){
-			var openGame = this.games[openGameID]
-			this.games.splice(openGameID, openGameID+1);
-            this.openGames--;
+	if(type===0 || type===2){
+		if(this.numberOfGamesThatNeedPikachu>0){
 			
-			openGame.setTRPlayer(player);
+			var gameThatNeedsPikachu = this.gamesThatNeedPikachu[0]
+			this.gamesThatNeedPikachu.splice(0, 1);
+			this.numberOfGamesThatNeedPikachu--;
+			gameThatNeedsPikachu.setPikachuPlayer(player);
+			// Tell the player that he joins the game
+			player.send('lobby start pikachu');
+			player.game = gameThatNeedsPikachu;
 			
 			// Tell the player that he joins the game
-			player.send('0 join 1 ' + player.userid);
-			player.game = openGame;
+			gameThatNeedsPikachu.trPlayer.send('lobby start tr');
 			
+			gameThatNeedsPikachu.start();
 			
 			//Log the event
 			this.log(':: server :: Player ' + player.userid.substring(0,8) + ' Joined a game with id '
 			+ player.game.id.substring(0,8));
+			return;
+		}
+		else if(type===0){
+			this.createGame(player,0);
 		}
 	}
-	//Else create game
-	else{
-		this.createGame(player,type);
+	if(type===1 || type===2){
+		if(this.numberOfGamesThatNeedTR>0){
+			var gameThatNeedsTR = this.gamesThatNeedTR[0]
+			this.gamesThatNeedTR.splice(0, 1);
+			this.numberOfGamesThatNeedTR--;
+			gameThatNeedsTR.setTRPlayer(player);
+			// Tell the player that he joins the game
+			player.send('lobby start tr');
+			player.game = gameThatNeedsTR;
+			
+			// Tell the player that he joins the game
+	 		gameThatNeedsTR.pikachuPlayer.send('lobby start pikachu');
+			
+			gameThatNeedsTR.start();
+			
+			//Log the event
+			this.log(':: server :: Player ' + player.userid.substring(0,8) + ' Joined a game with id '
+			+ player.game.id.substring(0,8));
+			return;
+		}
+		else{
+			this.createGame(player,1);
+		}
 	}
+	
 	
 };    
 
 // Define some required functions
 LobbyServer.prototype.createGame = function(player, type) {
 	// Create a new game instance
-	var theGame = new GameServer();
+	var newGame = new GameServer();
 	
-	theGame.setPikachuPlayer(player); 
+	if(type === 0){
+		newGame.setPikachuPlayer(player); 
+		// Store it in the list of game
+	   this.gamesThatNeedTR.push(newGame);
+	  // Keep track of #games
+	  this.numberOfGamesThatNeedTR++;
 	
-	// Store it in the list of game
-	this.games.push(theGame);
+	  
+	  player.game = newGame;
+	  
+	  //Log the event
+	  this.log(':: server :: Player ' + player.userid.substring(0,8) + ' created a game with id '
+	  + player.game.id.substring(0,8));
 
-	// Keep track of #games
-	this.openGames++;
-
-	// Tell the player that he joins the game
-	player.send('0 join 1 ' + player.userid);
-	player.game = theGame;
+	}
+	if(type === 1){
+		newGame.setTRPlayer(player); 
+		// Store it in the list of game
+	   this.gamesThatNeedPikachu.push(newGame);
+	  // Keep track of #games
+	  this.numberOfGamesThatNeedPikachu++;
 	
-	//Log the event
-	this.log(':: server :: Player ' + player.userid.substring(0,8) + ' created a game with id '
-	+ player.game.id.substring(0,8));
+	  
+	  player.game = newGame;
+	  
+	  //Log the event
+	  this.log(':: server :: Player ' + player.userid.substring(0,8) + ' created a game with id '
+	  + player.game.id.substring(0,8));
+	}
+	
+	
+	
 
-	// return it
-	return theGame;
+	
+
 }; 
 
 //Export Lobby
