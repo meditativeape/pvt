@@ -84,10 +84,14 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
  * Physics update loop.
  */
 GameServer.prototype.physicsUpdate = function(){
-    //this.processInput();
     this.gameState.pikachu.update();
-    if(this.gameState.pikachu.cooldown > 0){
+
+	this.gameState.pokeballUpdate();
+	if(this.gameState.pikachu.cooldown>0){
 		this.gameState.pikachu.cooldown--;
+	}
+	if(this.gameState.pokeballDelay>0){
+		this.gameState.pokeballDelay--;
 	}
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
@@ -138,7 +142,9 @@ GameServer.prototype.networkUpdate = function(){
         // pikachuLastInputSeq: this.pikachuPlayer.lastInputSeq,
         // trLastInputSeq: this.trPlayer.lastInputSeq,
         // time: this.serverTime
-        scrollMeter: this.gameState.scrollMeter
+        scrollMeter: this.gameState.scrollMeter,
+        pokeballs: this.gameState.pokeballs,
+        platforms: this.gameState.platforms
     };
     
     // send the snapshot to both states

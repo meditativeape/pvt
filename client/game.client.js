@@ -73,13 +73,16 @@ GameClient.prototype.processPikachuInput = function(/*String*/ action){
 };
 
 GameClient.prototype.processTRInput = function(/*Point*/ pokeballPos){
-    // TODO
+    this.gameState.addPokeball(pokeballPos);
 };
 
 GameClient.prototype.handleServerUpdate = function(/*object*/ update){
     this.gameState.scrollMeter = update.scrollMeter;
     // TODO: naive approach. add interpolation!
     this.gameState.pikachu.center = update.pikachuPos;
+    this.gameState.scrollMeter = update.scrollMeter;
+    this.gameState.pokeballs = update.pokeballs;
+    this.gameState.platforms = update.platforms;
 };
 
 GameClient.prototype.cleanUp = function(){
