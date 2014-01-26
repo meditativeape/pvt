@@ -110,35 +110,15 @@ GameClientUI.prototype.draw = function(){
     
     this.platformsToDraw = [];
     
-
-    
-    /*
-    	this.platformImage[0] = new Kinetic.Image({
-    	image: this.platformMid,
-        x: this.gameState.platforms[i].center.X-.5*this.gameState.platforms[i].width,
-        y: this.gameState.platforms[i].center.Y-.5*this.gameState.platforms[i].height,
-        width: this.gameState.platforms[i].width,
-        height: this.gameState.platforms[i].height
-        });
-        console.log(i);
-    this.platformLayer.add(this.platformImage);
-    
-    */
-    for(var i=0;i<this.gameState.platforms.length;i++){
-	console.log(this.gameState.platforms[i]);}
-	console.log(this.gameState.platforms.length);
     this.platAnim = new Kinetic.Animation(function(frame){
-    	console.log(me.gameState.platforms.length);
     	while(me.platformsToDraw.length < me.gameState.platforms.length){
     		var pfLen = me.gameState.platforms.length-1;
-    		//console.log(me.gameState.platforms);
     		var temp=new Kinetic.Image({
  	   		image: me.platformMid,
  	       	x: me.gameState.platforms[pfLen].center.X+.5*me.gameState.platforms[pfLen].width,
         	y: me.gameState.platforms[pfLen].center.Y+.5*me.gameState.platforms[pfLen].height,
         	width: me.gameState.platforms[pfLen].width,
         	height: me.gameState.platforms[pfLen].height});
-        	//console.log(pfLen);
     		me.platformsToDraw.push(temp);
     		me.platformLayer.add(temp);
     		}
@@ -154,7 +134,6 @@ GameClientUI.prototype.draw = function(){
 
 	}, this.platformLayer);
 	this.platAnim.start();
-  
     
     // Create two Kinetic image objects for the scrolling floor
     var floor1 = new Kinetic.Image({
