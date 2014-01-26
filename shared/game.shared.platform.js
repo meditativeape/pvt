@@ -59,7 +59,7 @@ Platform.prototype.checkStatus = function(/*Pikachu*/ pikachu){
 	*/
 }
 
-Platform.prototype.checkStatus = function(/*PhysicalObject*/ pokeball){
+Platform.prototype.checkStatusPokeball = function(/*PhysicalObject*/ pokeball){
 	//condition 1: bottom side
 	if((pokeball.center.Y-CONSTANTS.pokeballRadius)<=(this.center.Y+this.height/2.0)
 	&&(pokeball.center.X-CONSTANTS.pokeballRadius<=this.center.X+this.width/2.0)

@@ -34,16 +34,16 @@ GameClient.prototype.randomNumber = function(mac,min){
 }
 
 GameClient.prototype.physicsUpdate = function(){
-	console.log(this.count);
 	if(this.count == 0){
 	var platFormLength = this.randomNumber(1,5);
 	for(var i = 0;i<platFormLength;i++){
 	this.gameState.platforms.push(new Platform(new Point(CONSTANTS.width+(1+i)*CONSTANTS.platformUnitWidth,CONSTANTS.pikachuStartY-30),new Point(CONSTANTS.platformSpeed,0),0));
 	}
 	this.count = this.randomNumber(3*CONSTANTS.platformUnitWidth,2*CONSTANTS.platformUnitWidth);
-	console.log("Count is 0, add new platform!");
+
 	}
 	this.count --;//speed can be changed
+
 	
     this.gameState.pikachu.update();
 
@@ -64,6 +64,7 @@ GameClient.prototype.physicsUpdate = function(){
 		this.gameState.platforms.splice(0, 1);
 		this.gameState.pokeballUpdate(i);
 	}
+
 	}
 	
 };
@@ -83,7 +84,6 @@ GameClient.prototype.handleMessage = function(/*string*/message){
 };
 
 GameClient.prototype.processPikachuInput = function(/*String*/ action){
-    console.log(action);
     switch(action) {
     case "left":
         this.gameState.pikachuBrake();
@@ -102,13 +102,16 @@ GameClient.prototype.processPikachuInput = function(/*String*/ action){
 };
 
 GameClient.prototype.processTRInput = function(/*Point*/ pokeballPos){
-    // TODO
+    this.gameState.addPokeball(pokeballPos);
 };
 
 GameClient.prototype.handleServerUpdate = function(/*object*/ update){
     this.gameState.scrollMeter = update.scrollMeter;
     // TODO: naive approach. add interpolation!
     this.gameState.pikachu.center = update.pikachuPos;
+    this.gameState.scrollMeter = update.scrollMeter;
+    this.gameState.pokeballs = update.pokeballs;
+    this.gameState.platforms = update.platforms;
 };
 
 GameClient.prototype.cleanUp = function(){

@@ -73,7 +73,9 @@ GameState.prototype.pokeballUpdate = function(index){
 		else{
 			pokeball.gravity();
 		}
+
 		this.checkFloorBall(pokeball,index);
+
 		
 	}
 };
@@ -135,17 +137,22 @@ GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
 
 }
 
+
 GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball,index){
+
 	if(pokeball.center.Y+CONSTANTS.pokeballRadius>=CONSTANTS.height-CONSTANTS.floorHeight){
 		pokeball.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pokeballRadius;
 		pokeball.accelerationY = 0;
 		pokeball.velocity.Y = 0;
 		if(pokeball.midair === true){
 			pokeball.midair = false;
+			pokeball.velocity.X = CONSTANTS.platformScrollSpeed;
 		}
 	}
+
 	
 	this.checkPlatform(pokeball,index);
+
 }
 
 
