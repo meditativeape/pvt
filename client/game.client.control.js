@@ -45,9 +45,8 @@ GameClientControl.prototype.registerEventListeners = function(){
 	else{
 		var onclick = function(event){
 			if(gc.gameState.pokeballDelay === 0){	
-				var x = event.pageX - this.offsetLeft 
-				var y = event.pageY - this.offsetTop
-				console.log(new Point(x,y));
+				var x = event.pageX - this.offsetLeft; 
+				var y = event.pageY - this.offsetTop;
 				gc.gameState.addPokeball(new Point(x,y));
 				gc.mainSocket.send('game input ' + x + ' ' + y);
 				gc.gameState.pokeballDelay = gc.gameState.currentDelay;

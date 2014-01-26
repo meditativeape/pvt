@@ -189,7 +189,8 @@ GameServer.prototype.handleMessage = function(client, message){
             }
             this.sendMsg(this.trPlayer, message); // TODO: change time???
         } else {
-            // var newPokeballPos = new Point(parseInt(keywords[3]), parseInt(keywords[4]))
+            var newPokeballPos = new Point(parseInt(keywords[2]), parseInt(keywords[3]))
+            this.gameState.addPokeball(newPokeballPos);
             // var input = {
                 // pos: new Point(parseInt(keywords[3]), parseInt(keywords[4]))
             // };
