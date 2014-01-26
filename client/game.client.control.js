@@ -24,7 +24,6 @@ GameClientControl.prototype.registerEventListeners = function(){
 				gc.pikachu.dash();
 			} else if (event.keyCode === 38 || event.keyCode === 87){ // up or w
 				gc.pikachu.jump();
-				console.log(gc.pikachu);
 			} else if (event.keyCode === 40 || event.keyCode === 83){ // down or s
 				//Nothing
 			}

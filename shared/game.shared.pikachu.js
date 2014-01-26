@@ -14,8 +14,7 @@ Pikachu.prototype.constructor = Pikachu;
 
 // Decrease velocity
 Pikachu.prototype.brake = function(){
-
-	if(this.center<CONSTANTS.pikachuBoundLeft){
+	if(this.center.X<CONSTANTS.pikachuBoundLeft){
 		this.velocity.X = CONSTANTS.pikachuMove*2
 	}
 	else if(this.center.X>CONSTANTS.pikachuBoundRight){
