@@ -139,8 +139,6 @@ GameClientUI.prototype.draw = function(){
     this.platformLayerAnim.start();
     
     // Create a Pikachu
-    console.log(this.client.pikachu);
-    console.log(this.client.pikachu.center);
     this.pikachuToDraw = new Kinetic.Circle({
         radius: CONSTANTS.pikachuRadius,
         fill: 'yellow',

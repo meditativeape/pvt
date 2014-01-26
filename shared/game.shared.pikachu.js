@@ -5,15 +5,33 @@ var Pikachu = function(){
 }
 
 Pikachu.prototype.brake = function(){
-	this.velocity.x = -CONSTANTS.pikachuMove;
+	if(this.center<CONSTANTS.pikachuBoundLeft){
+		this.velocity.x = CONSTANTS.pikachuMove*2
+	}
+	else{
+		this.velocity.x = -CONSTANTS.pikachuMove;
+	}
 }
 
 Pikachu.prototype.dash = function(){
-	this.velocity.x = CONSTANTS.pikachuMove;
+	if(this.center>CONSTANTS.pikachuBoundRight){
+		this.velocity.x = -CONSTANTS.pikachuMove*2
+	}
+	else{
+		this.velocity.x = CONSTANTS.pikachuMove;
+	}
 }
 
 Pikachu.prototype.normal = function(){
-	this.velocity.x = 0;
+	if(this.center<CONSTANTS.pikachuBoundLeft){
+		this.velocity.x = CONSTANTS.pikachuMove*2
+	}
+	else if(this.center>CONSTANTS.pikachuBoundRight){
+		this.velocity.x = -CONSTANTS.pikachuMove*2
+	}
+	else{	
+		this.velocity.x = 0;
+	}
 }
 
 Pikachu.prototype.jump = function(){
