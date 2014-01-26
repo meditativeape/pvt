@@ -30,6 +30,10 @@ GameServer.prototype.leaveGame = function(/*client*/ player){
 	//TODO
 };
 
+GameServer.prototype.handleMessage = function(client, message){
+	//TODO
+};
+
 GameServer.prototype.physicsUpdate = function(){
     
 };

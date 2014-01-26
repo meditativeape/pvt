@@ -131,7 +131,7 @@ LobbyServer.prototype.findGame = function(player, type) {
 			this.numberOfGamesThatNeedPikachu--;
 			gameThatNeedsPikachu.setPikachuPlayer(player);
 			// Tell the player that he joins the game
-			player.send('start pikachu');
+			player.send('lobby start pikachu');
 			player.game = gameThatNeedsPikachu;
 			
 			
@@ -151,7 +151,7 @@ LobbyServer.prototype.findGame = function(player, type) {
 			this.numberOfGamesThatNeedTR--;
 			gameThatNeedsTR.setTRPlayer(player);
 			// Tell the player that he joins the game
-			player.send('start tr');
+			player.send('lobby start tr');
 			player.game = gameThatNeedsTR;
 			
 			
@@ -181,7 +181,7 @@ LobbyServer.prototype.createGame = function(player, type) {
 	  this.numberOfGamesThatNeedTR++;
 	
 	  // Tell the player that he joins the game
-	  player.send('start pikachu');
+	  player.send('lobby start pikachu');
 	  player.game = newGame;
 	  
 	  //Log the event
@@ -197,7 +197,7 @@ LobbyServer.prototype.createGame = function(player, type) {
 	  this.numberOfGamesThatNeedPikachu++;
 	
 	  // Tell the player that he joins the game
-	  player.send('start tr');
+	  player.send('lobby start tr');
 	  player.game = newGame;
 	  
 	  //Log the event
@@ -209,8 +209,7 @@ LobbyServer.prototype.createGame = function(player, type) {
 	
 
 	
-	// return it
-	return theGame;
+
 }; 
 
 //Export Lobby
