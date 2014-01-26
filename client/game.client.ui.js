@@ -207,11 +207,11 @@ GameClientUI.prototype.draw = function(){
             }));
 			me.frontLayer.add(me.pokeballsToDraw[me.pokeballsToDraw.length-1])
         }
-        while (me.gameState.pokeballs.length < me.pokeballsToDraw.length) {
-            me.pokeballsToDraw[0].destory;
-            me.pokeballsToDraw.splice(0, 1);
+        for (var i = me.gameState.pokeballs.length; i < me.pokeballsToDraw.length; i++) {
+        	me.pokeballsToDraw[i].visible(false);
         }
-        for (var i = 0; i < me.pokeballsToDraw.length; i++) {
+        for (var i = 0; i < me.gameState.pokeballs.length; i++) {
+        	me.pokeballsToDraw[i].visible(true);
             me.pokeballsToDraw[i].setAbsolutePosition({
                 x: me.gameState.pokeballs[i].center.X+25 - 0.5 * me.pokeball.width,
                 y: me.gameState.pokeballs[i].center.Y+25 - 0.5 * me.pokeball.height

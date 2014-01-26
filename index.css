@@ -27,6 +27,12 @@ html , body {
 	font-size:40px;
 }
 
+#back{
+	font-family: Lucida Console;
+	font-size:40px;
+}
+
+
 #scenario{
 	color: #000; 
 	font-family: Lucida Console;
@@ -39,7 +45,6 @@ html , body {
 
 #game {
 	visibility: hidden;
-	background: #00FFFF;
 }
 
 #waiting {
@@ -47,7 +52,15 @@ html , body {
 	background: #FFFFFF;
 }
 
-#score {
+#trwin {
+	color: #FFF; 
+
 	visibility: hidden;
-	background: #FFFF00;
+	background: #000000;
+}
+
+#pikachuwin {
+	color: #FFF; 
+	visibility: hidden;
+	background: #000000;
 }

@@ -33,11 +33,20 @@ Menu.prototype.start = function(){
 	score.style.visibility="hidden";
 }
 
-Menu.prototype.score = function(/*int*/type, /*int*/score){
+Menu.prototype.trwin = function(){
 	mainMenu.style.visibility="hidden";
 	waiting.style.visibility="hidden";
 	game.style.visibility="hidden";
-	score.style.visibility="visible";
+	trwin.style.visibility="visible";
+	pikachuwin.style.visibility="hidden";
+}
+
+Menu.prototype.pikachuwin = function(){
+	mainMenu.style.visibility="hidden";
+	waiting.style.visibility="hidden";
+	game.style.visibility="hidden";
+	pikachuwin.style.visibility="visible";
+	trwin.style.visibility="hidden";
 }
 
 
@@ -49,3 +58,52 @@ Menu.prototype.back = function(){
 }
 
 var menu = new Menu();
+
+
+/**
+ * Sound manager setup.
+ */
+ 
+//Data structure for sound Assets.
+var soundAssets = {};
+ 
+//Load sounds
+soundManager.setup({
+  url: '/lib/',
+  flashVersion: 8, // optional: shiny features (default = 8)
+  useFlashBlock: true, // optionally, enable when you're ready to dive in
+//   * read up on HTML5 audio support, if you're feeling adventurous.
+//   * iPad/iPhone and devices without flash installed will always attempt to use it.
+//   
+  onready: function() {
+    	soundAssets.background = soundManager.createSound({
+			  id: 'background',
+			  url: './sounds/background.mp3',
+			  onfinish: function(){soundAssets.background.play();},
+			  volume: 30
+		});
+		soundAssets.background.play();
+  },
+  ontimeout: function() {
+		alert("soundManager failed to load");	
+	}
+});
+
+var blurred = false;
+
+var onBlur = function() {
+	if(!blurred){
+		soundManager.mute();
+		blurred = true;
+	}
+};
+
+var onFocus = function() {
+	if(blurred){
+		soundManager.unmute();
+		blurred = false;
+	}
+};
+
+window.onfocus = onFocus;
+window.onblur = onBlur;
