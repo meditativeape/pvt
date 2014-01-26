@@ -2,10 +2,7 @@
  * Server side we import shared objects.
  */
 if( 'undefined' !== typeof global ){
-    var helper = require("./game.shared.helper.js");
-	var Point = helper.Point;
-	var CONSTANTS = helper.CONSTANTS;
-    var PhysicalObject = require("./game.shared.object.js").PhysicalObject;
+    var PhysicalObject = require("./game.shared.object.js");
 }
 
 //define/init the platform class
@@ -22,6 +19,7 @@ Platform.prototype = new PhysicalObject();
 
 // Correct the constructor pointer to Platform
 Platform.prototype.constructor = Platform;
+
 
 Platform.prototype.move = function(){
 	this.velocity.X = CONSTANTS.platformSpeed;
@@ -60,5 +58,5 @@ Platform.prototype.checkStatus = function(/*Pikachu*/ pikachu){
  * Server side we export Platform.
  */
 if( 'undefined' !== typeof global ) {
-    exports.Platform = Platform;
+    module.exports = Platform;
 }

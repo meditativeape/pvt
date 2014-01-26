@@ -2,10 +2,7 @@
  * Server side we import shared objects.
  */
 if( 'undefined' !== typeof global ){
-    var helper = require("./game.shared.helper.js");
-	var Point = helper.Point;
-	var CONSTANTS = helper.CONSTANTS;
-    var PhysicalObject = require("./game.shared.object.js").PhysicalObject;
+    var PhysicalObject = require("./game.shared.object.js");
 }
 
 // Pikachu inherits Physical
@@ -63,8 +60,7 @@ Pikachu.prototype.normal = function(){
 // Jump
 Pikachu.prototype.jump = function(){
 	if(this.midair === false){
-
-		if(this.cooldown === 0){
+        if(this.cooldown === 0){
 			this.velocity.Y = -CONSTANTS.pikachuJump;
 			this.midair = true;
 		}
@@ -75,5 +71,5 @@ Pikachu.prototype.jump = function(){
  * Server side we export Pikachu :)
  */
 if( 'undefined' !== typeof global ) {
-    exports.Pikachu = Pikachu;
+    module.exports = Pikachu;
 }

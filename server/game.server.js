@@ -5,14 +5,14 @@ if( 'undefined' !== typeof global ){
     var helper = require("../shared/game.shared.helper.js");
 	var Point = helper.Point;
 	var CONSTANTS = helper.CONSTANTS;
-    var GameState = require("../shared/game.shared.state.js").GameState;
+    var GameState = require("../shared/game.shared.state.js");
 };
 
 // Import UUID
 var UUID = require('node-uuid');
 
 var GameServer = function(){
-    this.gameState = new GameState(this);    
+    this.gameState = new GameState(this);
 	this.pikachuPlayer = null;
 	this.trPlayer = null;
     this.started = false;
@@ -50,18 +50,17 @@ GameServer.prototype.setTRPlayer = function(/*client*/ player){
 
 GameServer.prototype.start = function(){
 	this.started = true;
-    this.gameState.start();
     this.physicsId = setInterval(this.physicsUpdate.bind(this), 15); // update physics every 15ms
-    this.networkId = setInterval(this.networkUpdate.bind(this), 45); // update client states every 45ms
+    this.networkId = setInterval(this.networkUpdate.bind(this), 45); // update clients every 15ms
 }
-
-GameServer.prototype.leaveGame = function(/*client*/ player){
-	//TODO
-};
 
 GameServer.prototype.cleanUp = function(){
     clearInterval(this.physicsId);
     clearInterval(this.networkId);
+}
+
+GameServer.prototype.leaveGame = function(/*client*/ player){
+	//TODO
 };
 
 /**
@@ -69,15 +68,15 @@ GameServer.prototype.cleanUp = function(){
  */
 GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message){
     var clientIdentity;
-    if (recipient.id === this.pikachuPlayer.id) {
+    if (recipient.userid === this.pikachuPlayer.userid) {
         clientIdentity = "pikachu";
-    } else if (recipient.id === this.trPlayer.id) {
+    } else if (recipient.userid === this.trPlayer.userid) {
         clientIdentity = "team rocket";
     } else {
-        console.log("Error! Unrecognized player " + recipient.id + "when sending message");
+        console.log("Error! Unrecognized player " + recipient.userid.substring(0,8)  + "when sending message");
         return;
     }
-	console.log(this.id.substring(0,8) + " sends a message to " + clientIdentity + " " + recipient.player + ": " + message);
+	console.log(this.id.substring(0,8) + " sends a message to " + clientIdentity + " " + recipient.userid.substring(0,8) + ": " + message);
 	recipient.send(message);
 };
 
@@ -146,15 +145,17 @@ GameServer.prototype.networkUpdate = function(){
 GameServer.prototype.handleMessage = function(client, message){
     var keywords = message.split(" ");
     var clientIdentity;
-    if (client.id === this.pikachuPlayer.id) {
+    if (client.userid === this.pikachuPlayer.userid) {
         clientIdentity = "pikachu";
-    } else if (client.id === this.trPlayer.id) {
+    } else if (client.userid === this.trPlayer.userid) {
         clientIdentity = "team rocket";
     } else {
-        console.log("Error! " + this.id.substring(0,8) + " received message from unrecognized player " + client.id + ": " + message);
+        console.log("Error! " + this.userid.substring(0,8) + " received message from unrecognized player " + client.userid.substring(0,8) + ": " + message);
+        console.log(client.userid + '!=' + this.pikachuPlayer.userid);
+        console.log(client.userid + '!=' + this.trPlayer.userid);
         return;
     }
-    console.log(this.id.substring(0,8) + " received a message from " + clientIdentity + ": " + message);
+    console.log(this.id.substring(0,8) + " received a message from " + clientIdentity + " " + client.userid.substring(0,8) + ": " + message);
     
     switch (keywords[1]) {
     case "input":

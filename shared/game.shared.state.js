@@ -5,8 +5,8 @@ if( 'undefined' !== typeof global ){
     var helper = require("./game.shared.helper.js");
 	var Point = helper.Point;
 	var CONSTANTS = helper.CONSTANTS;
-    var Pikachu = require("./game.shared.pikachu.js").Pikachu;
-    var Platform = require("./game.shared.platform.js").Platform;
+    var Pikachu = require("./game.shared.pikachu.js");
+    var Platform = require("./game.shared.platform.js");
 }
 
 /**
@@ -93,8 +93,6 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 			pikachu.cooldown = CONSTANTS.pikachuJumpCooldown;
 			pikachu.midair = false;
 		}
-		
-		
 	}
 	else if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
 	&&(pikachu.center.X-CONSTANTS.pikachuRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
@@ -107,6 +105,8 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 			pikachu.cooldown = CONSTANTS.pikachuJumpCooldown;
 			pikachu.midair = false;
 		}
+				
+
 	}
 	this.gameInstance.gameState.platforms[0].checkStatus(pikachu);
 }
@@ -122,5 +122,5 @@ GameState.prototype.cleanUp = function() {
  * Server side we export GameState.
  */
 if( 'undefined' !== typeof global ) {
-    exports.GameState = GameState;
+    module.exports = GameState;
 }

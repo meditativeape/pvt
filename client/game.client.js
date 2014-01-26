@@ -12,7 +12,7 @@ var GameClient = function(/*int*/type, /*socketIO*/ mainSocket) {
 	this.gameState = new GameState(this);
 
     this.gameState.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY-30),new Point(-5,0),0);
-	 this.gameState.start();
+	this.gameState.start();
     
 	this.gameClientUI = new GameClientUI(this.gameState);
     this.gameClientUI.initialize();
@@ -23,14 +23,14 @@ var GameClient = function(/*int*/type, /*socketIO*/ mainSocket) {
 
 GameClient.prototype.start = function(){
     this.physicsId = setInterval(this.physicsUpdate.bind(this), 15);  // update physics every 15ms
-    //this.socket.on('message', this.handleMessage.bind(this));
 };
 
 GameClient.prototype.physicsUpdate = function(){
+    this.gameState.pikachu.update();
 	if(this.gameState.pikachu.cooldown>0){
 		this.gameState.pikachu.cooldown--;
 	}
-    this.gameState.pikachu.update();
+
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
 	this.gameState.platforms[0].move();
@@ -40,21 +40,19 @@ GameClient.prototype.handleMessage = function(/*string*/message){
     var keywords = message.split(" ");
     switch (keywords[1]) {
     case "input":
-        if (this.type === 0) { // I am Pikachu
+        if (this.type == 0) { // pikachu handles pokeball
+            var pokeballPos = new Point(parseInt(keywords[3]), parseInt(keywords[4]));
+            this.processTRInput(pokeballPos);
+        } else { // tr handles pikachu
             this.processPikachuInput(keywords[2]);
-        } else { // I am TR
-            this.processTRInput(new Point(parseInt(keywords[2], keywords[3])));
         }
-        break;
-    case "end":
-        break;
-    case "platform":
         break;
     }
 };
 
-GameClient.prototype.processPikachuInput = function(/*string*/move){
-    switch (move) {
+GameClient.prototype.processPikachuInput = function(/*String*/ action){
+    console.log(action);
+    switch(action) {
     case "left":
         this.gameState.pikachuBrake();
         break;
@@ -69,11 +67,11 @@ GameClient.prototype.processPikachuInput = function(/*string*/move){
         break;
     default:
     }
-}
+};
 
-GameClient.prototype.processTRInput = function(/*Point*/pokeballCenter){
+GameClient.prototype.processTRInput = function(/*Point*/ pokeballPos){
     // TODO
-}
+};
 
 GameClient.prototype.cleanUp = function(){
     clearInterval(this.physicsId);
