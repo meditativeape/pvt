@@ -18,11 +18,10 @@ var GameClientUI = function(/*GameClient*/ client){
     // sprites
     this.background = null;
     this.floor = null;
-    this.platform = null;
-    this.grassHalf = null;
-    this.grassHalfLeft = null;
-    this.grassHalfMid = null;
-    this.grassHalfRight = null;
+    this.platformLeft = null;
+    this.platformMid = null;
+    this.platformRight = null;
+    this.platformSingle = null;
     
     // Kinetic objects
     this.pikachuToDraw = null;
@@ -52,12 +51,10 @@ GameClientUI.prototype.initialize = function(){
      
     this.background = loadImage("..\\sprites\\background.png");
     this.floor = loadImage("..\\sprites\\floor.png");
-    this.grassHalf = loadImage("..\\sprites\\grassHalf.png");
-    this.grassHalfLeft = loadImage("..\\sprites\\grassHalfLeft.png");
-    this.grassHalfMid = loadImage("..\\sprites\\grassHalfMid.png");
-    this.grassHalfRight = loadImage("..\\sprites\\grassHalfRight.png");
-    
-    //while (!hasLoaded) {}
+    this.platformLeft = loadImage("..\\sprites\\platformLeft.png");
+    this.platformMid = loadImage("..\\sprites\\platformMid.png");
+    this.platformRight = loadImage("..\\sprites\\platformRight.png");
+    this.platformSingle = loadImage("..\\sprites\\platformSingle.png");
 };
 
 /**
@@ -140,20 +137,20 @@ GameClientUI.prototype.draw = function(){
     this.pikachuToDraw = new Kinetic.Circle({
         radius: CONSTANTS.pikachuRadius,
         fill: 'yellow',
-        x: this.client.pikachu.center.X,
-        y: this.client.pikachu.center.Y,
+        x: this.client.gameState.pikachu.center.X,
+        y: this.client.gameState.pikachu.center.Y,
     });
     this.frontLayer.add(this.pikachuToDraw);
 	
     this.frontLayerAnim = new Kinetic.Animation(function(frame){
 		
-		me.client.pikachu.update();
-		me.client.pikachu.gravity();
-		me.client.gameLogic.checkFloor(me.client.pikachu);
+		me.client.gameState.pikachu.update();
+		me.client.gameState.pikachu.gravity();
+		me.client.gameState.checkFloor(me.client.gameState.pikachu);
 		
 	
-        me.pikachuToDraw.setAbsolutePosition({x:me.client.pikachu.center.X,
-                                              y:me.client.pikachu.center.Y});
+        me.pikachuToDraw.setAbsolutePosition({x:me.client.gameState.pikachu.center.X,
+                                              y:me.client.gameState.pikachu.center.Y});
     }, this.frontLayer);
 	this.frontLayerAnim.start();
 

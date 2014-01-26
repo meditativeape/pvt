@@ -19,11 +19,11 @@ GameClientControl.prototype.registerEventListeners = function(){
 	if(gc.type === 0){
 		var keydown = function(event){
 			if (event.keyCode === 37 || event.keyCode === 65){ // left or a
-				gc.pikachu.brake();
+				gc.gameState.pikachuBrake();
 			} else if (event.keyCode === 39 || event.keyCode === 68){ // right or d
-				gc.pikachu.dash();
+				gc.gameState.pikachuDash();
 			} else if (event.keyCode === 38 || event.keyCode === 87){ // up or w
-				gc.pikachu.jump();
+				gc.gameState.pikachuJump();
 			} else if (event.keyCode === 40 || event.keyCode === 83){ // down or s
 				//Nothing
 			}
@@ -32,7 +32,7 @@ GameClientControl.prototype.registerEventListeners = function(){
 		
 		// Event listener for releasing a key to stop moving pikachu.
 		var keyup = function(event){
-			gc.pikachu.normal();
+			gc.gameState.pikachuNormal();
 		};
 		document.addEventListener('keyup', keyup);
 	}

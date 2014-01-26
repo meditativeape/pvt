@@ -28,7 +28,7 @@ GameState.prototype.start = function(){
     this.createTimer();
 };
 
-GameServer.prototype.createTimer = function(){
+GameState.prototype.createTimer = function(){
     this.timerId = setInterval(function(){
         var dt = new Date().getTime() - this.tOld;
         this.scrollMeter = -dt/16 * CONSTANTS.platformScrollSpeed;
@@ -85,7 +85,7 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 		pikachu.velocity.Y = 0;
 		pikachu.midair = false;
 	}
-	else if(pikachu.center.Y+CONSTANTS.pikachuRadius<=this.gameInstance.platforms[0].center.Y-0.5*this.gameInstance.platforms[0].height){
+	else if(pikachu.center.Y+CONSTANTS.pikachuRadius<=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height){
 		pikachu.center.Y = this.gameInstance.platforms[0].center.Y-0.5*this.gameInstance.platforms[0].height-CONSTANTS.pikachuRadius;
 		pikachu.accelerationY = 0;
 		pikachu.velocity.Y = 0;
