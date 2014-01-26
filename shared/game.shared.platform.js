@@ -1,3 +1,13 @@
+/**
+ * Server side we import shared objects.
+ */
+if( 'undefined' !== typeof global ){
+    var helper = require("./game.shared.helper.js");
+	var Point = helper.Point;
+	var CONSTANTS = helper.CONSTANTS;
+    var PhysicalObject = require("./game.shared.object.js").PhysicalObject;
+}
+
 //define/init the platform class
 var Platform = function(p, v, a ){
 	this.midair = false;
@@ -12,7 +22,7 @@ Platform.prototype = new PhysicalObject();
 // Correct the constructor pointer to Platform
 Platform.prototype.constructor = Platform;
 
-Platform.prototype.checkStatus = function(/*PhysicalObject*/ pikachu){
+Platform.prototype.checkStatus = function(/*Pikachu*/ pikachu){
 	//condition 1: bottom side
 	if((pikachu.center.y-CONSTANTS.pikachuRadius)==(Platform.center.y+Platform.height/2.0)
 	&&(pikachu.center.x<=Platform.center.x+Platform.width/2.0)
@@ -39,5 +49,5 @@ Platform.prototype.checkStatus = function(/*PhysicalObject*/ pikachu){
  * Server side we export Platform.
  */
 if( 'undefined' !== typeof global ) {
-    exports = Platform;
+    exports.Platform = Platform;
 }
