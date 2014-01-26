@@ -135,9 +135,9 @@ LobbyServer.prototype.findGame = function(player, type) {
 			player.game = gameThatNeedsPikachu;
 			
 			// Tell the player that he joins the game
-			game.trPlayer.send('lobby start tr');
+			gameThatNeedsPikachu.trPlayer.send('lobby start tr');
 			
-			game.start();
+			gameThatNeedsPikachu.start();
 			
 			//Log the event
 			this.log(':: server :: Player ' + player.userid.substring(0,8) + ' Joined a game with id '
@@ -159,9 +159,9 @@ LobbyServer.prototype.findGame = function(player, type) {
 			player.game = gameThatNeedsTR;
 			
 			// Tell the player that he joins the game
-	 		game.pikachuPlayer.send('lobby start pikachu');
+	 		gameThatNeedsTR.pikachuPlayer.send('lobby start pikachu');
 			
-			game.start();
+			gameThatNeedsTR.start();
 			
 			//Log the event
 			this.log(':: server :: Player ' + player.userid.substring(0,8) + ' Joined a game with id '

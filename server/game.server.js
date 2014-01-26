@@ -14,7 +14,7 @@ var GameServer = function(/*GameState*/ gameState){
     this.gameState = gameState;
 	this.pikachuPlayer = null;
 	this.trPlayer = null;
-    
+    this.started = false;
 	// Store game's uuid
 	this.id = UUID();
     
@@ -46,6 +46,10 @@ GameServer.prototype.setTRPlayer = function(/*client*/ player){
 	this.trPlayer = player;
 	this.trPlayer.inputs = [];
 };
+
+GameServer.prototype.start = function(){
+	this.started = true;
+}
 
 GameServer.prototype.leaveGame = function(/*client*/ player){
 	//TODO
