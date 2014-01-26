@@ -27,6 +27,10 @@ GameClient.prototype.start = function(){
 
 GameClient.prototype.physicsUpdate = function(){
     this.gameState.pikachu.update();
+	if(this.gameState.pikachu.cooldown>0){
+		this.gameState.pikachu.cooldown--;
+	}
+
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
 };
