@@ -2,8 +2,8 @@
  * Game Client UI.
  */
 
-var GameClientUI = function(/*GameClient*/ client){
-    this.client = client;
+var GameClientUI = function(/*GameState*/ gameState){
+    this.gameState = gameState;
     
     this.stage = new Kinetic.Stage({
         container: 'game',
@@ -22,6 +22,7 @@ var GameClientUI = function(/*GameClient*/ client){
     this.platformMid = null;
     this.platformRight = null;
     this.platformSingle = null;
+    this.pikachus = [null, null, null, null];
     
     // Kinetic objects
     this.pikachuToDraw = null;
@@ -37,7 +38,7 @@ GameClientUI.prototype.initialize = function(){
     
     var incrementCounter = function() {
         filesLoaded++;
-        if (filesLoaded >= 6) {
+        if (filesLoaded >= 10) {
             me.draw();
         }
     };
@@ -55,6 +56,10 @@ GameClientUI.prototype.initialize = function(){
     this.platformMid = loadImage("..\\sprites\\platformMid.png");
     this.platformRight = loadImage("..\\sprites\\platformRight.png");
     this.platformSingle = loadImage("..\\sprites\\platformSingle.png");
+    this.pikachus[0] = loadImage("..\\sprites\\pika1.png");
+    this.pikachus[1] = loadImage("..\\sprites\\pika2.png");
+    this.pikachus[2] = loadImage("..\\sprites\\pika3.png");
+    this.pikachus[3] = loadImage("..\\sprites\\pika4.png");
 };
 
 /**
@@ -134,23 +139,29 @@ GameClientUI.prototype.draw = function(){
     this.platformLayerAnim.start();
     
     // Create a Pikachu
-    this.pikachuToDraw = new Kinetic.Circle({
-        radius: CONSTANTS.pikachuRadius,
-        fill: 'yellow',
-        x: this.client.gameState.pikachu.center.X,
-        y: this.client.gameState.pikachu.center.Y,
+    this.pikachuToDraw = new Kinetic.Image({
+        image: this.pikachus[0],
+        x: this.gameState.pikachu.center.X - 0.5*this.pikachus[0].width,
+        y: this.gameState.pikachu.center.Y - 0.5*this.pikachus[0].height,
+        width: this.pikachus[0].width,
+        height: this.pikachus[0].height,
     });
+    this.pikachuToDraw.counter = 0;
     this.frontLayer.add(this.pikachuToDraw);
 	
     this.frontLayerAnim = new Kinetic.Animation(function(frame){
+		me.gameState.pikachu.update();
+		me.gameState.pikachu.gravity();
+		me.gameState.checkFloor(me.gameState.pikachu);
 		
-		me.client.gameState.pikachu.update();
-		me.client.gameState.pikachu.gravity();
-		me.client.gameState.checkFloor(me.client.gameState.pikachu);
-		
-	
-        me.pikachuToDraw.setAbsolutePosition({x:me.client.gameState.pikachu.center.X,
-                                              y:me.client.gameState.pikachu.center.Y});
+        if (!me.gameState.pikachu.midair) {
+            me.pikachuToDraw.counter = (me.pikachuToDraw.counter + 1) % 24;
+            me.pikachuToDraw.setImage(me.pikachus[Math.floor(me.pikachuToDraw.counter / 6)]);
+        } else {
+            me.pikachuToDraw.setImage(me.pikachus[2]);
+        }
+        me.pikachuToDraw.setAbsolutePosition({x:me.gameState.pikachu.center.X - 0.5*me.pikachus[0].width,
+                                              y:me.gameState.pikachu.center.Y - 0.5*me.pikachus[0].height});
     }, this.frontLayer);
 	this.frontLayerAnim.start();
 
