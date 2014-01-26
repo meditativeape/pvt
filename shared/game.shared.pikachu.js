@@ -3,6 +3,7 @@
 
 var Pikachu = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.midair = false;
+	this.cooldown = 0;
 	PhysicalObject.call(this,center,velocity,accelerationY);
 }
 
@@ -54,9 +55,12 @@ Pikachu.prototype.normal = function(){
 // Jump
 Pikachu.prototype.jump = function(){
 	if(this.midair === false){
-		this.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius -1;
-		this.velocity.Y = -CONSTANTS.pikachuJump;
-		this.midair = true;
+		if(this.cooldown === 0){
+			this.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pikachuRadius -1;
+			this.velocity.Y = -CONSTANTS.pikachuJump;
+			this.midair = true;
+		}
+
 	}
 }
 

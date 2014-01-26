@@ -30,7 +30,8 @@ var CONSTANTS = {
 	backgroundScrollSpeed: -0.5,
 	platformScrollSpeed: -2,
 	pikachuBoundLeft:100,
-	pikachuBoundRight:700
+	pikachuBoundRight:700,
+	pikachuJumpCooldown: 5
 };
 
 /**
