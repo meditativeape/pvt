@@ -40,6 +40,14 @@ Menu.prototype.score = function(/*int*/type, /*int*/score){
 	score.style.visibility="visible";
 }
 
+Menu.prototype.trBackground = function(){
+	document.body.background = "image.jpg";
+}
+
+Menu.prototype.pikachuBackground = function(){
+	document.body.background = "image.jpg";
+}
+
 Menu.prototype.back = function(){
 	mainMenu.style.visibility="visible";
 	waiting.style.visibility="hidden";

@@ -173,8 +173,10 @@ GameClientUI.prototype.draw = function(){
         if (!me.gameState.pikachu.midair) {
             me.pikachuToDraw.counter = (me.pikachuToDraw.counter + 1) % 24;
             me.pikachuToDraw.setImage(me.pikachus[Math.floor(me.pikachuToDraw.counter / 6)]);
+			me.pikachuToDraw.rotation(0);
         } else {
             me.pikachuToDraw.setImage(me.pikachus[2]);
+			me.pikachuToDraw.rotation(CONSTANTS.pikachuRotation);
         }
         me.pikachuToDraw.setAbsolutePosition({x:me.gameState.pikachu.center.X - 0.5*me.pikachus[0].width,
                                               y:me.gameState.pikachu.center.Y - 0.5*me.pikachus[0].height});

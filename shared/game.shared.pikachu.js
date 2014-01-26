@@ -8,6 +8,7 @@ if( 'undefined' !== typeof global ){
 // Pikachu inherits Physical
 var Pikachu = function(/*Point*/ center, /*Point*/velocity, /*int*/ accelerationY){
 	this.midair = false;
+	this.cooldown = 0;
 	PhysicalObject.call(this,center,velocity,accelerationY);
 }
 
