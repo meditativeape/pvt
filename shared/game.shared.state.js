@@ -17,24 +17,26 @@ var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.pikachu = new Pikachu(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
     this.pokeballs = [];
 	this.platforms = [];
+    this.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY-30),new Point(-5,0),0);
     this.end = false;
     this.winner = null;
-    this.scrollMeter = 0.0;
-    this.tOld = 0.0;
+    // this.scrollMeter = 0.0;
+    this.startTime = 0.0;
 };
 
 GameState.prototype.start = function(){
-    this.tOld = new Date().getTime();
-    this.createTimer();
+    this.startTime = new Date().getTime();
+    // this.createTimer();
 };
 
-GameState.prototype.createTimer = function(){
-    this.timerId = setInterval(function(){
-        var dt = new Date().getTime() - this.tOld;
-        this.scrollMeter = -dt/16 * CONSTANTS.platformScrollSpeed;
-        this.tOld = new Date().getTime();
-    }.bind(this), 4);
-};
+// GameState.prototype.createTimer = function(){
+    // this.timerId = setInterval(function(){
+        // var dt = new Date().getTime() - this.tOld;
+        // this.scrollMeter += -dt/16 * CONSTANTS.platformScrollSpeed;
+        // this.tOld = new Date().getTime();
+        // console.log(this.scrollMeter);
+    // }.bind(this), 4);
+// };
 
 GameState.prototype.pikachuBrake = function(){
     this.pikachu.brake();
@@ -99,15 +101,12 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 			pikachu.cooldown = CONSTANTS.pikachuJumpCooldown;
 			pikachu.midair = false;
 		}
-				
-
 	}
 	this.gameInstance.gameState.platforms[0].checkStatus(pikachu);
 }
 
 // Clean up to shut down game
 GameState.prototype.cleanUp = function() {
-    clearInterval(this.physicsUpateId);
     clearInterval(this.timerId);
     window.cancelRequestAnimationFrame(this.networkUpdateId);
 };

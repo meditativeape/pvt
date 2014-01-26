@@ -84,7 +84,10 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
  * Physics update loop.
  */
 GameServer.prototype.physicsUpdate = function(){
-    this.processInput();
+    //this.processInput();
+    this.gameState.pikachu.update();
+	this.gameState.pikachu.gravity();
+	this.gameState.checkFloor(this.gameState.pikachu);
 };
 
 /**
@@ -164,14 +167,24 @@ GameServer.prototype.handleMessage = function(client, message){
                 action: keywords[2],
                 time: parseInt(keywords[3])
             };
-            this.pikachuPlayer.inputs.push(input);
+            // this.pikachuPlayer.inputs.push(input);
+            if (input.action === 'left') {
+                this.gameState.pikachuBrake();
+            } else if (input.action === 'up') {
+                this.gameState.pikachuJump();
+            } else if (input.action === 'right') {
+                this.gameState.pikachuDash();
+            } else if (input.action === 'stop') {
+                this.gameState.pikachuNormal();
+            }
             this.sendMsg(this.trPlayer, message); // TODO: change time???
         } else {
-            var newPokeballPos = new Point(parseInt(keywords[3]), parseInt(keywords[4]))
-            var input = {
-                pos: new Point(parseInt(keywords[3]), parseInt(keywords[4]))
-            };
-            this.trPlayer.inputs.push(input);
+            // var newPokeballPos = new Point(parseInt(keywords[3]), parseInt(keywords[4]))
+            // var input = {
+                // pos: new Point(parseInt(keywords[3]), parseInt(keywords[4]))
+            // };
+            // this.trPlayer.inputs.push(input);
+            // TODO: do something
             this.sendMsg(this.pikachuPlayer, message); // TODO: change time???
         }
         break;
