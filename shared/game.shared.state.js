@@ -65,9 +65,15 @@ GameState.prototype.addPokeball = function(/*point*/ center){
 
 // Update pokeball position
 GameState.prototype.pokeballUpdate = function(){
-    for(var pokeballID in this.pokeballs){
-		var pokeball = this.pokeballs[pokeballID];
+    for(var i = 0; i < this.pokeballs.length;){
+		var pokeball = this.pokeballs[i];
 		pokeball.update();
+		if (this.pokeballs[i].center.X+CONSTANTS.pokeballRadius < 0) {
+			this.pokeballs.splice(i, i+1);
+			continue;
+		} else {
+			i++;
+		}
 		if(pokeball.cooldown>0){
 			pokeball.cooldown--;
 		}
@@ -133,7 +139,7 @@ GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
 
 }
 
-GameState.prototype.checkPlatformPokeball = function(/*Pokeball*/ pokeball, /*int*/index){
+GameState.prototype.checkPlatformBall = function(/*Pokeball*/ pokeball, /*int*/index){
 	
 	if((pokeball.center.Y+CONSTANTS.pokeballRadius>=this.gameInstance.gameState.platforms[index].center.Y-0.5*this.gameInstance.gameState.platforms[index].height)
 	&&(pokeball.center.X-CONSTANTS.pokeballRadius<this.gameInstance.gameState.platforms[index].center.X+.5*this.gameInstance.gameState.platforms[index].width)
@@ -144,12 +150,13 @@ GameState.prototype.checkPlatformPokeball = function(/*Pokeball*/ pokeball, /*in
 		pokeball.velocity.Y = 0;
         if(pokeball.midair === true){
 			pokeball.midair = false;
+			pokeball.velocity.X = CONSTANTS.platformScrollSpeed;
         }
 	}
 }
 
 
-GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball,index){
+GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball){
 
 	if(pokeball.center.Y+CONSTANTS.pokeballRadius>=CONSTANTS.height-CONSTANTS.floorHeight){
 		pokeball.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pokeballRadius;
@@ -160,8 +167,6 @@ GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball,index){
 			pokeball.velocity.X = CONSTANTS.platformScrollSpeed;
 		}
 	}
-
-	this.checkPlatformPokeball(pokeball,index);
 }
 
 // Clean up to shut down game

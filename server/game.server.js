@@ -110,16 +110,21 @@ GameServer.prototype.physicsUpdate = function(){
 	}
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
-    
-    for(var i = 0; i < this.gameState.platforms.length; i++){
+    for (var j = 0; j < this.gameState.pokeballs.length; j++) {
+		this.gameState.checkFloorBall(this.gameState.pokeballs[j]);
+	}
+	
+	for(var i = 0; i < this.gameState.platforms.length;){
 		this.gameState.platforms[i].move();
 		this.gameState.checkPlatform(this.gameState.pikachu,i);
-		if(this.gameState.platforms[i].center.X+.5*this.gameState.platforms[i].width < 0){
-            this.gameState.platforms.splice(0, 1);
-            for(var j = 0; j < this.gameState.pokeballs.length;j++){
-                this.gameState.checkFloorBall(this.gameState.pokeballs[j],i);
-            }
-        }	
+		if(this.gameState.platforms[i].center.X+.5*CONSTANTS.platformUnitWidth < 0){
+            this.gameState.platforms.splice(i, i+1);   
+        } else {
+        	for(var j = 0; j < this.gameState.pokeballs.length;j++){
+            	this.gameState.checkPlatformBall(this.gameState.pokeballs[j],i);
+        	}
+        	i++;
+        }
 	}
 };
 

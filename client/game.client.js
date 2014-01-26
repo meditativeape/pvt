@@ -39,17 +39,23 @@ GameClient.prototype.physicsUpdate = function(){
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
 	
-	for(var i = 0; i < this.gameState.platforms.length; i++){
-		this.gameState.platforms[i].move();
-		this.gameState.checkPlatform(this.gameState.pikachu,i);
-		if(this.gameState.platforms[i].center.X+.5*this.gameState.platforms[i].width < 0){
-            this.gameState.platforms.splice(0, 1);
-            for(var j = 0; j < this.gameState.pokeballs.length;j++){
-                this.gameState.checkFloorBall(this.gameState.pokeballs[j],i);
-            }
-        }	
+	
+	for (var j = 0; j < this.gameState.pokeballs.length; j++) {
+		this.gameState.checkFloorBall(this.gameState.pokeballs[j]);
 	}
 	
+	for(var i = 0; i < this.gameState.platforms.length;){
+		this.gameState.platforms[i].move();
+		this.gameState.checkPlatform(this.gameState.pikachu,i);
+		if(this.gameState.platforms[i].center.X+.5*CONSTANTS.platformUnitWidth < 0){
+            this.gameState.platforms.splice(i, i+1);   
+        } else {
+        	for(var j = 0; j < this.gameState.pokeballs.length;j++){
+            	this.gameState.checkPlatformBall(this.gameState.pokeballs[j],i);
+        	}
+        	i++;
+        }
+	}
 };
 
 GameClient.prototype.handleMessage = function(/*string*/message){
@@ -57,7 +63,7 @@ GameClient.prototype.handleMessage = function(/*string*/message){
     switch (keywords[1]) {
     case "input":
         if (this.type == 0) { // pikachu handles pokeball
-            var pokeballPos = new Point(parseInt(keywords[3]), parseInt(keywords[4]));
+            var pokeballPos = new Point(parseInt(keywords[2]), parseInt(keywords[3]));
             this.processTRInput(pokeballPos);
         } else { // tr handles pikachu
             this.processPikachuInput(keywords[2]);
@@ -68,6 +74,7 @@ GameClient.prototype.handleMessage = function(/*string*/message){
         for (var i = 0; i < platFormLength; i++) {
             this.gameState.platforms.push(new Platform(new Point(CONSTANTS.width+(1+i)*CONSTANTS.platformUnitWidth,CONSTANTS.pikachuStartY-30), new Point(CONSTANTS.platformSpeed,0), 0));
         }
+        break;
     }
 };
 
