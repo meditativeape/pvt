@@ -1,45 +1,12 @@
-//The main update loop runs on requestAnimationFrame,
-//Which falls back to a setTimeout loop on the server
-//Code below is from Three.js, and sourced from links below
-
-    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-    // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-
-var frame_time = 60/1000; // run the local game at 16ms/ 60hz
-if('undefined' != typeof(global)) frame_time = 45; //on server we run at 45ms, 22hz
-
-( function () {
-
-    var lastTime = 0;
-    var vendors = [ 'ms', 'moz', 'webkit', 'o' ];
-
-    for ( var x = 0; x < vendors.length && !window.requestAnimationFrame; ++ x ) {
-        window.requestAnimationFrame = window[ vendors[ x ] + 'RequestAnimationFrame' ];
-        window.cancelAnimationFrame = window[ vendors[ x ] + 'CancelAnimationFrame' ] || window[ vendors[ x ] + 'CancelRequestAnimationFrame' ];
-    }
-
-    if ( !window.requestAnimationFrame ) {
-        window.requestAnimationFrame = function ( callback, element ) {
-            var currTime = Date.now(), timeToCall = Math.max( 0, frame_time - ( currTime - lastTime ) );
-            var id = window.setTimeout( function() { callback( currTime + timeToCall ); }, timeToCall );
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-
-    if ( !window.cancelAnimationFrame ) {
-        window.cancelAnimationFrame = function ( id ) { clearTimeout( id ); };
-    }
-
-}() );
-
 /**
- * Server side we import helper objects.
+ * Server side we import shared objects.
  */
 if( 'undefined' !== typeof global ){
     var helper = require("game.shared.helper.js");
 	var Point = helper.Point;
 	var CONSTANTS = helper.CONSTANTS;
+    var Pikachu = require("game.shared.pikachu.js");
+    var Platform = require("game.shared.platform.js");
 }
 
 /**
@@ -47,31 +14,58 @@ if( 'undefined' !== typeof global ){
  */
 var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.gameInstance = gameInstance;
+    this.pikachu = new Pikachu(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
+    this.pokeballs = [];
+	this.platforms = [];
+    this.end = false;
+    this.winner = null;
+    this.scrollMeter = 0.0;
+    this.tOld = 0.0;
 };
 
-// Loop to keep updating game physics
-GameState.prototype.createPhysicsSimulation = function(){
-
-    //Set up some physics integration values
-    this._pdt = 0.0001;                 //The physics update delta time
-    this._pdte = new Date().getTime();  //The physics update last delta time
-    
-    //A local timer for precision on server and client
-    this.local_time = 0.016;            //The local timer
-    this._dt = new Date().getTime();    //The local timer delta
-    this._dte = new Date().getTime();   //The local timer last frame time
-
-    // Update game physics every 15ms (about 66 updates per second)
-    this.physicsUpateId = setInterval(function(){
-        this._pdt = (new Date().getTime() - this._pdte)/1000.0;
-        this._pdte = new Date().getTime();
-        this.updatePhysics();
-    }.bind(this), 15);
+GameState.prototype.start = function(){
+    this.tOld = new Date().getTime();
+    this.createTimer();
 };
 
-// Update game physics once
-GameState.prototype.updatePhysics = function() {
-    this.gameInstance.updatePhysics();
+GameServer.prototype.createTimer = function(){
+    this.timerId = setInterval(function(){
+        var dt = new Date().getTime() - this.tOld;
+        this.scrollMeter = -dt/16 * CONSTANTS.platformScrollSpeed;
+        this.tOld = new Date().getTime();
+    }.bind(this), 4);
+};
+
+GameState.prototype.pikachuBrake = function(){
+    this.pikachu.brake();
+};
+
+GameState.prototype.pikachuDash = function(){
+    this.pikachu.dash();
+};
+
+GameState.prototype.pikachuJump = function(){
+    this.pikachu.jump();
+};
+
+GameState.prototype.pikachuNormal = function(){
+    this.pikachu.normal();
+};
+
+// Update pikachu position
+GameState.prototype.pikachuUpdate = function(){
+    this.pikachu.update();
+    this.checkFloor();
+};
+
+// Check if pikachu is caught by any pokeball
+GameState.prototype.checkGameState = function(){
+    for (var pokeball in this.pokeballs)
+        if (this.checkCollision(this.pikachu, pokeball)) {
+            this.end = true;
+            this.winner = "tr";
+            break;
+        }
 };
 
 // Check if pikachu and pokeball collides
@@ -97,11 +91,18 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 		pikachu.velocity.Y = 0;
 		pikachu.midair = false;
 	}
-	
 }
 
 // Clean up to shut down game
 GameState.prototype.cleanUp = function() {
     clearInterval(this.physicsUpateId);
+    clearInterval(this.timerId);
     window.cancelRequestAnimationFrame(this.networkUpdateId);
 };
+
+/**
+ * Server side we export GameState.
+ */
+if( 'undefined' !== typeof global ) {
+    exports = GameState;
+}

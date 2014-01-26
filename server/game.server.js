@@ -30,7 +30,7 @@ var GameServer = function(/*GameState*/ gameState){
 };
 
 GameServer.prototype.createTimer = function(){
-    this.timerId = this.timersetInterval(function(){
+    this.timerId = setInterval(function(){
         this.dt = new Date().getTime() - this.dte;
         this.dte = new Date().getTime();
         this.localTime += this.dt/1000.0;
@@ -85,13 +85,13 @@ GameServer.prototype.processInput = function(){
         var input;
         for (input in this.pikachuPlayer.inputs) {
             if (input.action === 'left') {
-                // do something
+                this.gameState.pikachuBrake();
             } else if (input.action === 'up') {
-                // do something
+                this.gameState.pikachuJump();
             } else if (input.action === 'right') {
-                // do something
+                this.gameState.pikachuDash();
             } else if (input.action === 'stop') {
-                // do something
+                this.gameState.pikachuNormal();
             }
         }
         this.pikachuPlayer.lastInputTime = input.time;

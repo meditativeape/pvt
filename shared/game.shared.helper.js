@@ -34,7 +34,7 @@ var CONSTANTS = {
 };
 
 /**
- * Server side we export Point,Coordinate and constants.
+ * Server side we export Point and constants.
  */
 if( 'undefined' !== typeof global ) {
     exports.Point = Point;
