@@ -113,6 +113,11 @@ GameClientUI.prototype.draw = function(){
         stroke: 'black',
         strokeWidth: 4});
     this.platformLayer.add(rectPlat);
+    this.rectAnim = new Kinetic.Animation(function(frame){
+    	var timeDiff = frame.timeDiff;
+    	rectPlat.move({x: this.client.platforms[0].velocity.X* (timeDiff / 16), 
+                  y: 0});
+    }
     
     
     // Create two Kinetic image objects for the scrolling floor
