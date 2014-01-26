@@ -167,9 +167,6 @@ GameClientUI.prototype.draw = function(){
     this.frontLayer.add(this.pikachuToDraw);
 	
     this.frontLayerAnim = new Kinetic.Animation(function(frame){
-		me.gameState.pikachu.update();
-		me.gameState.pikachu.gravity();
-		me.gameState.checkFloor(me.gameState.pikachu);
 		
         if (!me.gameState.pikachu.midair) {
             me.pikachuToDraw.counter = (me.pikachuToDraw.counter + 1) % 24;

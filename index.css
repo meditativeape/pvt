@@ -26,9 +26,15 @@ html , body {
 
 #game {
 	visibility: hidden;
-	background: #FFFFFF;
+	background: #00FFFF;
 }
 
 #waiting {
 	visibility: hidden;
+	background: #F0000F;
+}
+
+#score {
+	visibility: hidden;
+	background: #FFFF00;
 }
