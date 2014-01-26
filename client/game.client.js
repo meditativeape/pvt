@@ -21,7 +21,7 @@ var GameClient = function(/*int*/type, /*socketIO*/ mainSocket) {
 };
 
 GameClient.prototype.start = function(){
-    this.physicsId = setInterval(this.physicsUpdate, 15);  // update physics every 15ms
+    this.physicsId = setInterval(this.physicsUpdate.bind(this), 15);  // update physics every 15ms
 };
 
 GameClient.prototype.physicsUpdate = function(){
