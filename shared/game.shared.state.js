@@ -17,6 +17,7 @@ var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.pikachu = new Pikachu(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
     this.pokeballs = [];
 	this.platforms = [];
+	//this.platforms[0] = new Platform(new Point(CONSTANTS.pikachuStartX,CONSTANTS.pikachuStartY),new Point(0,0),0);
     this.end = false;
     this.winner = null;
     this.scrollMeter = 0.0;
@@ -57,6 +58,11 @@ GameState.prototype.pikachuUpdate = function(){
     this.pikachu.update();
     this.checkFloor();
 };
+/*
+GameState.prototype.PlatformUpdate = function(){
+	this.platforms.move();
+};
+*/
 
 // Check if pikachu is caught by any pokeball
 GameState.prototype.checkGameState = function(){
