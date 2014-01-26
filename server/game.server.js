@@ -73,10 +73,10 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
     } else if (recipient.userid === this.trPlayer.userid) {
         clientIdentity = "team rocket";
     } else {
-        console.log("Error! Unrecognized player " + recipient.userid + "when sending message");
+        console.log("Error! Unrecognized player " + recipient.userid.substring(0,8)  + "when sending message");
         return;
     }
-	console.log(this.id.substring(0,8) + " sends a message to " + clientIdentity + " " + recipient.player + ": " + message);
+	console.log(this.id.substring(0,8) + " sends a message to " + clientIdentity + " " + recipient.userid.substring(0,8) + ": " + message);
 	recipient.send(message);
 };
 
@@ -145,15 +145,17 @@ GameServer.prototype.networkUpdate = function(){
 GameServer.prototype.handleMessage = function(client, message){
     var keywords = message.split(" ");
     var clientIdentity;
-    if (client.id === this.pikachuPlayer.userid) {
+    if (client.userid === this.pikachuPlayer.userid) {
         clientIdentity = "pikachu";
-    } else if (client.id === this.trPlayer.userid) {
+    } else if (client.userid === this.trPlayer.userid) {
         clientIdentity = "team rocket";
     } else {
-        console.log("Error! " + this.id.substring(0,8) + " received message from unrecognized player " + client.userid + ": " + message);
+        console.log("Error! " + this.userid.substring(0,8) + " received message from unrecognized player " + client.userid.substring(0,8) + ": " + message);
+        console.log(client.userid + '!=' + this.pikachuPlayer.userid);
+        console.log(client.userid + '!=' + this.trPlayer.userid);
         return;
     }
-    console.log(this.id.substring(0,8) + " received a message from " + clientIdentity + ": " + message);
+    console.log(this.id.substring(0,8) + " received a message from " + clientIdentity + " " + client.userid.substring(0,8) + ": " + message);
     
     switch (keywords[1]) {
     case "input":
