@@ -62,10 +62,10 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
     var clientIdentity;
     if (recipient.id === this.pikachuPlayer.id) {
         clientIdentity = "pikachu";
-    } else if (client.id === this.trPlayer.id) {
+    } else if (recipient.id === this.trPlayer.id) {
         clientIdentity = "team rocket";
     } else {
-        console.log("Error! Unrecognized player " + client.id + "when sending message");
+        console.log("Error! Unrecognized player " + recipient.id + "when sending message");
         return;
     }
 	console.log(this.id.substring(0,8) + " sends a message to " + clientIdentity + " " + recipient.player + ": " + message);
