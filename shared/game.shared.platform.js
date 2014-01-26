@@ -14,22 +14,25 @@ Platform.prototype.constructor = Platform;
 
 Platform.prototype.checkStatus = function(/*PhysicalObject*/ pikachu){
 	//condition 1: bottom side
-	if((pikachu.center.y-CONSTANTS.pikachuRadius)==(Platform.center.y+Platform.height/2.0)
-	&&(pikachu.center.x<=Platform.center.x+Platform.width/2.0)
-	&&(pikachu.center.x>=Platform.center.x-Platform.width/2.0)){
-		pikachu.velocity.y = pikachu.velocity.y*(-1);
+	if((pikachu.center.Y-CONSTANTS.pikachuRadius)<=(this.center.Y+this.height/2.0)
+	&&(pikachu.center.X<=this.center.X+this.width/2.0)
+	&&(pikachu.center.X>=this.center.X-this.width/2.0)
+	&&(pikachu.velocity.Y<0)
+	&&(pikachu.center.Y>this.center.Y)){
+		pikachu.velocity.Y = -pikachu.velocity.Y;
+		console.log("AAAAA");
 	}
 	//condition 2: head side
-	else if(((Platform.x-pikachu.center.x)<=(CONSTANTS.pikachuRadius+Platform.width/2.0))&&
-	(pikachu.center.y>= Platform.center.y-0.5*Platform.height)
-	&&(pikachu.center.y<= Platform.center.y+0.5*Platform.height)){
-		pikachu.velocity.x = Platform.velocity.x;
+	else if(((this.X-pikachu.center.X)<=(CONSTANTS.pikachuRadius+this.width/2.0))&&
+	(pikachu.center.Y>= this.center.Y-0.5*this.height)
+	&&(pikachu.center.Y<= this.center.Y+0.5*this.height)){
+		pikachu.velocity.X = this.velocity.X;
 	}
 	
 	//condition 3: upper side
 	/*
-	else if((Platform.center.y-0.5*Platform.height)-pikachu.center.y==CONSTANTS.pikachuRadius){
-		pikachu.velocity.y = 0;
+	else if((Platform.center.Y-0.5*Platform.height)-pikachu.center.Y==CONSTANTS.pikachuRadius){
+		pikachu.velocity.Y = 0;
 	}
 	return;
 	*/
