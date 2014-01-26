@@ -33,7 +33,7 @@ GameState.prototype.start = function(){
 
 GameState.prototype.startScrollMeter = function(){
     this.meterId = setInterval(function(){
-        var tDiff = new Date.getTime() - this.prevTime;
+        var tDiff = new Date().getTime() - this.prevTime;
         this.scrollMeter += tDiff / 16 * CONSTANTS.platformScrollSpeed;
     }.bind(this), 4);
 };

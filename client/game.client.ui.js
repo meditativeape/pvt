@@ -18,6 +18,8 @@ var GameClientUI = function(/*GameState*/ gameState){
     // sprites
     this.background = null;
     this.floor = null;
+    this.pokeball = null;
+    this.pokeballGray = null;
     this.platformLeft = null;
     this.platformMid = null;
     this.platformRight = null;
@@ -26,6 +28,7 @@ var GameClientUI = function(/*GameState*/ gameState){
     
     // Kinetic objects
     this.pikachuToDraw = null;
+    this.pokeballsToDraw = null;
 };
 
 /**
@@ -38,7 +41,7 @@ GameClientUI.prototype.initialize = function(){
     
     var incrementCounter = function() {
         filesLoaded++;
-        if (filesLoaded >= 10) {
+        if (filesLoaded >= 12) {
             me.draw();
         }
     };
@@ -56,6 +59,8 @@ GameClientUI.prototype.initialize = function(){
     this.platformMid = loadImage("..\\sprites\\platformMid.png");
     this.platformRight = loadImage("..\\sprites\\platformRight.png");
     this.platformSingle = loadImage("..\\sprites\\platformSingle.png");
+    this.pokeball = loadImage("..\\sprites\\pokeball.png");
+    this.pokeballGray = loadImage("..\\sprites\\pokeballGray.png");
     this.pikachus[0] = loadImage("..\\sprites\\pika1.png");
     this.pikachus[1] = loadImage("..\\sprites\\pika2.png");
     this.pikachus[2] = loadImage("..\\sprites\\pika3.png");
@@ -168,8 +173,7 @@ GameClientUI.prototype.draw = function(){
     this.pikachuToDraw.counter = 0;
     this.frontLayer.add(this.pikachuToDraw);
 	
-
-	
+    // Create a Kinetic animation to update Pikachu and pokeballs
     this.frontLayerAnim = new Kinetic.Animation(function(frame){
 		
         if (!me.gameState.pikachu.midair) {
@@ -182,6 +186,33 @@ GameClientUI.prototype.draw = function(){
         }
         me.pikachuToDraw.setAbsolutePosition({x:me.gameState.pikachu.center.X - 0.5*me.pikachus[0].width,
                                               y:me.gameState.pikachu.center.Y - 0.5*me.pikachus[0].height});
+                                              
+        while (me.gameState.pokeballs.length > me.pokeballsToDraw.length) {
+            me.pokeballsToDraw.push(new Kinetic.Image({
+                image: this.pokeball,
+                x: 0,
+                y: 0,
+                width: this.pokeball.width,
+                height: this.pokeball.height
+            }));
+        }
+        while (me.gameState.pokeballs.length < me.pokeballsToDraw.length) {
+            me.pokeballsToDraw[0].destory;
+            me.pokeballsToDraw.splice(0, 1);
+        }
+        for (var i = 0; i < me.pokeballsToDraw.length; i++) {
+            me.pokeballsToDraw[i].setAbsolutePosition({
+                x: me.gameState.pokeballs[i].center.X - 0.5 * me.pokeball.width,
+                y: me.gameState.pokeballs[i].center.Y - 0.5 * me.pokeball.height
+            });
+            if (me.gameState.pokeballs[i].cooldown > 0) {
+                me.pokeballsToDraw[i].setImage(this.pokeballGray);
+                me.pokeballsToDraw[i].rotation(CONSTANT.pokeballRotation);
+            } else {
+                me.pokeballsToDraw[i].setImage(this.pokeball);
+                me.pokeballsToDraw[i].rotation(0);
+            }
+        }
     }, this.frontLayer);
 	this.frontLayerAnim.start();
 
@@ -215,6 +246,7 @@ GameClientUI.prototype.cleanUp = function(){
     // stop all animations
     this.bgAnim.stop();
     this.platformLayerAnim.stop();
+    this.rectAnim.stop();
     // this.msgAnim.stop();
     
     // destroy all layers and the stage
