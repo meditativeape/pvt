@@ -15,8 +15,8 @@ Platform.prototype.constructor = Platform;
 Platform.prototype.checkStatus = function(/*PhysicalObject*/ pikachu){
 	//condition 1: bottom side
 	if((pikachu.center.Y-CONSTANTS.pikachuRadius)<=(this.center.Y+this.height/2.0)
-	&&(pikachu.center.X<=this.center.X+this.width/2.0)
-	&&(pikachu.center.X>=this.center.X-this.width/2.0)
+	&&(pikachu.center.X-CONSTANTS.pikachuRadius<=this.center.X+this.width/2.0)
+	&&(pikachu.center.X+CONSTANTS.pikachuRadius>=this.center.X-this.width/2.0)
 	&&(pikachu.velocity.Y<0)
 	&&(pikachu.center.Y>this.center.Y)){
 		pikachu.velocity.Y = -pikachu.velocity.Y;
