@@ -23,8 +23,3 @@ Pikachu.prototype.jump = function(){
 	}
 }
 
-var PikachuFromPhysicalObject = function(/*PhysicalObject*/ object){
-	var newPikachu = new Pikachu();
-	newPikachu.prototype = object;
-	return newPikachu;
-}

@@ -27,7 +27,7 @@ var CONSTANTS = {
 	gravity: 5,
 	pikachuJump: 20,
 	pikachuMove: 1,
-	backgroundScrollSpeed: -1,
+	backgroundScrollSpeed: -0.5,
 	platformScrollSpeed: -2
 };
 
