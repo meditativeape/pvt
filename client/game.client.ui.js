@@ -14,9 +14,6 @@ var GameClientUI = function(/*GameClient*/ client){
     this.backLayer = new Kinetic.Layer();
     this.platformLayer = new Kinetic.Layer();
     this.frontLayer = new Kinetic.Layer();
-    this.stage.add(this.backLayer);
-    this.stage.add(this.platformLayer);
-    this.stage.add(this.frontLayer);
     
     // sprites
     this.background = null;
@@ -139,13 +136,11 @@ GameClientUI.prototype.draw = function(){
     this.platformLayerAnim.start();
     
     // Create a Pikachu
-    console.log(this.client.pikachu);
-    console.log(this.client.pikachu.center);
     this.pikachuToDraw = new Kinetic.Circle({
         radius: CONSTANTS.pikachuRadius,
         fill: 'yellow',
         x: this.client.pikachu.center.X,
-        y: this.client.pikachu.center.Y
+        y: this.client.pikachu.center.Y,
     });
     this.frontLayer.add(this.pikachuToDraw);
     
@@ -169,6 +164,11 @@ GameClientUI.prototype.draw = function(){
     // A Kinetic animation to change the text message at the center of canvas.
     //this.msgAnim = new Kinetic.Animation(function(frame) {}, frontLayer);
     //this.msgAnim.start();
+    
+    // add layers to stage (add at last so that we donot to redraw layers after adding objects to them)
+    this.stage.add(this.backLayer);
+    this.stage.add(this.platformLayer);
+    this.stage.add(this.frontLayer);
 };
 
 /**
