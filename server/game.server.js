@@ -60,10 +60,11 @@ GameServer.prototype.start = function(){
 GameServer.prototype.cleanUp = function(){
     clearInterval(this.physicsId);
     clearInterval(this.networkId);
+    this.gameState.cleanUp();
 }
 
 GameServer.prototype.leaveGame = function(/*client*/ player){
-	//TODO
+	this.cleanUp();	
 };
 
 /**
@@ -87,6 +88,7 @@ GameServer.prototype.sendMsg = function(/*Player*/ recipient, /*String*/ message
  * Physics update loop.
  */
 GameServer.prototype.physicsUpdate = function(){
+	// random generate platform
     if(this.count == 0){
         var platFormLength = this.randomNumber(1,5);
         for (var i = 0; i < platFormLength; i++) {
@@ -99,8 +101,10 @@ GameServer.prototype.physicsUpdate = function(){
 	}
 	this.count --;//speed can be changed
 
+	// update pikachu
     this.gameState.pikachu.update();
 
+	// update pokeball
 	this.gameState.pokeballUpdate();
 	if(this.gameState.pikachu.cooldown>0){
 		this.gameState.pikachu.cooldown--;
@@ -114,6 +118,7 @@ GameServer.prototype.physicsUpdate = function(){
 		this.gameState.checkFloorBall(this.gameState.pokeballs[j]);
 	}
 	
+	// update platforms
 	for(var i = 0; i < this.gameState.platforms.length;){
 		this.gameState.platforms[i].move();
 		this.gameState.checkPlatform(this.gameState.pikachu,i);
@@ -125,6 +130,15 @@ GameServer.prototype.physicsUpdate = function(){
         	}
         	i++;
         }
+	}
+	
+	// check if game ends
+	this.gameState.checkGameState();
+	if (this.gameState.end) {
+		var msg = "game end " + this.gameState.winner; 
+		this.sendMsg(this.pikachuPlayer, msg);
+        this.sendMsg(this.trPlayer, msg);
+        this.leaveGame();
 	}
 };
 

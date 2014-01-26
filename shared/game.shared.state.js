@@ -90,8 +90,8 @@ GameState.prototype.PlatformUpdate = function(){
 
 // Check if pikachu is caught by any pokeball
 GameState.prototype.checkGameState = function(){
-    for (var pokeball in this.pokeballs)
-        if (this.checkCollision(this.pikachu, pokeball)) {
+    for (var id in this.pokeballs)
+        if (this.checkCollision(this.pikachu.center, this.pokeballs[id].center)) {
             this.end = true;
             this.winner = "tr";
             break;
