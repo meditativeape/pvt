@@ -7,6 +7,7 @@ if( 'undefined' !== typeof global ){
 	var CONSTANTS = helper.CONSTANTS;
     var Pikachu = require("./game.shared.pikachu.js");
     var Platform = require("./game.shared.platform.js");
+    var Pokeball = require("./game.shared.pokeball.js");
 }
 
 /**
