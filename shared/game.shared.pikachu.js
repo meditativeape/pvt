@@ -22,11 +22,9 @@ Pikachu.prototype.constructor = Pikachu;
 
 // Decrease velocity
 Pikachu.prototype.brake = function(){
-	if(this.center.X<CONSTANTS.pikachuBoundLeft){
-		this.velocity.X = CONSTANTS.pikachuMove*2
-	}
-	else if(this.center.X>CONSTANTS.pikachuBoundRight){
-		this.velocity.X = -CONSTANTS.pikachuMove*2;
+	if(this.center.X<=CONSTANTS.pikachuBoundLeft){
+		this.velocity.X = 0;
+		this.center.X = CONSTANTS.pikachuBoundLeft
 	}
 	else{
 		this.velocity.X = -CONSTANTS.pikachuMove;
@@ -35,11 +33,9 @@ Pikachu.prototype.brake = function(){
 
 // Increase velocity
 Pikachu.prototype.dash = function(){
-	if(this.center.X<CONSTANTS.pikachuBoundLeft){
-		this.velocity.X = CONSTANTS.pikachuMove*2;
-	}
-	else if(this.center.X>CONSTANTS.pikachuBoundRight){
-		this.velocity.X = -CONSTANTS.pikachuMove*2;
+	if(this.center.X>=CONSTANTS.pikachuBoundRight){
+		this.velocity.X = 0;
+		this.center.X = CONSTANTS.pikachuBoundRight
 	}
 	else{
 		this.velocity.X = CONSTANTS.pikachuMove;
@@ -48,15 +44,7 @@ Pikachu.prototype.dash = function(){
 
 // Back to normal velocity
 Pikachu.prototype.normal = function(){
-	if(this.center.X<CONSTANTS.pikachuBoundLeft){
-		this.velocity.X = CONSTANTS.pikachuMove*2;
-	}
-	else if(this.center.X>CONSTANTS.pikachuBoundRight){
-		this.velocity.X = -CONSTANTS.pikachuMove*2;
-	}
-	else{	
 		this.velocity.X = 0;
-	}
 }
 
 // Jump
