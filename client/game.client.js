@@ -26,11 +26,16 @@ GameClient.prototype.start = function(){
 
 GameClient.prototype.physicsUpdate = function(){
     this.gameState.pikachu.update();
+	this.gameState.pokeballUpdate();
 	if(this.gameState.pikachu.cooldown>0){
 		this.gameState.pikachu.cooldown--;
 	}
+	if(this.gameState.pokeballDelay>0){
+		this.gameState.pokeballDelay--;
+	}
 	this.gameState.pikachu.gravity();
 	this.gameState.checkFloor(this.gameState.pikachu);
+	
 };
 
 GameClient.prototype.handleMessage = function(/*string*/message){

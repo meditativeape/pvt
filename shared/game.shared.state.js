@@ -22,6 +22,8 @@ var GameState = function(/*GameClient or GameServer*/gameInstance) {
     this.winner = null;
     // this.scrollMeter = 0.0;
     this.startTime = 0.0;
+	this.pokeballDelay = CONSTANTS.pokeballDelay;
+	this.currentDelay = CONSTANTS.pokeballDelay;
 };
 
 GameState.prototype.start = function(){
@@ -54,10 +56,20 @@ GameState.prototype.pikachuNormal = function(){
     this.pikachu.normal();
 };
 
-// Update pikachu position
-GameState.prototype.pikachuUpdate = function(){
-    this.pikachu.update();
-    this.checkFloor();
+
+// Throw pokeball
+GameState.prototype.addPokeball = function(/*point*/ center){
+	var pokeball = new Pokeball(center);
+	this.pokeballs.push(pokeball);
+}
+
+// Update pokeball position
+GameState.prototype.pokeballUpdate = function(){
+    for(var pokeball in this.pokeballs){
+		pokeball.update();
+    	pokeball.gravity();
+		this.checkFloorBall(pokeball);
+	}
 };
 
 // Check if pikachu is caught by any pokeball
@@ -104,6 +116,30 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 	}
 	this.gameInstance.gameState.platforms[0].checkStatus(pikachu);
 }
+
+GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball){
+	if(pokeball.center.Y+CONSTANTS.pokeballRadius>=CONSTANTS.height-CONSTANTS.floorHeight){
+		pokeball.center.Y = CONSTANTS.height-CONSTANTS.floorHeight-CONSTANTS.pokeballRadius;
+		pokeball.accelerationY = 0;
+		pokeball.velocity.Y = 0;
+		if(pokeball.midair === true){
+			pokeball.midair = false;
+		}
+	}
+	else if((pokeball.center.Y+CONSTANTS.pokeballRadius>=this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height)
+	&&(pokeball.center.X-CONSTANTS.pokeballRadius<this.gameInstance.gameState.platforms[0].center.X+.5*this.gameInstance.gameState.platforms[0].width)
+	&&(pokeball.center.X+CONSTANTS.pokeballRadius>this.gameInstance.gameState.platforms[0].center.X-.5*this.gameInstance.gameState.platforms[0].width)
+	&&(pokeball.center.Y<this.gameInstance.gameState.platforms[0].center.Y)){
+		pokeball.center.Y = this.gameInstance.gameState.platforms[0].center.Y-0.5*this.gameInstance.gameState.platforms[0].height-CONSTANTS.pokeballRadius;
+		pokeball.accelerationY = 0;
+		pokeball.velocity.Y = 0;
+		if(pokeball.midair === true){
+			pokeball.midair = false;
+		}
+	}
+	this.gameInstance.gameState.platforms[0].checkStatusPokeball(pokeball);
+}
+
 
 // Clean up to shut down game
 GameState.prototype.cleanUp = function() {
