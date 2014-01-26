@@ -71,7 +71,7 @@ GameClient.prototype.processTRInput = function(/*Point*/ pokeballPos){
 };
 
 GameClient.prototype.handleServerUpdate = function(/*object*/ update){
-    console.log("update!");
+    this.gameState.scrollMeter = update.scrollMeter;
     // TODO: naive approach. add interpolation!
     this.gameState.pikachu.center = update.pikachuPos;
 };
