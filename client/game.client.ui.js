@@ -179,8 +179,6 @@ GameClientUI.prototype.draw = function(){
         height: this.pikachus[0].height,
     });    	
     
-    
-    
     this.pikachuToDraw.counter = 0;
     this.frontLayer.add(this.pikachuToDraw);
 	

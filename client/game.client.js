@@ -61,14 +61,11 @@ GameClient.prototype.physicsUpdate = function(){
 		this.gameState.platforms[i].move();
 		this.gameState.checkPlatform(this.gameState.pikachu,i);
 		if(this.gameState.platforms[i].center.X+.5*this.gameState.platforms[i].width <0){
-		this.gameState.platforms.splice(0, 1);
-		for(var j =0; j < this.gameState.pokeballs.length;j++){
-			this.checkFloorBall(pokeballs[j],i);
-		}
-		
-	}
-			
-
+            this.gameState.platforms.splice(0, 1);
+            for(var j =0; j < this.gameState.pokeballs.length;j++){
+                this.checkFloorBall(pokeballs[j],i);
+            }
+        }	
 	}
 	
 };
@@ -114,8 +111,18 @@ GameClient.prototype.handleServerUpdate = function(/*object*/ update){
     // TODO: naive approach. add interpolation!
     this.gameState.pikachu.center = update.pikachuPos;
     this.gameState.scrollMeter = update.scrollMeter;
-    this.gameState.pokeballs = update.pokeballs;
-    this.gameState.platforms = update.platforms;
+    for (var i = 0; i < this.gameState.pokeballs.length; i++) {
+        this.gameState.pokeballs[i].center = update.pokeballs[i].center;
+        this.gameState.pokeballs[i].cooldown = update.pokeballs[i].cooldown;
+        this.gameState.pokeballs[i].velocity = update.pokeballs[i].velocity;
+        this.gameState.pokeballs[i].accelerationY = update.pokeballs[i].accelerationY;
+    }
+    for (var i = 0; i < this.gameState.platforms.length; i++) {
+        this.gameState.platforms[i].center = update.platforms[i].center;
+        this.gameState.platforms[i].cooldown = update.platforms[i].cooldown;
+        this.gameState.platforms[i].velocity = update.platforms[i].velocity;
+        this.gameState.platforms[i].accelerationY = update.platforms[i].accelerationY;
+    }
 };
 
 GameClient.prototype.cleanUp = function(){

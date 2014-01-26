@@ -64,11 +64,8 @@ GameState.prototype.addPokeball = function(/*point*/ center){
 
 // Update pokeball position
 GameState.prototype.pokeballUpdate = function(){
-	console.log(this.pokeballs);
     for(var pokeballID in this.pokeballs){
-		console.log(pokeballID);
 		var pokeball = this.pokeballs[pokeballID];
-		console.log(pokeball);
 		pokeball.update();
 		if(pokeball.cooldown>0){
 			pokeball.cooldown--;
@@ -76,8 +73,6 @@ GameState.prototype.pokeballUpdate = function(){
 		else{
 			pokeball.gravity();
 		}
-
-		
 	}
 };
 /*
@@ -118,6 +113,7 @@ GameState.prototype.checkFloor = function(/*Pikachu*/ pikachu){
 	}
 
 }
+
 GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
 	
 	if((pikachu.center.Y+CONSTANTS.pikachuRadius>=this.gameInstance.gameState.platforms[index].center.Y-0.5*this.gameInstance.gameState.platforms[index].height)
@@ -136,6 +132,21 @@ GameState.prototype.checkPlatform = function(/*Pikachu*/ pikachu, /*int*/index){
 
 }
 
+GameState.prototype.checkPlatformPokeball = function(/*Pokeball*/ pokeball, /*int*/index){
+	
+	if((pokeball.center.Y+CONSTANTS.pokeballRadius>=this.gameInstance.gameState.platforms[index].center.Y-0.5*this.gameInstance.gameState.platforms[index].height)
+	&&(pokeball.center.X-CONSTANTS.pokeballRadius<this.gameInstance.gameState.platforms[index].center.X+.5*this.gameInstance.gameState.platforms[index].width)
+	&&(pokeball.center.X+CONSTANTS.pokeballRadius>this.gameInstance.gameState.platforms[index].center.X-.5*this.gameInstance.gameState.platforms[index].width)
+	&&(pokeball.center.Y<this.gameInstance.gameState.platforms[index].center.Y)){
+		pokeball.center.Y = this.gameInstance.gameState.platforms[index].center.Y-0.5*this.gameInstance.gameState.platforms[index].height-CONSTANTS.pokeballRadius;
+		pokeball.accelerationY = 0;
+		pokeball.velocity.Y = 0;
+        if(pokeball.midair === true){
+			pokeball.midair = false;
+        }
+	}
+}
+
 
 GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball,index){
 
@@ -149,11 +160,8 @@ GameState.prototype.checkFloorBall = function(/*pokeball*/ pokeball,index){
 		}
 	}
 
-	
-	this.checkPlatform(pokeball,index);
-
+	this.checkPlatformPokeball(pokeball,index);
 }
-
 
 // Clean up to shut down game
 GameState.prototype.cleanUp = function() {
