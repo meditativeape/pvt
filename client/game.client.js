@@ -26,6 +26,7 @@ GameClient.prototype.start = function(){
 
 GameClient.prototype.physicsUpdate = function(){
     this.gameState.pikachu.update();
+
 	this.gameState.pokeballUpdate();
 	if(this.gameState.pikachu.cooldown>0){
 		this.gameState.pikachu.cooldown--;
